@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Ministério Remissão Portugal | Cura e Libertação da Alma na Europa</title>
+    <meta name="title" content="Ministério Remissão Portugal | Cura e Libertação da Alma na Europa">
+    <meta name="description"
+        content="Plataforma oficial do Ministério Remissão em Portugal e Europa. Formações de cura da alma, libertação espiritual, cura de traumas e restauração familiar. Efésios 1:7. Próxima edição em Sintra - Lisboa.">
+    <meta name="keywords"
+        content="Ministério Remissão, Remissão Portugal, Efésios 1:7, Remission to the Nations, Cura e Libertação, Sintra Lisboa, Paternidade, Rejeição, Pharmakeia, Cativeiros Espirituais, e-inscricao">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Ministério Remissão Portugal">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://remissao.pt">
+    <meta property="og:title" content="Ministério Remissão Portugal | Cura e Libertação da Alma">
+    <meta property="og:description"
+        content="Seminário Remir em Sintra, Portugal. 3 Módulos de cura emocional, libertação e restauração espiritual. Garanta sua vaga via e-inscricao.com.">
+    <meta property="og:image" content="assets/logo-remissao-novo.png">
+    <meta property="og:locale" content="pt_PT">
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="styles.css?v=14">
+    <!-- MDI Icons Script -->
+    <script type="module" src="assets/mdi-icons.js"></script>
+</head>
+
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar" id="announcementBar">
+        <span class="announcement-badge" id="announcementBadge"> Inscrições Abertas</span>
+        <span id="announcementText">Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) •
+            Investimento: €80,00</span>
+        <button class="btn btn-sm btn-primary btn-einscricao-active"
+            style="padding: 0.25rem 0.75rem; font-size: 0.75rem;">
+            Inscrever-me agora
+        </button>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="navbar" id="mainHeader">
+        <div class="nav-container">
+            <a href="#home" class="brand-logo" id="brandLogoBtn">
+                <!-- User's Official Golden Medallion Logo Image without Circle Border -->
+                <div class="brand-logo-img-wrap">
+                    <img src="assets/logo-remissao-novo.png" alt="Ministério Remissão Emblem Logo"
+                        class="brand-logo-img">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">MINISTÉRIO <span class="gold-gradient-text">REMISSÃO</span></span>
+                    <span class="brand-subtitle">PORTUGAL & EUROPA</span>
+                </div>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active" data-i18n="nav.home">Início</a></li>
+                <li><a href="#sobre" class="nav-link" data-i18n="nav.sobre">Sobre Nós</a></li>
+                <li><a href="#temas" class="nav-link">Áreas de Ensino</a></li>
+                <li><a href="#testemunhos" class="nav-link" data-i18n="nav.testemunhos">Testemunhos</a></li>
+                <li><a href="#levar-igreja" class="nav-link" data-i18n="nav.levar_igreja">Levar à minha Igreja</a></li>
+                <li><a href="#faq" class="nav-link" data-i18n="nav.faq">Perguntas Frequentes</a></li>
+                <li><a href="#contato" class="nav-link">Contacto</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <!-- Language Dropdown -->
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+                        PT <span style="font-size: 0.7rem;">▼</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu">
+                        <a href="#" data-lang="pt">Português (PT)</a>
+                        <a href="#" data-lang="en">English (EN)</a>
+                        <a href="#" data-lang="es">Español (ES)</a>
+                    </div>
+                </div>
+
+                <!-- Primary CTA to active e-inscricao -->
+                <button class="btn btn-primary btn-sm btn-einscricao-active" id="navRegisterBtn">
+                    <span>⚡ Inscrever-me</span>
+                </button>
+
+                <!-- Hamburger Menu Toggle Button -->
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main id="appContainer">
+
+        <!-- ==================== HOME SECTION ==================== -->
+        <div id="view-home" class="view-page">
+
+            <!-- Hero Section -->
+            <section class="hero-section" id="home">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span> REMISSION TO THE NATION • PORTUGAL</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        Cura & Libertação <span class="gold-gradient-text">da Alma</span> em Portugal.
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Através de um ensino bíblico sólido e de ministrações direcionadas, ajudamos pessoas a romper
+                        cadeias espirituais, restaurar a identidade em Cristo e viver a liberdade que Jesus conquistou
+                        na cruz.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <button class="btn btn-primary btn-lg btn-einscricao-active" id="heroMainCta">
+                            <span>Inscrever-me Agora</span>
+                        </button>
+
+                        <a href="#sobre" class="btn btn-secondary btn-lg">
+                            Conhecer o Seminário
+                        </a>
+                    </div>
+
+                    <div class="hero-guarantee">
+                        <span>🔒 Inscrição 100% oficial e segura via <strong>e-inscricao.com</strong></span>
+                    </div>
+
+                    <!-- Counter Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                                <h4 class="counter-val">2k+</h4>
+                            </div>
+                            <p class="stat-label">VIDAS ALCANÇADAS NO BRASIL</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 15l-2 5l9-5l-9-5l2 5z"></path>
+                                    <circle cx="12" cy="8" r="5"></circle>
+                                </svg>
+                                <h4 class="counter-val">10+</h4>
+                            </div>
+                            <p class="stat-label">ANOS DE MINISTÉRIO</p>
+                        </div>
+                        <div class="stat-card" style="display: none;">
+                            <div class="stat-header">
+                                <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path
+                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                    </path>
+                                </svg>
+                                <h4 class="counter-val">Brasel e Portugal</h4>
+                            </div>
+                            <p class="stat-label">PAÍSES ALCANÇADOS</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spacing block for background banner visibility on desktop -->
+                <div class="hero-bg-spacer"></div>
+            </section>
+
+            <!-- ==================== ABOUT / SOBRE NÓS ==================== -->
+            <section class="section" id="sobre">
+                <div class="section-header">
+                    <span class="section-tag">Nossa Trajetória</span>
+                    <h2 class="section-title">Do Brasil para Portugal e <span class="gold-gradient-text">Toda a
+                            Europa</span></h2>
+                    <p class="section-subtitle">
+                        Com base consolidada em Joinville (Brasil) e milhares de vidas restauradas, o Ministério
+                        Remissão expande sua missão oficial para Portugal.
+                    </p>
+                </div>
+
+                <div class="grid-2" style="align-items: center;">
+                    <div class="card-glass">
+                        <h3 class="card-title font-serif" style="font-size: 2rem; color: var(--gold-light);">Servindo ao
+                            Corpo de Cristo</h3>
+                        <p class="card-desc" style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                            Nossa missão é auxiliar filhos de Deus que, mesmo após a confissão de fé em Cristo Jesus,
+                            continuam sofrendo com as adversidades e prisões da alma deste mundo.
+                        </p>
+
+                        <div class="timeline-track">
+                            <div class="timeline-step">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-year">Consolidação no Brasil</div>
+                                <p class="card-desc">Anos de ministração em Joinville e São Francisco do Sul formando
+                                    intercessores e restaurando milhares de vidas.</p>
+                            </div>
+                            <div class="timeline-step">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-year">2026/2027 - Sintra, Portugal</div>
+                                <p class="card-desc">Instalação da base europeia na Av. Irene Lisboa, 19, Sintra –
+                                    Lisboa, abrindo turmas internacionais.</p>
+                            </div>
+                            <div class="timeline-step">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-year">Expansão Europeia</div>
+                                <p class="card-desc">Levar os seminários para Porto, Lisboa, Braga, Faro, Coimbra e
+                                    nações europeias.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card-glass" style="margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">
+                                <div id="instaHeaderIcon"
+                                    style="display:inline-block; vertical-align:middle; margin-right:0.5rem;"></div>
+                                Acompanhe no Instagram
+                            </h4>
+                            <p class="card-desc" style="margin-bottom: 1rem;">Veja fotos, vídeos e testemunhos diários
+                                do Ministério Remissão em Portugal.</p>
+                            <a href="https://www.instagram.com/ministerioremissaopt/" target="_blank" rel="noopener"
+                                class="btn btn-outline-gold btn-sm">
+                                <div id="instagramVue"></div> Seguir @ministerioremissaopt
+                            </a>
+                        </div>
+
+                        <div class="card-glass">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">🇧🇷 Ministério Brasil</h4>
+                            <p class="card-desc" style="margin-bottom: 1rem;">Conheça a plataforma de origem do
+                                ministério no Brasil.</p>
+                            <a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener"
+                                class="btn btn-secondary btn-sm">
+                                🌐 Visitar ministerioremissao.com.br
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== ÁREAS DE ENSINO SECTION ==================== -->
+            <section class="section themes-section" id="temas">
+                <div class="section-header">
+                    <span class="section-tag">Fundamentação Bíblica & Ministração</span>
+                    <h2 class="section-title">Áreas de <span class="gold-gradient-text">Ensino Ministradas</span></h2>
+                    <p class="section-subtitle">
+                        Uma imersão profunda que aborda os pilares fundamentais para a completa cura da alma e
+                        libertação de jugos espirituais.
+                    </p>
+                </div>
+
+                <!-- Hero Interactive Slider Container -->
+                <div class="themes-hero-container" id="themesHeroSlider">
+                    <!-- Background Layers with Crossfade Transitions -->
+                    <div class="themes-bg-wrapper">
+                        <div class="themes-bg-layer bg-layer-a active" id="themesBgLayerA"></div>
+                        <div class="themes-bg-layer bg-layer-b" id="themesBgLayerB"></div>
+                        <div class="themes-bg-overlay"></div>
+                    </div>
+
+                    <div class="themes-hero-content">
+                        <!-- Left Side: Vertical Indicator Track + Text Content -->
+                        <div class="themes-left-col">
+                            <!-- Vertical Numeric Indicator -->
+                            <div class="themes-indicator-wrapper">
+                                <div class="themes-indicator-line"></div>
+                                <div class="themes-indicator-list" id="themesIndicatorList">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Text Content Box -->
+                            <div class="themes-text-box">
+                                <div class="themes-badge-tag">
+                                    <span class="gold-badge" id="themeModuleBadge">TEMA 01</span>
+                                </div>
+                                <h3 class="themes-title" id="themeActiveTitle">PATERNIDADE</h3>
+                                <p class="themes-description" id="themeActiveDesc">
+                                    Cura da orfandade interior, restauração da imagem do Pai Celestial e aceitação como
+                                    filho amado de Deus.
+                                </p>
+                                <div class="themes-cta-wrap">
+                                    <button class="btn btn-primary btn-themes-cta btn-einscricao-active"
+                                        id="themeCtaBtn">
+                                        <span>Saiba mais →</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Vertical Portrait Cards Carousel -->
+                        <div class="themes-right-col">
+                            <div class="themes-carousel-viewport" id="themesCarouselViewport">
+                                <div class="themes-cards-track" id="themesCardsTrack">
+                                    <!-- Floating Portrait Cards rendered dynamically via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Carousel Navigation Arrows -->
+                            <div class="themes-nav-controls">
+                                <button class="themes-nav-btn themes-nav-prev" id="themesPrevBtn"
+                                    aria-label="Tema anterior">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+                                        stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+                                <button class="themes-nav-btn themes-nav-next" id="themesNextBtn"
+                                    aria-label="Próximo tema">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+                                        stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== FORMAÇÕES DO MINISTÉRIO ==================== -->
+            <section class="section" id="programas" style="display:none;">
+                <div class="section-header">
+                    <span class="section-tag">Grade de Ensino & Formação</span>
+                    <h2 class="section-title">Formações do <span class="gold-gradient-text">Ministério Remissão</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        Conheça as modalidades dos nossos seminários desenvolvidos para atender igrejas, famílias e
+                        alunos em toda a Europa.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">📖</div>
+                        <h3 class="card-title">Seminário Remir Extensivo</h3>
+                        <p class="card-desc">
+                            Dividido em 3 Módulos presenciais (Sextas à noite e Sábados). Ideal para quem busca um
+                            acompanhamento gradual com suporte ministerial e apostilas completas.
+                        </p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">⚡</div>
+                        <h3 class="card-title">Seminário Remir Intensivo</h3>
+                        <p class="card-desc">
+                            Imersão concentrada de fim de semana projetada para acolher participantes vindos de outras
+                            cidades e países da Europa.
+                        </p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">🕊️</div>
+                        <h3 class="card-title">Escola de Ativação Profética</h3>
+                        <p class="card-desc">
+                            Treinamento para líderes e intercessores sobre discernimento espiritual, escuta da voz de
+                            Deus e ministração de libertação nas igrejas locais.
+                        </p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">🏠</div>
+                        <h3 class="card-title">Seminário Remindo a Casa</h3>
+                        <p class="card-desc">
+                            Foco exclusivo na restauração do lar, quebra de maldições familiares e edificação de
+                            casamentos sob a aliança divina.
+                        </p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">☀️</div>
+                        <h3 class="card-title">Seminário Remir Summer</h3>
+                        <p class="card-desc">
+                            Edição especial de férias para capacitação de jovens, estudantes universitários e novas
+                            gerações.
+                        </p>
+                    </div>
+
+                    <div class="card-glass">
+                        <div class="card-icon-wrap">🌍</div>
+                        <h3 class="card-title">Remission to the Nations</h3>
+                        <p class="card-desc">
+                            A plataforma de expansão internacional que leva a equipe do Ministério para sediar edições
+                            em igrejas por toda a Europa.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== TESTIMONIALS SECTION ==================== -->
+            <section class="section" id="testemunhos">
+                <div class="section-header">
+                    <span class="section-tag">Testemunhos Reais</span>
+                    <h2 class="section-title">O que Dizem <span class="gold-gradient-text">Nossos Alunos</span></h2>
+                    <p class="section-subtitle">
+                        Relatos de pastores, líderes e alunos transformados pelo poder da palavra de Deus.
+                    </p>
+                </div>
+
+                <div class="grid-3" id="testimonialsGrid">
+                    <!-- Dynamic Testimonial Cards Rendered by JS -->
+                </div>
+            </section>
+
+            <!-- ==================== LEVAR O SEMINÁRIO À MINHA IGREJA ==================== -->
+            <section class="section" id="levar-igreja">
+                <div class="grid-2" style="align-items: center;">
+                    <div>
+                        <span class="section-tag">Expansão Ministerial</span>
+                        <h2 class="section-title">Leve o Seminário para a <span class="gold-gradient-text">Sua
+                                Igreja</span></h2>
+                        <p class="section-subtitle" style="text-align: left; margin-bottom: 2rem;">
+                            É pastor ou líder ministerial em Portugal ou na Europa? Leve a equipe e apostilas do
+                            Ministério Remissão para ministrar cura e libertação na sua igreja local.
+                        </p>
+
+                        <div class="card-glass" style="margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">Suporte Ministerial à Sua
+                                Liderança</h4>
+                            <p class="card-desc">Total sigilo, embasamento bíblico e alinhamento com o pastor local
+                                durante todas as ministrações.</p>
+                        </div>
+
+                        <div class="card-glass">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">Para Qualquer Cidade
+                                Europeia</h4>
+                            <p class="card-desc">Atendemos igrejas em Portugal, Espanha, França, Suíça, Alemanha e Reino
+                                Unido.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <h3 class="font-serif"
+                            style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;">
+                            Solicitar Seminário na Minha Igreja
+                        </h3>
+
+                        <form id="churchHostForm">
+                            <div class="form-group">
+                                <label class="form-label" for="chName">Seu Nome Completo *</label>
+                                <input type="text" id="chName" class="form-control" placeholder="Pr. Nome Sobrenome..."
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="chChurch">Nome da Igreja / Ministério *</label>
+                                <input type="text" id="chChurch" class="form-control"
+                                    placeholder="Ex: Igreja Evangélica em Sintra" required>
+                            </div>
+
+                            <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
+                                <div class="form-group">
+                                    <label class="form-label" for="chCity">Cidade *</label>
+                                    <input type="text" id="chCity" class="form-control" placeholder="Ex: Sintra"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="chCountry">País *</label>
+                                    <input type="text" id="chCountry" class="form-control" placeholder="Ex: Portugal"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
+                                <div class="form-group">
+                                    <label class="form-label" for="chPhone">WhatsApp / Telefone *</label>
+                                    <input type="tel" id="chPhone" class="form-control" placeholder="+351 928 364 086"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="chEmail">E-mail *</label>
+                                    <input type="email" id="chEmail" class="form-control"
+                                        placeholder="contato@igreja.pt" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="chCapacity">Número Estimado de Participantes</label>
+                                <select id="chCapacity" class="form-control">
+                                    <option value="30-50">30 a 50 pessoas</option>
+                                    <option value="50-100">50 a 100 pessoas</option>
+                                    <option value="100-200">100 a 200 pessoas</option>
+                                    <option value="200+">Mais de 200 pessoas</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="chMessage">Mensagem / Observações</label>
+                                <textarea id="chMessage" class="form-control"
+                                    placeholder="Conte-nos sobre sua comunidade e datas pretendidas..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                📩 Enviar Solicitação Pastoral
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PERGUNTAS FREQUENTES SECTION ==================== -->
+            <section class="section" id="faq">
+                <div class="section-header">
+                    <span class="section-tag">Esclarecimento de Dúvidas</span>
+                    <h2 class="section-title">Perguntas <span class="gold-gradient-text">Frequentes</span></h2>
+                    <p class="section-subtitle">
+                        Saiba como funcionam os módulos em Sintra, valores, horários e inscrições pelo e-inscricao.com.
+                    </p>
+                </div>
+
+                <div class="faq-list" id="globalFaqList">
+                    <!-- Rendered by JS -->
+                </div>
+            </section>
+
+            <!-- ==================== CONTACTO SECTION ==================== -->
+            <section class="section" id="contato">
+                <div class="section-header">
+                    <span class="section-tag">Atendimento Oficial</span>
+                    <h2 class="section-title">Fale Conosco em <span class="gold-gradient-text">Portugal</span></h2>
+                    <p class="section-subtitle">Estamos à disposição para atender você e tirar dúvidas sobre a próxima
+                        turma em Sintra.</p>
+                </div>
+
+                <div class="grid-3">
+                    <a href="https://www.instagram.com/ministerioremissaopt/" target="_blank" class="card-glass"
+                        style="text-decoration: none; color: inherit; text-align: center;">
+                        <!-- switch.my_switch:
+  friendly_name: My Switch
+  icon: mdi:instagram -->
+                        <div class="card-icon-wrap" style="margin: 0 auto 1.25rem;">
+                            <div id="instagramReactContact"
+                                style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                            </div>
+                        </div>
+                        <h4 class="card-title">Instagram Oficial</h4>
+                        <p class="card-desc">@ministerioremissaopt</p>
+                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;">Ver Publicações</span>
+                    </a>
+
+                    <a href="https://wa.me/351928364086" target="_blank" class="card-glass"
+                        style="text-decoration: none; color: inherit; text-align: center;">
+                        <div class="card-icon-wrap" style="margin: 0 auto 1.25rem;">
+                            <div id="whatsappReactContact"
+                                style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                            </div>
+                        </div>
+                        <h4 class="card-title">WhatsApp Oficial</h4>
+                        <p class="card-desc">+351 928 364 086</p>
+                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;">Iniciar Conversa</span>
+                    </a>
+
+                    <div class="card-glass" style="text-align: center;">
+                        <div class="card-icon-wrap" style="margin: 0 auto 1.25rem;">
+                            <div id="churchReactContact"
+                                style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                            </div>
+                        </div>
+                        <h4 class="card-title">Local do Seminário (Sintra)</h4>
+                        <p class="card-desc" style="font-size: 0.85rem;">Av. Irene Lisboa, 19 – Armazém A, 2º
+                            Piso<br>Sintra – Lisboa</p>
+                        <span
+                            style="font-size: 0.8rem; color: var(--gold-light); display: block; margin-top: 1rem;">Base
+                            Principal Europeia</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pre-Footer CTA -->
+            <div
+                style="background: linear-gradient(180deg, var(--bg-dark) 0%, #0E0B08 100%); padding: 4rem 2rem; border-top: 1px solid var(--border-subtle); text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <h2 class="font-serif" style="font-size: 2.5rem; color: var(--gold-light); margin-bottom: 1rem;">
+                        Garanta sua vaga no Seminário Remir em Sintra.
+                    </h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+                        3 Módulos de cura e libertação. Investimento total: €80,00. Inscreva-se via e-inscricao.com.
+                    </p>
+                    <button class="btn btn-primary btn-lg btn-einscricao-active">
+                        <span>Inscrever-me no e-inscricao.com (€80)</span>
+                    </button>
+                </div>
+            </div>
+
+        </div><!-- END VIEW HOME -->
+
+        <!-- ==================== ADMIN PORTAL (#admin) ==================== -->
+        <div id="view-admin" class="view-page" style="display: none;">
+            <div class="section">
+                <div class="admin-portal">
+                    <div class="admin-header">
+                        <div>
+                            <h2 style="font-size: 2rem; color: var(--gold-light);">Painel Administrativo & IA Assistente
+                            </h2>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Gestão de seminários em Portugal,
+                                solicitações de igrejas e ferramentas de inteligência sob demanda.</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="exitAdminBtn">Sair do Painel</button>
+                    </div>
+
+                    <div class="admin-tabs">
+                        <button class="admin-tab-btn active" data-tab="tab-events" style="display:none;">📅 Gerenciar Seminários</button>
+                        <button class="admin-tab-btn" data-tab="tab-crm">⛪ Solicitações de Igrejas (CRM)</button>
+                        <button class="admin-tab-btn" data-tab="tab-ai-suite">🤖 IA Assistente Suite</button>
+                        <button class="admin-tab-btn" data-tab="tab-seo">🔍 SEO Booster</button>
+                    </div>
+
+                    <!-- TAB EVENTS -->
+                    <div id="tab-events" class="admin-tab-content">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Seminários Cadastrados</h3>
+                            <button class="btn btn-primary btn-sm" id="addNewEventBtn">+ Criar Novo Seminário</button>
+                        </div>
+                        <div id="adminEventsTableWrap">
+                            <!-- Table rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- TAB CRM -->
+                    <div id="tab-crm" class="admin-tab-content" style="display: none;">
+                        <h3>Leads de Igrejas Interessadas</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Formulários
+                            recebidos através da página "Levar à minha Igreja".</p>
+                        <div id="adminCrmTableWrap">
+                            <!-- Table rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- TAB AI SUITE -->
+                    <div id="tab-ai-suite" class="admin-tab-content" style="display: none;">
+                        <h3 style="margin-bottom: 1rem;">Ferramentas de Inteligência Artificial Sob Demanda</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">
+                            Execução exclusiva mediante clique do administrador. Nenhuma chamada automática é feita aos
+                            visitantes do site.
+                        </p>
+
+                        <div class="ai-tool-card">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">🌐 Tradução Automática
+                                Multi-idioma (PT, EN, ES)</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Traduz o plano
+                                de aulas, horários de Sintra e descrições sem alterar o link oficial do e-inscricao.</p>
+                            <button class="ai-action-btn" id="aiTranslateBtn">✨ Traduzir Conteúdo da Formação
+                                Ativa</button>
+                            <div id="aiTranslateResult"
+                                style="margin-top: 1rem; font-size: 0.85rem; color: var(--emerald-accent);"></div>
+                        </div>
+
+                        <div class="ai-tool-card">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">💡 Sugestão Inteligente de FAQ
+                                da Formação</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Gera FAQs sobre
+                                o local na Av. Irene Lisboa em Sintra, horários das sextas/sábados e valor de €80.</p>
+                            <button class="ai-action-btn" id="aiFaqBtn">✨ Gerar Perguntas Frequentes com IA</button>
+                            <div id="aiFaqResult"
+                                style="margin-top: 1rem; font-size: 0.85rem; color: var(--emerald-accent);"></div>
+                        </div>
+
+                        <div class="ai-tool-card">
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">✍️ Assistente de Redação &
+                                Português Europeu</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Adequa as
+                                ministrações e explicações das 12 áreas de ensino para a linguagem ministerial europeia.
+                            </p>
+                            <button class="ai-action-btn" id="aiWritingBtn">✨ Otimizar Texto Institucional com
+                                IA</button>
+                            <div id="aiWritingResult"
+                                style="margin-top: 1rem; font-size: 0.85rem; color: var(--emerald-accent);"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB SEO -->
+                    <div id="tab-seo" class="admin-tab-content" style="display: none;">
+                        <h3>Otimização de SEO Inteligente com IA</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Gera
+                            recomendações de busca focadas em "Cura da alma Sintra", "Formação Remissão Portugal" e
+                            "Seminário Remir".</p>
+
+                        <button class="ai-action-btn" id="aiSeoBtn">✨ Gerar Recomendações SEO para Google</button>
+
+                        <div id="seoReportWrap" style="margin-top: 1.5rem;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#home" class="brand-logo" style="display: inline-flex;">
+                    <div class="brand-logo-img-wrap" style="width: 52px; height: 52px;">
+                        <img src="assets/logo-remissao.jpg" alt="Ministério Remissão Emblem Logo"
+                            class="brand-logo-img">
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-title">MINISTÉRIO <span class="gold-gradient-text">REMISSÃO</span></span>
+                        <span class="brand-subtitle">PORTUGAL & EUROPA</span>
+                    </div>
+                </a>
+                <p>
+                    Plataforma oficial do Ministério Remissão em Portugal e Europa. Inscrições exclusivas pelo portal
+                    oficial e-inscricao.com.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="footer-title">Navegação</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#sobre">Sobre Nós</a></li>
+                    <li><a href="#temas">Áreas de Ensino</a></li>
+                    <li><a href="#programas">Formações</a></li>
+                    <li><a href="#levar-igreja">Levar à minha Igreja</a></li>
+                    <li><a href="#contato">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-title">Links Oficiais</h4>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/ministerioremissaopt/" target="_blank"
+                            rel="noopener">Instagram Portugal (@ministerioremissaopt)</a></li>
+                    <li><a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener">Site Oficial
+                            Brasil</a></li>
+                    <li><a href="#home">Edição Sintra (€80)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-title">Informações Legais</h4>
+                <ul class="footer-links">
+                    <li><a href="#" id="privacyPolicyLink">Política de Privacidade</a></li>
+                    <li><a href="#" id="termsOfUseLink">Termos de Uso</a></li>
+                    <!-- Footer Link for Password Protected Admin Panel -->
+                    <li><a href="#admin" id="footerAdminLink" style="color: var(--gold-light); font-weight: 700;">🔐
+                            Painel Administrativo</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2026-2027 Ministério Remissão Portugal. Todos os direitos reservados. Efésios 1:7.</div>
+            <div>Desenvolvido por <a href="https://gdsdesign.site/" target="_blank" rel="noopener">GDS Design</a></div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL OVERLAYS ==================== -->
+
+    <!-- Admin Password Prompt Authentication Modal -->
+    <div class="modal-overlay" id="adminAuthModal">
+        <div class="modal-dialog admin-auth-dialog">
+            <button class="modal-close" id="closeAdminAuthModal">&times;</button>
+
+            <div class="admin-auth-icon-wrap">
+                🔐
+            </div>
+
+            <h3 class="font-serif" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.5rem;">
+                Acesso Restrito ao Painel Administrativo
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem;">
+                Digite a senha de administrador do Ministério Remissão Portugal para acessar a área de gestão.
+            </p>
+
+            <form id="adminAuthForm">
+                <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
+                    <label class="form-label" for="adminPasswordInput">Senha de Acesso</label>
+                    <input type="password" id="adminPasswordInput" class="form-control" placeholder="••••••••••••"
+                        required autocomplete="current-password">
+                </div>
+
+                <div id="adminAuthError"
+                    style="color: #EF4444; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600;">
+                    ❌ Senha incorreta. Tente novamente.
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    🔑 Entrar no Painel Administrativo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- e-inscricao Redirect / Embed Modal -->
+    <div class="modal-overlay" id="einscricaoModal">
+        <div class="modal-dialog" style="max-width: 780px;">
+            <button class="modal-close" id="closeEinscricaoModal">&times;</button>
+            <h3 class="font-serif" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.5rem;">
+                Redirecionamento Oficial e-inscricao.com
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                Você será direcionado para o ambiente 100% seguro do e-inscricao.com para concluir sua inscrição no
+                Seminário Remir.
+            </p>
+
+            <div
+                style="background: rgba(18, 15, 12, 0.94); border: 1px solid var(--border-subtle); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; margin-bottom: 1.5rem;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+                <h4 id="einscricaoModalEventTitle" style="margin-bottom: 0.3rem;">Remission to the Nations — Sintra
+                    2026/2027</h4>
+                <p id="einscricaoModalEventMeta"
+                    style="color: var(--gold-light); font-size: 0.85rem; margin-bottom: 1rem;">Sintra – Lisboa • Av.
+                    Irene Lisboa, 19 • Investimento: €80,00</p>
+
+                <a href="#" target="_blank" rel="noopener" id="directEinscricaoBtn" class="btn btn-primary btn-lg"
+                    style="width: 100%;">
+                    <span>🚀 Prosseguir para e-inscricao.com (€80)</span>
+                </a>
+            </div>
+
+            <p style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">
+                O Ministério Remissão Portugal não processa nem armazena pagamentos diretamente neste website.
+            </p>
+        </div>
+    </div>
+
+    <!-- Share Event Modal -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal-dialog">
+            <button class="modal-close" id="closeShareModal">&times;</button>
+            <h3 class="font-serif" style="font-size: 1.6rem; color: var(--gold-light); margin-bottom: 1rem;">
+                Compartilhar Evento
+            </h3>
+
+            <div id="sharePreviewCard" class="card-glass" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="grid-2" style="gap: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" id="shareWaBtn">📱 WhatsApp</button>
+                <button class="btn btn-secondary btn-sm" id="shareFbBtn">📘 Facebook</button>
+                <button class="btn btn-secondary btn-sm" id="shareTgBtn">✈️ Telegram</button>
+                <button class="btn btn-secondary btn-sm" id="shareCopyBtn">📋 Copiar Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Script File -->
+    <script src="script.js?v=14"></script>
+</body>
+
+</html>
