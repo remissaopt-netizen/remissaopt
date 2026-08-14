@@ -2947,4 +2947,97 @@ textarea.form-control { resize: vertical; min-height: 120px; }
     color: #FFF3A8;
 }
 
+/* ==========================================================================
+   MODERN HARMONIOUS SVG ICONS SYSTEM
+   ========================================================================== */
+
+.icon-svg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.2s ease, fill 0.2s ease;
+}
+
+.pillar-icon-wrapper,
+.ministrado-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(230, 184, 59, 0.14) 0%, rgba(198, 146, 20, 0.08) 100%);
+    border: 1px solid rgba(245, 208, 97, 0.35);
+    color: var(--gold-light, #F5D061);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(230, 184, 59, 0.12);
+}
+
+.card-modern-light:hover .pillar-icon-wrapper,
+.ministrado-card:hover .ministrado-icon-wrapper {
+    background: var(--gold-gradient);
+    color: #0A0806;
+    border-color: transparent;
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 8px 24px rgba(230, 184, 59, 0.4);
+}
+
+.badge-pill-item .badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light, #F5D061);
+}
+
+.location-pin-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(230, 184, 59, 0.14) 0%, rgba(198, 146, 20, 0.08) 100%);
+    border: 1px solid rgba(245, 208, 97, 0.3);
+    color: var(--gold-light, #F5D061);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.pricing-check-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.status-dot-paid { background: #10B981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
+.status-dot-pending { background: #F59E0B; box-shadow: 0 0 8px rgba(245, 158, 11, 0.6); }
+.status-dot-cancelled { background: #EF4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+.status-dot-refunded { background: #3B82F6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
+
+.btn-landing-primary .icon-svg,
+.btn-primary .icon-svg,
+.btn-submit-registration .icon-svg,
+.floating-sticky-btn .icon-svg {
+    margin-right: 0.35rem;
+}
+
+
 
