@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Seminário Remission to the Nations Portugal 2026 | Inscrições Abertas</title>
+    <meta name="title" content="Seminário Remission to the Nations Portugal 2026 | Inscrições Abertas">
+    <meta name="description"
+        content="Página Oficial de Inscrição para o Seminário Remission to the Nations em Sintra - Lisboa. 3 Módulos presenciais de Cura da Alma, Libertação Espiritual e Restauração Familiar. Reserve sua vaga através do Formulário Google.">
+    <meta name="keywords"
+        content="Seminário Remission to the Nations, Remissão Portugal, Cura da Alma, Libertação Espiritual, Sintra Lisboa, Formulário Google, Inscrições Seminário, Efésios 1:7">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Ministério Remissão Portugal">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://remissao.pt">
+    <meta property="og:title" content="Seminário Remission to the Nations Portugal 2026 | Inscrições Abertas">
+    <meta property="og:description"
+        content="Experiência presencial transformadora em Sintra - Lisboa. 3 Módulos de Cura da Alma e Libertação Espiritual. Investimento: €80. Garanta sua vaga!">
+    <meta property="og:image" content="assets/banner-seminario.webp">
+    <meta property="og:locale" content="pt_PT">
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="styles.css?v=17">
+    <!-- MDI Icons Script -->
+    <script type="module" src="assets/mdi-icons.js"></script>
+</head>
+
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar" id="announcementBar">
+        <span class="announcement-badge">INSCRIÇÕES ABERTAS</span>
+        <span>Seminário Remission to the Nations 2026 • <strong>Sintra - Lisboa</strong> (3 Módulos) • 💶 €80</span>
+        <button class="btn btn-sm btn-primary btn-registration-trigger" style="padding: 0.25rem 0.75rem; font-size: 0.75rem;">
+            Inscrever-me agora
+        </button>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="navbar" id="mainHeader">
+        <div class="nav-container">
+            <a href="#home" class="brand-logo" id="brandLogoBtn">
+                <div class="brand-logo-img-wrap">
+                    <img src="assets/logo-remissao-novo.png" alt="Ministério Remissão Emblem Logo" class="brand-logo-img">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">MINISTÉRIO <span class="cyan-gradient-text">REMISSÃO</span></span>
+                    <span class="brand-subtitle">SEMINÁRIO PORTUGAL</span>
+                </div>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li>
+                    <a href="https://remissaopt.remissao-pt.workers.dev/" class="nav-link nav-link-mainsite" target="_blank" rel="noopener">
+                        ← Voltar ao Site Principal
+                    </a>
+                </li>
+                <li><a href="#home" class="nav-link active">Início</a></li>
+                <li><a href="#seminario" class="nav-link">O Seminário</a></li>
+                <li><a href="#ministrado" class="nav-link">O que será Ministrado</a></li>
+                <li><a href="#cronograma" class="nav-link">Módulos & Datas</a></li>
+                <li><a href="#investimento" class="nav-link">Investimento</a></li>
+                <li><a href="#local" class="nav-link">Local</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <!-- Primary CTA Button -->
+                <button class="btn btn-primary btn-sm btn-registration-trigger" id="navRegisterBtn">
+                    <span>⚡ Inscrever-me</span>
+                </button>
+
+                <!-- Mobile Hamburger Menu Button -->
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN LANDING PAGE CONTAINER -->
+    <main id="appContainer">
+
+        <!-- ==================== HERO BANNER SECTION ==================== -->
+        <section class="hero-banner-section" id="home">
+            <div class="hero-banner-container">
+                <div class="hero-banner-img-wrapper">
+                    <img src="assets/banner-seminario.webp" alt="Banner Oficial Seminário Remission to the Nations 2026 - Inscrições Abertas" class="hero-banner-img" width="1024" height="512" loading="eager">
+                </div>
+            </div>
+
+            <!-- Overlaid CTA Panel Immediately Visible Below Banner -->
+            <div class="hero-cta-highlight-bar">
+                <div class="hero-cta-card-glass">
+                    <!-- Badges Grid -->
+                    <div class="info-badges-grid">
+                        <div class="badge-pill-item">
+                            <span class="badge-icon">📍</span>
+                            <span>Sintra • Lisboa</span>
+                        </div>
+                        <div class="badge-pill-item">
+                            <span class="badge-icon">📅</span>
+                            <span>Outubro 2026</span>
+                        </div>
+                        <div class="badge-pill-item">
+                            <span class="badge-icon">📚</span>
+                            <span>3 Módulos Presenciais</span>
+                        </div>
+                        <div class="badge-pill-item">
+                            <span class="badge-icon">💶</span>
+                            <span>Investimento: €80</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons Group -->
+                    <div class="hero-cta-actions">
+                        <button class="btn-landing-primary btn-registration-trigger" id="heroPrimaryCta">
+                            <span>⚡ Inscrever-me Agora</span>
+                        </button>
+                        <a href="#seminario" class="btn-landing-secondary">
+                            <span>Ver Informações do Seminário</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Tagline -->
+                    <div class="trust-badge-line">
+                        <span>🔒 Inscrição oficial e segura via <strong>Formulário Google</strong> (condições de pagamento no formulário)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== O SEMINÁRIO SECTION ==================== -->
+        <section class="section-light" id="seminario">
+            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <span class="section-tag">Propósito & Missão</span>
+                <h2 class="section-title">O que é o Remission to the Nations?</h2>
+                <p class="section-subtitle">
+                    Uma jornada de imersão espiritual concebida para restaurar vidas, curar feridas da alma e levar cada participante a experimentar a verdadeira liberdade conquistada por Jesus na cruz.
+                </p>
+            </div>
+
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div class="card-modern-light" style="margin-bottom: 2.5rem; line-height: 1.8; font-size: 1.1rem; color: #334155;">
+                    <p style="margin-bottom: 1.25rem;">
+                        O <strong>Seminário Remission to the Nations</strong> é um ministério fundamentado na Palavra de Deus (Efésios 1:7), focado no ensino bíblico profundo, na ministração direta de Cura da Alma, Libertação Espiritual e na restauração da identidade filial.
+                    </p>
+                    <p style="margin-bottom: 1.25rem;">
+                        Mesmo após a confissão de fé, muitas pessoas continuam travando batalhas contra dores emocionais, traumas do passado, rejeição e cadeias espirituais hereditárias. Nosso propósito em Portugal e na Europa é oferecer ferramentas práticas e espirituais para que você rompa definitivamente com esses cativeiros e viva a plenitude do seu chamado em Deus.
+                    </p>
+                </div>
+
+                <!-- 4 Pillars Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+                    <div class="card-modern-light" style="padding: 1.75rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.75rem;">💧</div>
+                        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #0B132B; margin-bottom: 0.5rem;">Cura da Alma</h3>
+                        <p style="font-size: 0.95rem; color: #475569; line-height: 1.5;">Restauração de traumas profundos, rejeição, amargura e libertação de feridas emocionais.</p>
+                    </div>
+
+                    <div class="card-modern-light" style="padding: 1.75rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.75rem;">👑</div>
+                        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #0B132B; margin-bottom: 0.5rem;">Libertação Espiritual</h3>
+                        <p style="font-size: 0.95rem; color: #475569; line-height: 1.5;">Quebra de legalidades diabólicas, jugos hereditários e cativeiros do espírito.</p>
+                    </div>
+
+                    <div class="card-modern-light" style="padding: 1.75rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.75rem;">🛡️</div>
+                        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #0B132B; margin-bottom: 0.5rem;">Identidade em Cristo</h3>
+                        <p style="font-size: 0.95rem; color: #475569; line-height: 1.5;">Resgate da filiação divina, fim da mentalidade de orfandade e autoridade no Espírito.</p>
+                    </div>
+
+                    <div class="card-modern-light" style="padding: 1.75rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.75rem;">🏠</div>
+                        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #0B132B; margin-bottom: 0.5rem;">Restauração Familiar</h3>
+                        <p style="font-size: 0.95rem; color: #475569; line-height: 1.5;">Cura de relacionamentos no lar, alianças conjugais e bênção para as próximas gerações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== O QUE SERÁ MINISTRADO SECTION ==================== -->
+        <section class="section-light" id="ministrado" style="background: #F1F5F9;">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag">Conteúdo Programático</span>
+                <h2 class="section-title">O que será Ministrado</h2>
+                <p class="section-subtitle">
+                    Temas fundamentais abordados com rigor bíblico, profundidade teológica e ministração prática.
+                </p>
+            </div>
+
+            <div class="ministrado-grid">
+                <!-- Card 1 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">💧</div>
+                    <h3 class="ministrado-card-title">Cura da Alma</h3>
+                    <p class="ministrado-card-desc">Processo de cicatrização de feridas interiores, memórias dolorosas, mágoas e liberação de perdão profundo.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">👑</div>
+                    <h3 class="ministrado-card-title">Libertação Espiritual</h3>
+                    <p class="ministrado-card-desc">Desmantelamento de fortalezas mentais, opressões e quebra de pactos e amarras espirituais.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">🛡️</div>
+                    <h3 class="ministrado-card-title">Identidade em Cristo</h3>
+                    <p class="ministrado-card-desc">Cura do sentimento de orfandade e rejeição, assumindo a posição de filho amado e herdeiro em Deus.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">⛓️</div>
+                    <h3 class="ministrado-card-title">Quebra de Cativeiros</h3>
+                    <p class="ministrado-card-desc">Cancelamento de sentenças de cativeiro geracional, jugos de opressão familiar e hereditariedade maligna.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">🏠</div>
+                    <h3 class="ministrado-card-title">Restauração Familiar</h3>
+                    <p class="ministrado-card-desc">Edificação dos relacionamentos conjugais, reconciliação entre pais e filhos e restauração do altar do lar.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">🔥</div>
+                    <h3 class="ministrado-card-title">Vida no Espírito</h3>
+                    <p class="ministrado-card-desc">Sensibilidade à voz do Espírito Santo, discernimento espiritual e caminhar contínuo em poder e amor.</p>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">🌳</div>
+                    <h3 class="ministrado-card-title">Maturidade Cristã</h3>
+                    <p class="ministrado-card-desc">Desenvolvimento de disciplina espiritual, firmeza na doutrina sagrada e constante crescimento na fé.</p>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="ministrado-card">
+                    <div class="ministrado-icon-wrapper">📖</div>
+                    <h3 class="ministrado-card-title">Aplicação prática da Palavra</h3>
+                    <p class="ministrado-card-desc">Princípios claros e ferramentas do dia a dia para sustentar a libertação e viver em contínua vitória.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CRONOGRAMA DOS MÓDULOS SECTION ==================== -->
+        <section class="section-light" id="cronograma">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag">Datas & Módulos</span>
+                <h2 class="section-title">Cronograma dos Módulos Presenciais</h2>
+                <p class="section-subtitle">
+                    O Seminário é composto por 3 Módulos presenciais progressivos em Sintra — Lisboa.
+                </p>
+            </div>
+
+            <div class="modules-timeline-wrapper">
+                <!-- Module 1 -->
+                <div class="module-timeline-card">
+                    <span class="module-badge-num">1º MÓDULO</span>
+                    <div class="module-dates">02 e 03 de Outubro</div>
+                    <p style="color: #64748B; font-size: 0.95rem;">Fundamentação, identificação de traumas e primeiras ministrações de libertação.</p>
+                    <div class="module-schedule-box">
+                        <div class="schedule-row">
+                            <span>Sexta-feira</span>
+                            <strong>20h00</strong>
+                        </div>
+                        <div class="schedule-row">
+                            <span>Sábado</span>
+                            <strong>09h30</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-timeline-card">
+                    <span class="module-badge-num">2º MÓDULO</span>
+                    <div class="module-dates">16 e 17 de Outubro</div>
+                    <p style="color: #64748B; font-size: 0.95rem;">Aprofundamento na quebra de legalidades, cura emocional e filiação em Cristo.</p>
+                    <div class="module-schedule-box">
+                        <div class="schedule-row">
+                            <span>Sexta-feira</span>
+                            <strong>20h00</strong>
+                        </div>
+                        <div class="schedule-row">
+                            <span>Sábado</span>
+                            <strong>09h30</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-timeline-card">
+                    <span class="module-badge-num">3º MÓDULO</span>
+                    <div class="module-dates">30 e 31 de Outubro</div>
+                    <p style="color: #64748B; font-size: 0.95rem;">Restauração familiar, consolidação da maturidade e envio em libertação contínua.</p>
+                    <div class="module-schedule-box">
+                        <div class="schedule-row">
+                            <span>Sexta-feira</span>
+                            <strong>20h00</strong>
+                        </div>
+                        <div class="schedule-row">
+                            <span>Sábado</span>
+                            <strong>09h30</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== INVESTIMENTO SECTION ==================== -->
+        <section class="section-light" id="investimento" style="background: #F1F5F9;">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag">Valor Único</span>
+                <h2 class="section-title">Investimento do Seminário</h2>
+                <p class="section-subtitle">
+                    Garantia de vaga e participação completa nos 3 módulos presenciais.
+                </p>
+            </div>
+
+            <div class="pricing-hero-container">
+                <span style="background: rgba(11, 79, 138, 0.08); color: #0B4F8A; font-weight: 700; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.85rem; text-transform: uppercase;">
+                    Inscrição Completa
+                </span>
+                
+                <div class="pricing-value">€80</div>
+                <div class="pricing-subtitle">Pagamento único para participação nos três módulos presenciais.</div>
+
+                <div class="pricing-features-grid">
+                    <div class="pricing-feature-item">
+                        <div class="pricing-check-icon">✓</div>
+                        <span>Acesso presencial aos 3 Módulos em Sintra</span>
+                    </div>
+                    <div class="pricing-feature-item">
+                        <div class="pricing-check-icon">✓</div>
+                        <span>Material didático e de apoio exclusivo</span>
+                    </div>
+                    <div class="pricing-feature-item">
+                        <div class="pricing-check-icon">✓</div>
+                        <span>Ambiente de oração e ministração individual</span>
+                    </div>
+                    <div class="pricing-feature-item">
+                        <div class="pricing-check-icon">✓</div>
+                        <span>Certificado de Conclusão do Seminário</span>
+                    </div>
+                </div>
+
+                <button class="btn-landing-primary btn-registration-trigger" style="font-size: 1.25rem; padding: 1.25rem 3rem;">
+                    <span>⚡ Inscrever-me Agora</span>
+                </button>
+                
+                <div style="margin-top: 1rem; font-size: 0.85rem; color: #64748B;">
+                    🔒 Inscrição oficial via <strong>Formulário Google</strong> (condições e formas de pagamento detalhadas no formulário)
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== LOCAL DO EVENTO SECTION ==================== -->
+        <section class="section-light" id="local">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag">Base Sintra</span>
+                <h2 class="section-title">Local do Evento</h2>
+                <p class="section-subtitle">
+                    Espaço acolhedor e estruturado em Sintra — Lisboa para receber você com excelência.
+                </p>
+            </div>
+
+            <div class="location-card-container">
+                <div class="location-address-box">
+                    <div class="location-pin-icon">📍</div>
+                    <h3 class="location-title">Ministério Remissão Portugal</h3>
+                    <div class="location-text">
+                        <strong>Av. Irene Lisboa, 19</strong><br>
+                        Armazém A — 2º Piso<br>
+                        Sintra — Lisboa, Portugal
+                    </div>
+                    <p style="font-size: 0.9rem; color: #64748B; margin-top: 0.5rem;">
+                        Fácil acesso via transportes públicos e estada com amplo estacionamento nas proximidades.
+                    </p>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1rem;">
+                    <a href="https://maps.google.com/?q=Av.+Irene+Lisboa,+19,+Sintra+Lisboa" target="_blank" rel="noopener" class="btn-maps-link">
+                        <span>📍 Ver localização no Google Maps</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PERGUNTAS FREQUENTES (FAQ) SECTION ==================== -->
+        <section class="section-light" id="faq" style="background: #F1F5F9;">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag">Tire Suas Dúvidas</span>
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-subtitle">
+                    Respostas claras sobre o funcionamento do seminário e a inscrição oficial.
+                </p>
+            </div>
+
+            <div class="faq-accordion-container">
+                <!-- Q1 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>Preciso participar dos três módulos?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Sim! O Seminário Remission to the Nations é concebido como uma jornada contínua e progressiva dividida em 3 módulos complementares. Participar de todos os módulos garante o aprendizado completo e a vivência integral das ministrações.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>Como funciona a inscrição?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Todo o processo é realizado através do <strong>Formulário do Google</strong>, proporcionando uma experiência prática, rápida e segura. Basta clicar em qualquer botão de inscrição para abrir o formulário oficial e preencher seus dados.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>Como é realizado o pagamento?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Todas as condições, modalidades e instruções de pagamento estão descritas diretamente no <strong>Formulário do Google</strong>. O investimento único para os 3 módulos presenciais é de €80.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>O processo é seguro?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Sim, 100% seguro! Suas informações são enviadas diretamente através da infraestrutura segura do Google e tratadas com total privacidade e cuidado pela organização do Ministério Remissão.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>Receberei confirmação?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Sim. Após preencher o <strong>Formulário do Google</strong> e seguir as instruções de pagamento, a nossa equipa entrará em contacto com você por e-mail ou WhatsApp com a confirmação e as orientações para o evento.
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>Posso transferir minha inscrição?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Sim! Caso ocorra algum imprevisto, você poderá transferir sua titularidade para outra pessoa mediante aviso prévio à equipe de organização antes do início do 1º Módulo.
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="faq-accordion-item">
+                    <button class="faq-accordion-header">
+                        <span>O seminário possui certificado?</span>
+                        <div class="faq-accordion-icon">+</div>
+                    </button>
+                    <div class="faq-accordion-body">
+                        Sim, todos os participantes que concluírem os três módulos presenciais receberão o Certificado oficial de Conclusão do Seminário Remission to the Nations.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CTA FINAL BANNER SECTION ==================== -->
+        <section class="cta-final-banner-section">
+            <div class="cta-final-container">
+                <span style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #FFF; font-weight: 700; padding: 0.35rem 1.25rem; border-radius: 50px; font-size: 0.85rem; text-transform: uppercase;">
+                    GARANTA SUA VAGA
+                </span>
+                
+                <h2 class="cta-final-title">Sua jornada pode começar hoje.</h2>
+                <p class="cta-final-subtitle">
+                    Garanta sua vaga e participe desta experiência presencial transformadora de Cura da Alma e Libertação em Sintra — Lisboa.
+                </p>
+
+                <button class="btn-landing-primary btn-open-registration-modal" style="font-size: 1.25rem; padding: 1.25rem 3.5rem;">
+                    <span>⚡ Quero fazer minha inscrição</span>
+                </button>
+
+                <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.75);">
+                    🔒 Inscrição oficial e segura via <strong>Formulário Google</strong> (condições de pagamento no formulário)
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAINEL ADMINISTRATIVO VIEW (#view-admin) ==================== -->
+        <div id="view-admin" class="view-page" style="display: none; padding: 3rem 1.5rem; max-width: 1320px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <span class="reg-modal-tag">ÁREA RESTRITA</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 800; color: #FFF;">Painel de Gestão de Inscrições</h2>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-outline-gold btn-sm" id="btnExportCsv">
+                        📥 Exportar Excel / CSV
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="exitAdminBtn">
+                        🚪 Sair do Painel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard KPI Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: var(--gold-light); font-weight: 700; text-transform: uppercase;">Total Inscritos</span>
+                    <h3 id="statTotalRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #FFF; margin-top: 0.25rem;">0</h3>
+                </div>
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #10B981; font-weight: 700; text-transform: uppercase;">Confirmados (Pagos)</span>
+                    <h3 id="statPaidRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #10B981; margin-top: 0.25rem;">0</h3>
+                </div>
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #F59E0B; font-weight: 700; text-transform: uppercase;">Pendentes</span>
+                    <h3 id="statPendingRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #F59E0B; margin-top: 0.25rem;">0</h3>
+                </div>
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #00CFC8; font-weight: 700; text-transform: uppercase;">Arrecadado (€)</span>
+                    <h3 id="statTotalRevenue" style="font-size: 2.2rem; font-weight: 800; color: #00CFC8; margin-top: 0.25rem;">€0</h3>
+                </div>
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #94A3B8; font-weight: 700; text-transform: uppercase;">Pendente (€)</span>
+                    <h3 id="statPendingRevenue" style="font-size: 2.2rem; font-weight: 800; color: #CBD5E1; margin-top: 0.25rem;">€0</h3>
+                </div>
+                <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #FFF3A8; font-weight: 700; text-transform: uppercase;">Conversão</span>
+                    <h3 id="statConversionRate" style="font-size: 2.2rem; font-weight: 800; color: #FFF3A8; margin-top: 0.25rem;">0%</h3>
+                </div>
+            </div>
+
+            <!-- RELATÓRIO DE CAMISETAS PARA ENCOMENDA WIDGET -->
+            <div class="shirt-report-container">
+                <div class="shirt-report-title">
+                    <span>🎁 Relatório para Encomenda de Camisetas Oficiais</span>
+                </div>
+                <div class="shirt-sizes-grid">
+                    <div class="shirt-size-badge-box">
+                        <div class="shirt-size-name">Tamanho XS</div>
+                        <div class="shirt-size-count" id="countShirtXS">0</div>
+                    </div>
+                    <div class="shirt-size-badge-box">
+                        <div class="shirt-size-name">Tamanho S</div>
+                        <div class="shirt-size-count" id="countShirtS">0</div>
+                    </div>
+                    <div class="shirt-size-badge-box">
+                        <div class="shirt-size-name">Tamanho M</div>
+                        <div class="shirt-size-count" id="countShirtM">0</div>
+                    </div>
+                    <div class="shirt-size-badge-box">
+                        <div class="shirt-size-name">Tamanho L</div>
+                        <div class="shirt-size-count" id="countShirtL">0</div>
+                    </div>
+                    <div class="shirt-size-badge-box">
+                        <div class="shirt-size-name">Tamanho XL</div>
+                        <div class="shirt-size-count" id="countShirtXL">0</div>
+                    </div>
+                    <div class="shirt-size-badge-box" style="border-color: #00CFC8; background: rgba(0, 207, 200, 0.15);">
+                        <div class="shirt-size-name" style="color: #00CFC8;">TOTAL CAMISETAS</div>
+                        <div class="shirt-size-count" id="countShirtTotal" style="color: #00CFC8;">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Controls: Search & Filters -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="adminFilterPills">
+                    <button class="btn btn-sm btn-primary filter-pill active" data-filter="all">Todos</button>
+                    <button class="btn btn-sm btn-secondary filter-pill" data-filter="paid">🟢 Pagos</button>
+                    <button class="btn btn-sm btn-secondary filter-pill" data-filter="pending">🟡 Pendentes</button>
+                    <button class="btn btn-sm btn-secondary filter-pill" data-filter="cancelled">🔴 Cancelados</button>
+                    <button class="btn btn-sm btn-secondary filter-pill" data-filter="refunded">🔵 Reembolsados</button>
+                </div>
+                <input type="text" id="adminSearchInput" placeholder="🔍 Pesquisar por Nome, Email, Cidade ou Igreja..." class="form-input" style="max-width: 380px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: #FFF;">
+            </div>
+
+            <!-- Interactive Registrations Table -->
+            <div style="overflow-x: auto; background: rgba(18, 26, 43, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem;">
+                    <thead>
+                        <tr style="background: rgba(255,255,255,0.08); color: #00CFC8; border-bottom: 1px solid rgba(255,255,255,0.15);">
+                            <th style="padding: 1rem 1.25rem;">Participante</th>
+                            <th style="padding: 1rem 1.25rem;">Contacto</th>
+                            <th style="padding: 1rem 1.25rem;">Cidade / País</th>
+                            <th style="padding: 1rem 1.25rem;">Igreja</th>
+                            <th style="padding: 1rem 1.25rem; text-align: center;">Camiseta</th>
+                            <th style="padding: 1rem 1.25rem;">Data Inscrição</th>
+                            <th style="padding: 1rem 1.25rem;">Valor</th>
+                            <th style="padding: 1rem 1.25rem;">Status</th>
+                            <th style="padding: 1rem 1.25rem; text-align: right;">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminRegistrationsTbody">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==================== NATIVE REGISTRATION FORM MODAL (#registrationModal) ==================== -->
+    <div class="registration-modal-overlay" id="registrationModal">
+        <div class="registration-modal-card">
+            <button class="registration-modal-close" id="closeRegistrationModalBtn">&times;</button>
+            
+            <div class="reg-modal-header">
+                <span class="reg-modal-tag">INSCRIÇÃO OFICIAL</span>
+                <h2 class="reg-modal-title">Seminário Remission to the Nations 2026</h2>
+                <p style="color: #64748B; font-size: 0.95rem; margin-top: 0.25rem;">
+                    Preencha os dados abaixo para garantir a sua vaga no evento presencial em Sintra — Lisboa.
+                </p>
+            </div>
+
+            <form id="nativeRegistrationForm">
+                <!-- 1. Dados Pessoais -->
+                <div class="form-section-title">
+                    <span>👤 1. Dados Pessoais</span>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Nome Completo <span class="req">*</span></label>
+                    <input type="text" id="regFullName" class="form-input" placeholder="Ex: João Pedro Silva" required>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Email <span class="req">*</span></label>
+                        <input type="email" id="regEmail" class="form-input" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telemóvel / WhatsApp <span class="req">*</span></label>
+                        <input type="tel" id="regPhone" class="form-input" placeholder="+351 912 345 678" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Data de Nascimento <span class="req">*</span></label>
+                        <input type="date" id="regBirthDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">País de Residência <span class="req">*</span></label>
+                        <input type="text" id="regCountry" class="form-input" placeholder="Ex: Portugal" value="Portugal" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Cidade <span class="req">*</span></label>
+                    <input type="text" id="regCity" class="form-input" placeholder="Ex: Sintra, Lisboa, Porto..." required>
+                </div>
+
+                <!-- 2. CAMISETA OFICIAL INCLUSA CARD SECTION -->
+                <div class="shirt-gift-card">
+                    <div class="shirt-gift-header">
+                        <span>🎁 Camiseta Oficial Inclusa no Valor da Inscrição</span>
+                    </div>
+                    <p class="shirt-gift-text">
+                        O valor da inscrição (€80) já inclui <strong>1 camiseta oficial do Remission to the Nations Portugal 2026</strong>. Para que possamos providenciar a sua camiseta com excelência, selecione abaixo o tamanho desejado. <em>Após a confirmação da inscrição, não será possível alterar o tamanho escolhido.</em>
+                    </p>
+                    
+                    <label class="form-label" style="margin-bottom: 0.75rem; display: block;">
+                        Qual o tamanho da sua camiseta? <span class="req">*</span>
+                    </label>
+
+                    <div class="shirt-size-selector">
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="XS" required>
+                            <div class="shirt-option-label">
+                                <span>XS</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra P</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="S" required>
+                            <div class="shirt-option-label">
+                                <span>S</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Pequeno (P)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="M" checked required>
+                            <div class="shirt-option-label">
+                                <span>M</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Médio (M)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="L" required>
+                            <div class="shirt-option-label">
+                                <span>L</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Grande (G)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="XL" required>
+                            <div class="shirt-option-label">
+                                <span>XL</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra G</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3. Dados da Igreja -->
+                <div class="form-section-title">
+                    <span>⛪ 2. Dados da sua Igreja</span>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Nome da sua Igreja</label>
+                        <input type="text" id="regChurch" class="form-input" placeholder="Ex: Igreja Comunidade Cristã">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nome do seu Pastor</label>
+                        <input type="text" id="regPastor" class="form-input" placeholder="Ex: Pr. Manuel Ribeiro">
+                    </div>
+                </div>
+
+                <!-- 4. Informações Adicionais -->
+                <div class="form-section-title">
+                    <span>ℹ️ 3. Informações Adicionais</span>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Como conheceu o evento?</label>
+                        <select id="regHowFound" class="form-select">
+                            <option value="Instagram / Redes Sociais">Instagram / Redes Sociais</option>
+                            <option value="Recomendação de Amigos / Família">Recomendação de Amigos / Família</option>
+                            <option value="Indicação da Igreja / Pastor">Indicação da Igreja / Pastor</option>
+                            <option value="Google / Pesquisa Web">Google / Pesquisa Web</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Já participou do Seminário Remissão?</label>
+                        <select id="regPreviousParticipant" class="form-select">
+                            <option value="Não, será minha 1ª vez">Não, será minha 1ª vez</option>
+                            <option value="Sim, no Brasil">Sim, no Brasil</option>
+                            <option value="Sim, em Portugal">Sim, em Portugal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Observações ou pedidos de oração (opcional)</label>
+                    <textarea id="regNotes" class="form-textarea" rows="2" placeholder="Escreva aqui se tiver alguma observação específica..."></textarea>
+                </div>
+
+                <!-- RGPD Checkbox -->
+                <div class="rgpd-checkbox-box">
+                    <input type="checkbox" id="regRgpdAccepted" required>
+                    <label for="regRgpdAccepted">
+                        Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para efeitos de gestão da inscrição conforme o RGPD. <span class="req">*</span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit-registration" id="btnSubmitRegistration">
+                    <span>Continuar para Pagamento (€80) →</span>
+                </button>
+            </form>
+    </div>
+    </div>
+
+    <!-- ==================== ADMIN AUTH MODAL (#adminAuthModal) ==================== -->
+    <div class="registration-modal-overlay" id="adminAuthModal">
+        <div class="registration-modal-card" style="max-width: 400px; text-align: center;">
+            <button class="registration-modal-close" id="closeAdminAuthModalBtn">&times;</button>
+            
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+            <h2 class="reg-modal-title" style="margin-top: 0.5rem; font-size: 1.5rem;">Acesso Restrito</h2>
+            
+            <p style="color: #475569; margin: 1rem 0 1.5rem 0; font-size: 0.95rem; line-height: 1.6;">
+                Por favor, insira a senha de acesso para visualizar o Painel Administrativo.
+            </p>
+
+            <form id="adminAuthForm">
+                <div class="form-group" style="margin-bottom: 1.25rem; text-align: left;">
+                    <input type="password" id="adminPassword" class="form-input" placeholder="Senha de Acesso" required>
+                </div>
+                <button type="submit" class="btn-landing-primary" style="width: 100%;">
+                    <span>Acessar Painel</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== DETAILS MODAL FOR ADMIN (#registrationDetailsModal) ==================== -->
+    <div class="registration-modal-overlay" id="registrationDetailsModal">
+        <div class="registration-modal-card" style="max-width: 680px;">
+            <button class="registration-modal-close" id="closeDetailsModalBtn">&times;</button>
+            
+            <div class="reg-modal-header" style="margin-bottom: 1.5rem;">
+                <span class="reg-modal-tag">DETALHES DA INSCRIÇÃO</span>
+                <h3 class="reg-modal-title" id="detailsNameTitle" style="font-size: 1.6rem;">—</h3>
+                <div id="detailsStatusPill" style="margin-top: 0.5rem;"></div>
+            </div>
+
+            <div id="detailsModalContent" style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONFIRMATION MODAL (#confirmationModal) ==================== -->
+    <div class="registration-modal-overlay" id="confirmationModal">
+        <div class="registration-modal-card" style="max-width: 600px; text-align: center;">
+            <button class="registration-modal-close" id="closeConfirmationModalBtn">&times;</button>
+            
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+            <span class="reg-modal-tag" style="background: #D1FAE5; color: #065F46;">INSCRIÇÃO CONFIRMADA</span>
+            <h2 class="reg-modal-title" style="margin-top: 0.5rem; font-size: 1.8rem;">Sua vaga está garantida!</h2>
+            
+            <p style="color: #475569; margin: 1rem 0 1.5rem 0; font-size: 1rem; line-height: 1.6;">
+                Parabéns! Seu pagamento foi processado com sucesso. Enviamos a confirmação da sua inscrição e os detalhes do evento para o seu e-mail.
+            </p>
+
+            <div class="card-modern-light" style="text-align: left; padding: 1.25rem; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem; background: #F8FAFC;">
+                <div>📍 <strong>Local:</strong> Av. Irene Lisboa, 19 – Armazém A (2º Piso), Sintra — Lisboa</div>
+                <div>📅 <strong>1º Módulo:</strong> 02 e 03 de Outubro (Sexta 20h | Sábado 09h30)</div>
+                <div>🎁 <strong>Camiseta Reservada:</strong> Tamanho <strong id="confirmShirtSize">—</strong></div>
+            </div>
+
+            <button class="btn-landing-primary" id="btnCloseConfirmation">
+                <span>Concluir</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== RODAPÉ (FOOTER) ==================== -->
+    <footer style="background: #061826; color: #CBD5E1; padding: 4rem 1.5rem 2rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; margin-bottom: 3rem;">
+            <!-- Brand Col -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <img src="assets/logo-remissao-novo.png" alt="Logo Remissão" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; color: #FFF; font-size: 1.2rem;">
+                        MINISTÉRIO REMISSÃO
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: #94A3B8; line-height: 1.6;">
+                    Remission to the Nations Portugal & Europa. Restaurando vidas, curando a alma e proclamando libertação em Cristo. Efésios 1:7.
+                </p>
+            </div>
+
+            <!-- Links Col -->
+            <div>
+                <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; color: #FFF; margin-bottom: 1.25rem;">Links Importantes</h4>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.95rem;">
+                    <li><a href="https://remissaopt.remissao-pt.workers.dev/" target="_blank" rel="noopener" style="color: #00CFC8; text-decoration: none;">🌐 Voltar ao Site Principal</a></li>
+                    <li><a href="https://www.instagram.com/ministerioremissaopt/" target="_blank" rel="noopener" style="color: #CBD5E1; text-decoration: none;">📸 Instagram (@ministerioremissaopt)</a></li>
+                    <li><a href="#faq" style="color: #CBD5E1; text-decoration: none;">❓ Perguntas Frequentes</a></li>
+                    <li><a href="/admin" target="_blank" rel="noopener" id="footerAdminLink" style="color: #64748B; text-decoration: none; font-size: 0.8rem;">🔒 Painel Administrativo</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Col -->
+            <div>
+                <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; color: #FFF; margin-bottom: 1.25rem;">Contacto & Informações</h4>
+                <p style="font-size: 0.95rem; margin-bottom: 0.5rem; color: #CBD5E1;">
+                    <strong>Pra. Beatriz:</strong> 962 929 371
+                </p>
+                <p style="font-size: 0.95rem; color: #CBD5E1; margin-bottom: 1rem;">
+                    <strong>Local:</strong> Av. Irene Lisboa, 19 – Armazém A (2º Piso), Sintra — Lisboa
+                </p>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center; font-size: 0.85rem; color: #64748B;">
+            © 2026 Ministério Remissão Portugal. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- STICKY FLOATING CTA BUTTON -->
+    <div class="floating-sticky-cta" id="floatingCta">
+        <button class="floating-sticky-btn btn-open-registration-modal">
+            <span>🚀 Garantir Minha Vaga</span>
+        </button>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script src="script.js?v=18"></script>
+</body>
+
+</html>

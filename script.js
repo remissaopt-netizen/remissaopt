@@ -2,7 +2,7 @@
    MINISTÉRIO REMISSÃO PORTUGAL — Core Web Application Logic
    - Multi-language (PT, EN, ES)
    - Dynamic Sintra Flyer & Next Active Event Engine
-   - e-inscricao.com External Integration & Redirection Modal
+   - Google Forms Official Integration & Redirection Modal
    - Typo-Tolerant Search Algorithm
    - Password-Protected Admin Suite (#admin) with On-Demand AI Tools
    ========================================================================== */
@@ -33,7 +33,7 @@ const initialEventsDB = [
         status: 'inscriçoes_abertas',
         totalCapacity: 150,
         enrolledCount: 118,
-        einscricaoUrl: 'https://www.e-inscricao.com/ministerioremissaopt/sintra2027',
+        einscricaoUrl: 'https://forms.gle/Wz4fqTavCH2j16tD7',
         modules: [
             { name: '1º MÓDULO', dates: '02 e 03 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
             { name: '2º MÓDULO', dates: '16 e 17 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
@@ -149,7 +149,7 @@ class RemissaoApp {
             });
         }
 
-        // e-inscricao CTA Buttons
+        // Google Forms / Registration CTA Buttons
         document.addEventListener('click', (e) => {
             if (e.target.closest('.btn-einscricao-active')) {
                 const event = this.getActiveEvent();
@@ -357,7 +357,7 @@ class RemissaoApp {
 
             <div class="grid-2" style="gap: 1rem;">
                 <button class="btn btn-primary btn-einscricao-active" style="width: 100%;">
-                    ⚡ Inscrever-me no e-inscricao (€${event.priceEUR.toFixed(2).replace('.', ',')})
+                    ⚡ Inscrever-me no Formulário Google (€${event.priceEUR.toFixed(2).replace('.', ',')})
                 </button>
                 <a href="#levar-igreja" class="btn btn-secondary" style="width: 100%;">
                     ⛪ Levar à minha Igreja
@@ -413,7 +413,7 @@ class RemissaoApp {
             },
             {
                 q: 'Como é realizado o pagamento e a inscrição?',
-                a: 'Toda a inscrição e o pagamento seguro são processados exclusivamente através da plataforma oficial e-inscricao.com. O site do Ministério não armazena dados de pagamento.'
+                a: 'Toda a inscrição é realizada através do Formulário oficial do Google, onde também estão detalhadas as condições e instruções de pagamento. O investimento para os 3 módulos presenciais é de €80.'
             },
             {
                 q: 'Quais são as datas e horários dos 3 Módulos em Sintra?',
@@ -562,7 +562,7 @@ class RemissaoApp {
     runAiTranslation() {
         const resultEl = document.getElementById('aiTranslateResult');
         if (resultEl) {
-            resultEl.innerHTML = `✨ <strong>Tradução Concluída:</strong> Módulos e horários traduzidos para Inglês (EN) e Espanhol (ES). Link oficial do e-inscricao mantido seguro.`;
+            resultEl.innerHTML = `✨ <strong>Tradução Concluída:</strong> Módulos e horários traduzidos para Inglês (EN) e Espanhol (ES). Link oficial do formulário mantido seguro.`;
             this.showToast('AI Tool: Conteúdo traduzido com sucesso!');
         }
     }
