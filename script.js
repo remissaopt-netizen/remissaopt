@@ -151,9 +151,25 @@ class RemissaoApp {
 
         // Google Forms / Registration CTA Buttons
         document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-registration-trigger, .btn-open-registration-modal, #heroPrimaryCta, .floating-sticky-btn')) {
+                e.preventDefault();
+                window.open('https://forms.gle/Wz4fqTavCH2j16tD7', '_blank', 'noopener,noreferrer');
+            }
             if (e.target.closest('.btn-einscricao-active')) {
                 const event = this.getActiveEvent();
                 this.openEinscricaoModal(event);
+            }
+            const accordionHeader = e.target.closest('.faq-accordion-header');
+            if (accordionHeader) {
+                e.preventDefault();
+                const item = accordionHeader.closest('.faq-accordion-item');
+                if (item) {
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-accordion-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                }
             }
         });
 
