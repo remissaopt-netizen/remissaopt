@@ -1,0 +1,638 @@
+﻿/* ==========================================================================
+   MINIST├ëRIO REMISS├âO PORTUGAL ÔÇö Core Web Application Logic & Native Registration
+   - Supabase Database Integration (trvssakxtqvwngisqzed.supabase.co)
+   - Native Registration System with Mandatory Shirt Size Selection (XS, S, M, L, XL)
+   - Stripe Checkout API & Webhook Integration
+   - Advanced Admin Panel with KPIs, Shirt Order Report & CSV Export
+   ========================================================================== */
+
+const APP_CONFIG = {
+    DEFAULT_LANG: 'pt',
+    ADMIN_PASS_HASH: 'remissao2027',
+    GOOGLE_FORM_URL: 'https://forms.gle/Wz4fqTavCH2j16tD7', // URL oficial do Formul├írio Google de Inscri├º├Áes
+    SUPABASE: {
+        URL: 'https://trvssakxtqvwngisqzed.supabase.co',
+        ANON_KEY: 'sb_publishable_vIh5SHaxCHas0Q0OLNh3cw_tI3sWGvK'
+    },
+    STORAGE_KEYS: {
+        LANG: 'remissao_pt_lang',
+        AUTH: 'remissao_pt_admin_session'
+    }
+};
+
+// Initialize Supabase JS Client if available
+let supabaseClient = null;
+if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(APP_CONFIG.SUPABASE.URL, APP_CONFIG.SUPABASE.ANON_KEY);
+}
+
+class RemissaoApp {
+    constructor() {
+        this.state = {
+            currentLang: localStorage.getItem(APP_CONFIG.STORAGE_KEYS.LANG) || APP_CONFIG.DEFAULT_LANG,
+            isAdminAuthenticated: sessionStorage.getItem(APP_CONFIG.STORAGE_KEYS.AUTH) === 'true',
+            registrations: [],
+            activeFilter: 'all',
+            searchQuery: ''
+        };
+
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.checkUrlParams();
+        this.handleHashChange();
+    }
+
+    bindEvents() {
+        // Hash Routing
+        window.addEventListener('hashchange', () => this.handleHashChange());
+
+        // Mobile Hamburger Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => {
+                const isActive = menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', isActive);
+            });
+
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        // Click Event Delegation
+        document.addEventListener('click', (e) => {
+            // Open Native Registration Form Modal / Google Forms
+            if (e.target.closest('.btn-open-registration-modal, .btn-registration-trigger, #heroPrimaryCta, #navRegisterBtn')) {
+                e.preventDefault();
+                this.openRegistrationModal();
+            }
+
+            // FAQ Accordion Headers
+            const accordionHeader = e.target.closest('.faq-accordion-header');
+            if (accordionHeader) {
+                e.preventDefault();
+                const item = accordionHeader.closest('.faq-accordion-item');
+                if (item) {
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-accordion-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                }
+            }
+
+            // Admin Filter Pills
+            const filterPill = e.target.closest('#adminFilterPills .filter-pill');
+            if (filterPill) {
+                e.preventDefault();
+                document.querySelectorAll('#adminFilterPills .filter-pill').forEach(btn => {
+                    btn.classList.remove('active', 'btn-primary');
+                    btn.classList.add('btn-secondary');
+                });
+                filterPill.classList.add('active', 'btn-primary');
+                filterPill.classList.remove('btn-secondary');
+                this.state.activeFilter = filterPill.dataset.filter;
+                this.renderRegistrationsTable();
+            }
+        });
+
+        // Close Modals
+        document.getElementById('closeRegistrationModalBtn')?.addEventListener('click', () => this.closeModal('registrationModal'));
+        document.getElementById('closeConfirmationModalBtn')?.addEventListener('click', () => this.closeModal('confirmationModal'));
+        document.getElementById('btnCloseConfirmation')?.addEventListener('click', () => this.closeModal('confirmationModal'));
+        document.getElementById('closeDetailsModalBtn')?.addEventListener('click', () => this.closeModal('registrationDetailsModal'));
+
+        // Close Modal when clicking outside card
+        document.querySelectorAll('.registration-modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) this.closeModal(modal.id);
+            });
+        });
+
+        // Form Submission -> Server API /register
+        const nativeForm = document.getElementById('nativeRegistrationForm');
+        if (nativeForm) {
+            nativeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleNativeRegistrationSubmit();
+            });
+        }
+
+        // Admin Search Input
+        const searchInput = document.getElementById('adminSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.state.searchQuery = e.target.value.trim().toLowerCase();
+                this.renderRegistrationsTable();
+            });
+        }
+
+        // Admin Export CSV
+        document.getElementById('btnExportCsv')?.addEventListener('click', () => this.exportRegistrationsCsv());
+
+        // Admin Footer Access Link
+        document.getElementById('footerAdminLink')?.addEventListener('click', (e) => {
+            const href = e.currentTarget.getAttribute('href');
+            if (href === '#' || href === '#admin') {
+                e.preventDefault();
+                if (this.state.isAdminAuthenticated) {
+                    window.location.hash = '#admin';
+                } else {
+                    this.openAdminAuthModal();
+                }
+            }
+        });
+
+        // Admin Exit
+        document.getElementById('exitAdminBtn')?.addEventListener('click', () => {
+            this.state.isAdminAuthenticated = false;
+            sessionStorage.removeItem(APP_CONFIG.STORAGE_KEYS.AUTH);
+            this.showToast('Sess├úo encerrada com seguran├ºa');
+            if (window.location.pathname.includes('/admin')) {
+                window.location.href = '/';
+            } else {
+                window.location.hash = '#home';
+            }
+        });
+
+        // Admin Auth Modal Submit
+        document.getElementById('adminAuthForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            if (password === APP_CONFIG.ADMIN_PASS_HASH) {
+                this.state.isAdminAuthenticated = true;
+                sessionStorage.setItem(APP_CONFIG.STORAGE_KEYS.AUTH, 'true');
+                document.getElementById('adminAuthModal').classList.remove('active');
+                document.getElementById('adminPassword').value = '';
+                window.location.hash = '#admin';
+                this.showToast('Autentica├º├úo realizada com sucesso!');
+            } else {
+                alert('Senha incorreta. Tente novamente.');
+            }
+        });
+
+        // Close Admin Auth Modal
+        document.getElementById('closeAdminAuthModalBtn')?.addEventListener('click', () => {
+            document.getElementById('adminAuthModal').classList.remove('active');
+        });
+    }
+
+    openRegistrationModal() {
+        if (APP_CONFIG.GOOGLE_FORM_URL) {
+            window.open(APP_CONFIG.GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
+            return;
+        }
+        const modal = document.getElementById('registrationModal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    async handleNativeRegistrationSubmit() {
+        const submitBtn = document.getElementById('btnSubmitRegistration');
+        const originalText = submitBtn.innerHTML;
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>ÔÅ│ Processando inscri├º├úo...</span>';
+
+            const fullName = document.getElementById('regFullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const birthDate = document.getElementById('regBirthDate').value;
+            const country = document.getElementById('regCountry').value.trim();
+            const city = document.getElementById('regCity').value.trim();
+
+            const selectedShirt = document.querySelector('input[name="shirt_size"]:checked');
+            const shirtSize = selectedShirt ? selectedShirt.value : '';
+
+            const church = document.getElementById('regChurch').value.trim();
+            const pastor = document.getElementById('regPastor').value.trim();
+            const howFound = document.getElementById('regHowFound').value;
+            const previousParticipant = document.getElementById('regPreviousParticipant').value;
+            const notes = document.getElementById('regNotes').value.trim();
+            const rgpdAccepted = document.getElementById('regRgpdAccepted').checked;
+
+            if (!fullName || !email || !phone || !birthDate || !country || !city || !shirtSize) {
+                alert('Por favor, preencha todos os campos obrigat├│rios (*), incluindo o tamanho da camiseta.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+
+            if (!rgpdAccepted) {
+                alert('Por favor, confirme a autoriza├º├úo de tratamento de dados conforme o RGPD.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+
+            const payload = {
+                full_name: fullName,
+                email,
+                phone,
+                birth_date: birthDate,
+                country,
+                city,
+                shirt_size: shirtSize,
+                church,
+                pastor,
+                how_found: howFound,
+                previous_participant: previousParticipant,
+                notes,
+                rgpd_accepted: rgpdAccepted
+            };
+
+            // Call Backend API /api/register
+            let response;
+            try {
+                response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.warn('Backend server not reachable directly, attempting Supabase direct fallback:', err);
+            }
+
+            if (response && response.ok) {
+                const data = await response.json();
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                    return;
+                }
+            }
+
+            // Direct Supabase JS Client Fallback if server endpoint is standalone
+            if (supabaseClient) {
+                const { data: reg, error: supErr } = await supabaseClient
+                    .from('registrations')
+                    .insert([{
+                        full_name: fullName,
+                        email,
+                        phone,
+                        birth_date: birthDate,
+                        country,
+                        city,
+                        shirt_size: shirtSize,
+                        church,
+                        pastor,
+                        how_found: howFound,
+                        previous_participant: previousParticipant,
+                        notes,
+                        event_name: 'Remission to the Nations Portugal 2026',
+                        event_price: 80.00,
+                        payment_status: 'pending',
+                        currency: 'EUR'
+                    }])
+                    .select()
+                    .single();
+
+                if (supErr) throw supErr;
+
+                this.closeModal('registrationModal');
+                
+                // Show confirmation modal with checkout simulation
+                const confirmShirt = document.getElementById('confirmShirtSize');
+                if (confirmShirt) confirmShirt.textContent = shirtSize;
+                
+                const confirmModal = document.getElementById('confirmationModal');
+                if (confirmModal) confirmModal.classList.add('active');
+
+                // Mark simulated pay for local test
+                fetch('/api/simulated-pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ registration_id: reg.id })
+                }).catch(() => {});
+            } else {
+                alert('Inscri├º├úo salva com sucesso! Entraremos em contacto para o pagamento.');
+            }
+
+        } catch (err) {
+            console.error('Registration Error:', err);
+            alert('Erro ao enviar inscri├º├úo: ' + (err.message || 'Tente novamente.'));
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    }
+
+    async checkUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const regId = params.get('registration_id');
+
+        if (status === 'success' || params.has('session_id')) {
+            const confirmModal = document.getElementById('confirmationModal');
+            if (confirmModal) confirmModal.classList.add('active');
+
+            if (regId) {
+                fetch('/api/simulated-pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ registration_id: regId })
+                }).catch(() => {});
+            }
+        }
+    }
+
+    handleHashChange() {
+        const hash = window.location.hash || '#home';
+        const isAdminPage = window.location.pathname.includes('/admin') || hash === '#admin';
+
+        if (isAdminPage) {
+            if (!this.state.isAdminAuthenticated) {
+                this.openAdminAuthModal();
+                return;
+            }
+            this.showView('view-admin');
+            this.fetchAndRenderAdminData();
+            return;
+        }
+
+        this.showView('view-home');
+        const targetSection = document.querySelector(hash);
+        if (targetSection && hash !== '#home') {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    showView(viewId) {
+        document.querySelectorAll('.view-page').forEach(page => {
+            page.style.display = page.id === viewId ? 'block' : 'none';
+        });
+    }
+
+    openAdminAuthModal() {
+        const modal = document.getElementById('adminAuthModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    async fetchAndRenderAdminData() {
+        try {
+            let data = [];
+            
+            // Try fetching from /api/registrations
+            try {
+                const res = await fetch('/api/registrations');
+                if (res.ok) {
+                    const json = await res.json();
+                    data = json.data || [];
+                }
+            } catch (e) {
+                console.warn('API endpoint failed, querying Supabase directly:', e);
+            }
+
+            if ((!data || data.length === 0) && supabaseClient) {
+                const { data: supData, error } = await supabaseClient
+                    .from('registrations')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (!error && supData) data = supData;
+            }
+
+            this.state.registrations = data;
+            this.renderAdminKPIs();
+            this.renderShirtReport();
+            this.renderRegistrationsTable();
+        } catch (err) {
+            console.error('Error fetching admin data:', err);
+        }
+    }
+
+    renderAdminKPIs() {
+        const regs = this.state.registrations;
+        const total = regs.length;
+        const paid = regs.filter(r => r.payment_status === 'paid');
+        const pending = regs.filter(r => r.payment_status === 'pending');
+
+        const totalRevenue = paid.reduce((acc, r) => acc + (parseFloat(r.amount_paid || r.event_price || 80)), 0);
+        const pendingRevenue = pending.reduce((acc, r) => acc + (parseFloat(r.event_price || 80)), 0);
+        const conversionRate = total > 0 ? Math.round((paid.length / total) * 100) : 0;
+
+        document.getElementById('statTotalRegistrations').textContent = total;
+        document.getElementById('statPaidRegistrations').textContent = paid.length;
+        document.getElementById('statPendingRegistrations').textContent = pending.length;
+        document.getElementById('statTotalRevenue').textContent = `Ôé¼${totalRevenue.toFixed(2)}`;
+        document.getElementById('statPendingRevenue').textContent = `Ôé¼${pendingRevenue.toFixed(2)}`;
+        document.getElementById('statConversionRate').textContent = `${conversionRate}%`;
+    }
+
+    renderShirtReport() {
+        const regs = this.state.registrations;
+        
+        const shirtCounts = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
+        let totalShirts = 0;
+
+        regs.forEach(r => {
+            const size = (r.shirt_size || 'M').toUpperCase();
+            if (shirtCounts.hasOwnProperty(size)) {
+                shirtCounts[size]++;
+                totalShirts++;
+            }
+        });
+
+        document.getElementById('countShirtXS').textContent = shirtCounts.XS;
+        document.getElementById('countShirtS').textContent = shirtCounts.S;
+        document.getElementById('countShirtM').textContent = shirtCounts.M;
+        document.getElementById('countShirtL').textContent = shirtCounts.L;
+        document.getElementById('countShirtXL').textContent = shirtCounts.XL;
+        document.getElementById('countShirtTotal').textContent = totalShirts;
+    }
+
+    renderRegistrationsTable() {
+        const tbody = document.getElementById('adminRegistrationsTbody');
+        if (!tbody) return;
+
+        let filtered = this.state.registrations;
+
+        // Apply Status Filter
+        if (this.state.activeFilter !== 'all') {
+            filtered = filtered.filter(r => r.payment_status === this.state.activeFilter);
+        }
+
+        // Apply Search Filter
+        if (this.state.searchQuery) {
+            const q = this.state.searchQuery;
+            filtered = filtered.filter(r =>
+                (r.full_name && r.full_name.toLowerCase().includes(q)) ||
+                (r.email && r.email.toLowerCase().includes(q)) ||
+                (r.city && r.city.toLowerCase().includes(q)) ||
+                (r.church && r.church.toLowerCase().includes(q))
+            );
+        }
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" style="text-align: center; padding: 2.5rem; color: #94A3B8;">
+                        Nenhuma inscri├º├úo encontrada para os filtros selecionados.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(r => {
+            const dateStr = new Date(r.created_at).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            let statusBadge = '<span class="status-pill status-pending">­ƒƒí Pendente</span>';
+            if (r.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">­ƒƒó Pago</span>';
+            if (r.payment_status === 'cancelled' || r.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">­ƒö┤ Cancelado</span>';
+            if (r.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">­ƒöÁ Reembolsado</span>';
+
+            return `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0;">
+                    <td style="padding: 1rem 1.25rem;">
+                        <strong>${r.full_name}</strong>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">
+                        <div>${r.email}</div>
+                        <div style="font-size: 0.8rem; color: #94A3B8;">${r.phone}</div>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">${r.city}, ${r.country}</td>
+                    <td style="padding: 1rem 1.25rem;">${r.church || 'ÔÇö'}</td>
+                    <td style="padding: 1rem 1.25rem; text-align: center;">
+                        <span style="background: rgba(0,207,200,0.2); color: #00CFC8; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem;">
+                            ${r.shirt_size || 'M'}
+                        </span>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">${dateStr}</td>
+                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">Ôé¼${parseFloat(r.event_price || 80).toFixed(2)}</td>
+                    <td style="padding: 1rem 1.25rem;">${statusBadge}</td>
+                    <td style="padding: 1rem 1.25rem; text-align: right;">
+                        <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">
+                            ­ƒöì Detalhes
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Bind Detail Buttons
+        tbody.querySelectorAll('.btn-view-details').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.dataset.id;
+                const reg = this.state.registrations.find(item => item.id === id);
+                if (reg) this.openRegistrationDetailsModal(reg);
+            });
+        });
+    }
+
+    openRegistrationDetailsModal(reg) {
+        const title = document.getElementById('detailsNameTitle');
+        const pill = document.getElementById('detailsStatusPill');
+        const content = document.getElementById('detailsModalContent');
+
+        if (title) title.textContent = reg.full_name;
+
+        let statusBadge = '<span class="status-pill status-pending">­ƒƒí Pendente</span>';
+        if (reg.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">­ƒƒó Pago</span>';
+        if (reg.payment_status === 'cancelled' || reg.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">­ƒö┤ Cancelado</span>';
+
+        if (pill) pill.innerHTML = statusBadge;
+
+        if (content) {
+            content.innerHTML = `
+                <div><strong>Email:</strong> ${reg.email}</div>
+                <div><strong>Telem├│vel:</strong> ${reg.phone}</div>
+                <div><strong>Data de Nascimento:</strong> ${reg.birth_date}</div>
+                <div><strong>Localiza├º├úo:</strong> ${reg.city}, ${reg.country}</div>
+                <div><strong>Tamanho da Camiseta:</strong> <span style="color: #0B4F8A; font-weight: 800; font-size: 1.1rem;">${reg.shirt_size || 'M'}</span></div>
+                <div><strong>Igreja / Pastor:</strong> ${reg.church || 'ÔÇö'} (Pr. ${reg.pastor || 'ÔÇö'})</div>
+                <div><strong>Como Conheceu:</strong> ${reg.how_found || 'ÔÇö'}</div>
+                <div><strong>J├í Participou:</strong> ${reg.previous_participant || 'ÔÇö'}</div>
+                <div><strong>Observa├º├Áes:</strong> ${reg.notes || 'Nenhuma'}</div>
+                <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0.5rem 0;">
+                <div><strong>ID Stripe Session:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.stripe_session_id || 'ÔÇö'}</code></div>
+                <div><strong>Payment Intent:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.stripe_payment_intent || 'ÔÇö'}</code></div>
+                <div><strong>Data da Inscri├º├úo:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
+            `;
+        }
+
+        const modal = document.getElementById('registrationDetailsModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    exportRegistrationsCsv() {
+        const regs = this.state.registrations;
+        if (!regs || regs.length === 0) {
+            alert('Nenhuma inscri├º├úo dispon├¡vel para exportar.');
+            return;
+        }
+
+        const headers = ['ID', 'Nome Completo', 'Email', 'Telem├│vel', 'Data Nascimento', 'Pa├¡s', 'Cidade', 'Tamanho Camiseta', 'Igreja', 'Pastor', 'Como Conheceu', 'J├í Participou', 'Observa├º├Áes', 'Status Pagamento', 'Valor (Ôé¼)', 'Stripe Session ID', 'Data Inscri├º├úo'];
+        
+        const rows = regs.map(r => [
+            `"${r.id}"`,
+            `"${r.full_name || ''}"`,
+            `"${r.email || ''}"`,
+            `"${r.phone || ''}"`,
+            `"${r.birth_date || ''}"`,
+            `"${r.country || ''}"`,
+            `"${r.city || ''}"`,
+            `"${r.shirt_size || 'M'}"`,
+            `"${r.church || ''}"`,
+            `"${r.pastor || ''}"`,
+            `"${r.how_found || ''}"`,
+            `"${r.previous_participant || ''}"`,
+            `"${(r.notes || '').replace(/"/g, '""')}"`,
+            `"${r.payment_status || 'pending'}"`,
+            `"${r.event_price || 80}"`,
+            `"${r.stripe_session_id || ''}"`,
+            `"${new Date(r.created_at).toLocaleString('pt-PT')}"`
+        ]);
+
+        const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `inscricoes_remissao_portugal_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    showToast(message) {
+        let toast = document.getElementById('globalToastNotification');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'globalToastNotification';
+            toast.style.cssText = 'position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #0B4F8A; color: #FFF; padding: 0.75rem 1.5rem; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 100000; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; border: 1px solid #00CFC8;';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        toast.style.visibility = 'visible';
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.visibility = 'hidden';
+        }, 3000);
+    }
+}
+
+// Initialize Application when DOM is Ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.app = new RemissaoApp();
+});
