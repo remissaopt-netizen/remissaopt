@@ -142,14 +142,14 @@ class RemissaoApp {
 
         // Admin Footer Access Link
         document.getElementById('footerAdminLink')?.addEventListener('click', (e) => {
-            const href = e.currentTarget.getAttribute('href');
-            if (href === '#' || href === '#admin') {
-                e.preventDefault();
-                if (this.state.isAdminAuthenticated) {
-                    window.location.hash = '#admin';
-                } else {
-                    this.openAdminAuthModal();
-                }
+            e.preventDefault();
+            if (this.state.isAdminAuthenticated) {
+                window.location.hash = '#admin';
+                this.showView('view-admin');
+                this.fetchAndRenderAdminData();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                this.openAdminAuthModal();
             }
         });
 
@@ -157,25 +157,26 @@ class RemissaoApp {
         document.getElementById('exitAdminBtn')?.addEventListener('click', () => {
             this.state.isAdminAuthenticated = false;
             sessionStorage.removeItem(APP_CONFIG.STORAGE_KEYS.AUTH);
-            this.showToast('Sess├úo encerrada com seguran├ºa');
-            if (window.location.pathname.includes('/admin')) {
-                window.location.href = '/';
-            } else {
-                window.location.hash = '#home';
-            }
+            this.showToast('Sessão encerrada com segurança');
+            window.location.hash = '#home';
+            this.showView('view-home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Admin Auth Modal Submit
         document.getElementById('adminAuthForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
-            const password = document.getElementById('adminPassword').value;
+            const password = document.getElementById('adminPassword').value.trim();
             if (password === APP_CONFIG.ADMIN_PASS_HASH) {
                 this.state.isAdminAuthenticated = true;
                 sessionStorage.setItem(APP_CONFIG.STORAGE_KEYS.AUTH, 'true');
                 document.getElementById('adminAuthModal').classList.remove('active');
                 document.getElementById('adminPassword').value = '';
                 window.location.hash = '#admin';
-                this.showToast('Autentica├º├úo realizada com sucesso!');
+                this.showView('view-admin');
+                this.fetchAndRenderAdminData();
+                this.showToast('Autenticação realizada com sucesso!');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 alert('Senha incorreta. Tente novamente.');
             }
@@ -349,7 +350,7 @@ class RemissaoApp {
 
     handleHashChange() {
         const hash = window.location.hash || '#home';
-        const isAdminPage = window.location.pathname.includes('/admin') || hash === '#admin';
+        const isAdminPage = hash === '#admin' || window.location.pathname.includes('/admin');
 
         if (isAdminPage) {
             if (!this.state.isAdminAuthenticated) {
@@ -358,13 +359,16 @@ class RemissaoApp {
             }
             this.showView('view-admin');
             this.fetchAndRenderAdminData();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
 
         this.showView('view-home');
-        const targetSection = document.querySelector(hash);
-        if (targetSection && hash !== '#home') {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
+        if (hash !== '#home' && hash !== '') {
+            const targetSection = document.querySelector(hash);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     }
 
@@ -376,31 +380,40 @@ class RemissaoApp {
 
     openAdminAuthModal() {
         const modal = document.getElementById('adminAuthModal');
-        if (modal) modal.classList.add('active');
+        if (modal) {
+            modal.classList.add('active');
+            setTimeout(() => {
+                document.getElementById('adminPassword')?.focus();
+            }, 100);
+        }
     }
 
     async fetchAndRenderAdminData() {
+        const tbody = document.getElementById('adminRegistrationsTbody');
+        if (tbody && (!this.state.registrations || this.state.registrations.length === 0)) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" style="text-align: center; padding: 2.5rem; color: #00CFC8;">
+                        Carregando inscrições do banco de dados...
+                    </td>
+                </tr>
+            `;
+        }
+
         try {
             let data = [];
             
-            // Try fetching from /api/registrations
-            try {
-                const res = await fetch('/api/registrations');
-                if (res.ok) {
-                    const json = await res.json();
-                    data = json.data || [];
-                }
-            } catch (e) {
-                console.warn('API endpoint failed, querying Supabase directly:', e);
-            }
-
-            if ((!data || data.length === 0) && supabaseClient) {
+            if (supabaseClient) {
                 const { data: supData, error } = await supabaseClient
                     .from('registrations')
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                if (!error && supData) data = supData;
+                if (error) {
+                    console.error('Supabase query error:', error);
+                } else if (supData) {
+                    data = supData;
+                }
             }
 
             this.state.registrations = data;
@@ -425,8 +438,8 @@ class RemissaoApp {
         document.getElementById('statTotalRegistrations').textContent = total;
         document.getElementById('statPaidRegistrations').textContent = paid.length;
         document.getElementById('statPendingRegistrations').textContent = pending.length;
-        document.getElementById('statTotalRevenue').textContent = `Ôé¼${totalRevenue.toFixed(2)}`;
-        document.getElementById('statPendingRevenue').textContent = `Ôé¼${pendingRevenue.toFixed(2)}`;
+        document.getElementById('statTotalRevenue').textContent = `€${totalRevenue.toFixed(2)}`;
+        document.getElementById('statPendingRevenue').textContent = `€${pendingRevenue.toFixed(2)}`;
         document.getElementById('statConversionRate').textContent = `${conversionRate}%`;
     }
 
@@ -478,7 +491,7 @@ class RemissaoApp {
             tbody.innerHTML = `
                 <tr>
                     <td colspan="9" style="text-align: center; padding: 2.5rem; color: #94A3B8;">
-                        Nenhuma inscri├º├úo encontrada para os filtros selecionados.
+                        Nenhuma inscrição encontrada para os filtros selecionados.
                     </td>
                 </tr>
             `;
@@ -487,10 +500,10 @@ class RemissaoApp {
 
         tbody.innerHTML = filtered.map(r => {
             const dateStr = new Date(r.created_at).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            let statusBadge = '<span class="status-pill status-pending">­ƒƒí Pendente</span>';
-            if (r.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">­ƒƒó Pago</span>';
-            if (r.payment_status === 'cancelled' || r.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">­ƒö┤ Cancelado</span>';
-            if (r.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">­ƒöÁ Reembolsado</span>';
+            let statusBadge = '<span class="status-pill status-pending">⏳ Pendente</span>';
+            if (r.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">✅ Pago</span>';
+            if (r.payment_status === 'cancelled' || r.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">❌ Cancelado</span>';
+            if (r.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">🔄 Reembolsado</span>';
 
             return `
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0;">
@@ -502,18 +515,18 @@ class RemissaoApp {
                         <div style="font-size: 0.8rem; color: #94A3B8;">${r.phone}</div>
                     </td>
                     <td style="padding: 1rem 1.25rem;">${r.city}, ${r.country}</td>
-                    <td style="padding: 1rem 1.25rem;">${r.church || 'ÔÇö'}</td>
+                    <td style="padding: 1rem 1.25rem;">${r.church || '—'}</td>
                     <td style="padding: 1rem 1.25rem; text-align: center;">
                         <span style="background: rgba(0,207,200,0.2); color: #00CFC8; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem;">
                             ${r.shirt_size || 'M'}
                         </span>
                     </td>
                     <td style="padding: 1rem 1.25rem;">${dateStr}</td>
-                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">Ôé¼${parseFloat(r.event_price || 80).toFixed(2)}</td>
+                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">€${parseFloat(r.event_price || 80).toFixed(2)}</td>
                     <td style="padding: 1rem 1.25rem;">${statusBadge}</td>
                     <td style="padding: 1rem 1.25rem; text-align: right;">
                         <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">
-                            ­ƒöì Detalhes
+                            🔍 Detalhes
                         </button>
                     </td>
                 </tr>
@@ -537,27 +550,26 @@ class RemissaoApp {
 
         if (title) title.textContent = reg.full_name;
 
-        let statusBadge = '<span class="status-pill status-pending">­ƒƒí Pendente</span>';
-        if (reg.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">­ƒƒó Pago</span>';
-        if (reg.payment_status === 'cancelled' || reg.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">­ƒö┤ Cancelado</span>';
+        let statusBadge = '<span class="status-pill status-pending">⏳ Pendente</span>';
+        if (reg.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">✅ Pago</span>';
+        if (reg.payment_status === 'cancelled' || reg.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">❌ Cancelado</span>';
 
         if (pill) pill.innerHTML = statusBadge;
 
         if (content) {
             content.innerHTML = `
                 <div><strong>Email:</strong> ${reg.email}</div>
-                <div><strong>Telem├│vel:</strong> ${reg.phone}</div>
+                <div><strong>Telemóvel:</strong> ${reg.phone}</div>
                 <div><strong>Data de Nascimento:</strong> ${reg.birth_date}</div>
-                <div><strong>Localiza├º├úo:</strong> ${reg.city}, ${reg.country}</div>
+                <div><strong>Localização:</strong> ${reg.city}, ${reg.country}</div>
                 <div><strong>Tamanho da Camiseta:</strong> <span style="color: #0B4F8A; font-weight: 800; font-size: 1.1rem;">${reg.shirt_size || 'M'}</span></div>
-                <div><strong>Igreja / Pastor:</strong> ${reg.church || 'ÔÇö'} (Pr. ${reg.pastor || 'ÔÇö'})</div>
-                <div><strong>Como Conheceu:</strong> ${reg.how_found || 'ÔÇö'}</div>
-                <div><strong>J├í Participou:</strong> ${reg.previous_participant || 'ÔÇö'}</div>
-                <div><strong>Observa├º├Áes:</strong> ${reg.notes || 'Nenhuma'}</div>
+                <div><strong>Igreja / Pastor:</strong> ${reg.church || '—'} (Pr. ${reg.pastor || '—'})</div>
+                <div><strong>Como Conheceu:</strong> ${reg.how_found || '—'}</div>
+                <div><strong>Já Participou:</strong> ${reg.previous_participant || '—'}</div>
+                <div><strong>Observações:</strong> ${reg.notes || 'Nenhuma'}</div>
                 <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0.5rem 0;">
-                <div><strong>ID Stripe Session:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.stripe_session_id || 'ÔÇö'}</code></div>
-                <div><strong>Payment Intent:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.stripe_payment_intent || 'ÔÇö'}</code></div>
-                <div><strong>Data da Inscri├º├úo:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
+                <div><strong>ID Inscrição:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.id || '—'}</code></div>
+                <div><strong>Data da Inscrição:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
             `;
         }
 
