@@ -2,7 +2,7 @@
    MINISTÉRIO REMISSÃO PORTUGAL — Core Web Application Logic
    - Multi-language (PT, EN, ES)
    - Dynamic Sintra Flyer & Next Active Event Engine
-   - Google Forms Official Integration & Redirection Modal
+   - Online Registration & Stripe Checkout Integration
    - Typo-Tolerant Search Algorithm
    - Password-Protected Admin Suite (#admin) with On-Demand AI Tools
    ========================================================================== */
@@ -149,7 +149,7 @@ class RemissaoApp {
             });
         }
 
-        // Google Forms / Registration CTA Buttons
+        // Registration CTA Buttons
         document.addEventListener('click', (e) => {
             if (e.target.closest('.btn-registration-trigger, .btn-open-registration-modal, #heroPrimaryCta, .floating-sticky-btn')) {
                 e.preventDefault();
@@ -373,7 +373,7 @@ class RemissaoApp {
 
             <div class="grid-2" style="gap: 1rem;">
                 <button class="btn btn-primary btn-einscricao-active" style="width: 100%;">
-                    ⚡ Inscrever-me no Formulário Google (€${event.priceEUR.toFixed(2).replace('.', ',')})
+                    ⚡ Garantir Minha Vaga (€${event.priceEUR.toFixed(2).replace('.', ',')})
                 </button>
                 <a href="#levar-igreja" class="btn btn-secondary" style="width: 100%;">
                     ⛪ Levar à minha Igreja
@@ -429,7 +429,7 @@ class RemissaoApp {
             },
             {
                 q: 'Como é realizado o pagamento e a inscrição?',
-                a: 'Toda a inscrição é realizada através do Formulário oficial do Google, onde também estão detalhadas as condições e instruções de pagamento. O investimento para os 3 módulos presenciais é de €80.'
+                a: 'Toda a inscrição é realizada diretamente aqui no site com pagamento online seguro via Stripe. O investimento único para os 3 módulos presenciais é de €80.'
             },
             {
                 q: 'Quais são as datas e horários dos 3 Módulos em Sintra?',

@@ -71,7 +71,7 @@ class RemissaoApp {
 
         // Click Event Delegation
         document.addEventListener('click', (e) => {
-            // Open Native Registration Form Modal / Google Forms
+            // Open Native Registration Form Modal
             if (e.target.closest('.btn-open-registration-modal, .btn-registration-trigger, #heroPrimaryCta, #navRegisterBtn')) {
                 e.preventDefault();
                 this.openRegistrationModal();
