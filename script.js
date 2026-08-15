@@ -37,7 +37,7 @@ const initialEventsDB = [
         modules: [
             { name: '1º MÓDULO', dates: '02 e 03 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
             { name: '2º MÓDULO', dates: '16 e 17 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
-            { name: '3º MÓDULO', dates: '30 e 31 de Outubro', times: 'Sexta 20h | Sáb 09:30h' }
+            { name: '3º MÓDULO', dates: '23 e 24 de Outubro', times: 'Sexta 20h | Sáb 09:30h' }
         ],
         description: 'Seminário de cura emocional, libertação espiritual de traumas, cativeiros da alma e restauração familiar.'
     }
@@ -433,7 +433,7 @@ class RemissaoApp {
             },
             {
                 q: 'Quais são as datas e horários dos 3 Módulos em Sintra?',
-                a: 'O seminário é dividido em 3 Módulos presenciais: 1º Módulo (02 e 03 de Outubro), 2º Módulo (16 e 17 de Outubro) e 3º Módulo (30 e 31 de Outubro). Horários: Sextas às 20h00 e Sábados às 09h30.'
+                a: 'O seminário é dividido em 3 Módulos presenciais: 1º Módulo (02 e 03 de Outubro), 2º Módulo (16 e 17 de Outubro) e 3º Módulo (23 e 24 de Outubro). Horários: Sextas às 20h00 e Sábados às 09h30.'
             },
             {
                 q: 'Qual o valor do investimento para os 3 Módulos?',
