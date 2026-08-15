@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    MINIST├ëRIO REMISS├âO PORTUGAL ÔÇö Core Web Application Logic & Native Registration
    - Supabase Database Integration (trvssakxtqvwngisqzed.supabase.co)
    - Native Registration System with Mandatory Shirt Size Selection (XS, S, M, L, XL)
@@ -9,10 +9,10 @@
 const APP_CONFIG = {
     DEFAULT_LANG: 'pt',
     ADMIN_PASS_HASH: 'remissao2027',
-    GOOGLE_FORM_URL: 'https://forms.gle/Wz4fqTavCH2j16tD7', // URL oficial do Formul├írio Google de Inscri├º├Áes
+    CHECKOUT_URL: 'https://buy.stripe.com/4gM9ASa6h3iQbywdF92ZO00', // URL oficial do Checkout Stripe
     SUPABASE: {
-        URL: 'https://trvssakxtqvwngisqzed.supabase.co',
-        ANON_KEY: 'sb_publishable_vIh5SHaxCHas0Q0OLNh3cw_tI3sWGvK'
+        URL: 'https://jcpjgowdxcmqditgvmeq.supabase.co',
+        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcGpnb3dkeGNtcWRpdGd2bWVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDIwNTAsImV4cCI6MjEwMjMxODA1MH0.MCdmZqHdRFDaS-FzHCuDmWEdtd08qyJFYhXumepwZ8Y'
     },
     STORAGE_KEYS: {
         LANG: 'remissao_pt_lang',
@@ -188,10 +188,6 @@ class RemissaoApp {
     }
 
     openRegistrationModal() {
-        if (APP_CONFIG.GOOGLE_FORM_URL) {
-            window.open(APP_CONFIG.GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
-            return;
-        }
         const modal = document.getElementById('registrationModal');
         if (modal) {
             modal.classList.add('active');
@@ -311,19 +307,14 @@ class RemissaoApp {
 
                 this.closeModal('registrationModal');
                 
-                // Show confirmation modal with checkout simulation
-                const confirmShirt = document.getElementById('confirmShirtSize');
-                if (confirmShirt) confirmShirt.textContent = shirtSize;
-                
-                const confirmModal = document.getElementById('confirmationModal');
-                if (confirmModal) confirmModal.classList.add('active');
+                // Redirect to Stripe Checkout with client_reference_id
+                if (APP_CONFIG.CHECKOUT_URL) {
+                    const checkoutUrl = new URL(APP_CONFIG.CHECKOUT_URL);
+                    checkoutUrl.searchParams.set('client_reference_id', reg.id);
+                    window.location.href = checkoutUrl.toString();
+                    return;
+                }
 
-                // Mark simulated pay for local test
-                fetch('/api/simulated-pay', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ registration_id: reg.id })
-                }).catch(() => {});
             } else {
                 alert('Inscri├º├úo salva com sucesso! Entraremos em contacto para o pagamento.');
             }

@@ -33,7 +33,7 @@ const initialEventsDB = [
         status: 'inscriçoes_abertas',
         totalCapacity: 150,
         enrolledCount: 118,
-        einscricaoUrl: 'https://forms.gle/Wz4fqTavCH2j16tD7',
+        einscricaoUrl: 'https://buy.stripe.com/4gM9ASa6h3iQbywdF92ZO00',
         modules: [
             { name: '1º MÓDULO', dates: '02 e 03 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
             { name: '2º MÓDULO', dates: '16 e 17 de Outubro', times: 'Sexta 20h | Sáb 09:30h' },
@@ -153,7 +153,7 @@ class RemissaoApp {
         document.addEventListener('click', (e) => {
             if (e.target.closest('.btn-registration-trigger, .btn-open-registration-modal, #heroPrimaryCta, .floating-sticky-btn')) {
                 e.preventDefault();
-                window.open('https://forms.gle/Wz4fqTavCH2j16tD7', '_blank', 'noopener,noreferrer');
+                window.open('https://buy.stripe.com/4gM9ASa6h3iQbywdF92ZO00', '_blank', 'noopener,noreferrer');
             }
             if (e.target.closest('.btn-einscricao-active')) {
                 const event = this.getActiveEvent();
