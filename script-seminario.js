@@ -9,7 +9,7 @@
 const APP_CONFIG = {
     DEFAULT_LANG: 'pt',
     ADMIN_PASS_HASH: 'remissao2027',
-    CHECKOUT_URL: 'https://buy.stripe.com/4gM9ASa6h3iQbywdF92ZO00', // URL oficial do Checkout Stripe
+    CHECKOUT_URL: 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01', // URL oficial do Checkout Stripe
     SUPABASE: {
         URL: 'https://jcpjgowdxcmqditgvmeq.supabase.co',
         ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcGpnb3dkeGNtcWRpdGd2bWVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDIwNTAsImV4cCI6MjEwMjMxODA1MH0.MCdmZqHdRFDaS-FzHCuDmWEdtd08qyJFYhXumepwZ8Y'
