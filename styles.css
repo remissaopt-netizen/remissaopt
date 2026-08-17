@@ -2514,6 +2514,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+#view-admin:not([style*="display: none"]) ~ .floating-sticky-cta,
+body.admin-mode .floating-sticky-cta {
+    display: none !important;
+}
+
 .floating-sticky-btn {
     background: linear-gradient(135deg, #00CFC8 0%, #0B4F8A 100%);
     color: #FFFFFF !important;

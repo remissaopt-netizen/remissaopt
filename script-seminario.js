@@ -376,6 +376,12 @@ class RemissaoApp {
         document.querySelectorAll('.view-page').forEach(page => {
             page.style.display = page.id === viewId ? 'block' : 'none';
         });
+
+        // Hide floating sticky CTA button when inside Admin View
+        const floatingCta = document.getElementById('floatingCta');
+        if (floatingCta) {
+            floatingCta.style.display = viewId === 'view-admin' ? 'none' : 'block';
+        }
     }
 
     openAdminAuthModal() {
@@ -500,10 +506,6 @@ class RemissaoApp {
 
         tbody.innerHTML = filtered.map(r => {
             const dateStr = new Date(r.created_at).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            let statusBadge = '<span class="status-pill status-pending">⏳ Pendente</span>';
-            if (r.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">✅ Pago</span>';
-            if (r.payment_status === 'cancelled' || r.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">❌ Cancelado</span>';
-            if (r.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">🔄 Reembolsado</span>';
 
             return `
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0;">
@@ -523,15 +525,46 @@ class RemissaoApp {
                     </td>
                     <td style="padding: 1rem 1.25rem;">${dateStr}</td>
                     <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">€${parseFloat(r.event_price || 85).toFixed(2)}</td>
-                    <td style="padding: 1rem 1.25rem;">${statusBadge}</td>
+                    <td style="padding: 1rem 1.25rem;">
+                        <select class="admin-status-select" data-id="${r.id}" style="background: #0F172A; color: #FFF; border: 1.5px solid rgba(0, 207, 200, 0.4); border-radius: 8px; padding: 0.35rem 0.65rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; outline: none;">
+                            <option value="pending" ${r.payment_status === 'pending' ? 'selected' : ''}>⏳ Pendente</option>
+                            <option value="paid" ${r.payment_status === 'paid' ? 'selected' : ''}>✅ Pago</option>
+                            <option value="cancelled" ${r.payment_status === 'cancelled' || r.payment_status === 'expired' ? 'selected' : ''}>❌ Cancelado</option>
+                            <option value="refunded" ${r.payment_status === 'refunded' ? 'selected' : ''}>🔄 Reembolsado</option>
+                        </select>
+                    </td>
                     <td style="padding: 1rem 1.25rem; text-align: right;">
-                        <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">
-                            🔍 Detalhes
-                        </button>
+                        <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+                            <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" title="Ver detalhes completos" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+                                🔍 Detalhes
+                            </button>
+                            <button class="btn btn-sm btn-delete-reg" data-id="${r.id}" data-name="${r.full_name}" title="Excluir inscrição" style="padding: 0.35rem 0.65rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #FCA5A5; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                                🗑️ Excluir
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `;
         }).join('');
+
+        // Bind Status Change
+        tbody.querySelectorAll('.admin-status-select').forEach(sel => {
+            sel.addEventListener('change', (e) => {
+                const id = e.target.dataset.id;
+                const newStatus = e.target.value;
+                this.updateRegistrationStatus(id, newStatus);
+            });
+        });
+
+        // Bind Delete Buttons
+        tbody.querySelectorAll('.btn-delete-reg').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const button = e.target.closest('.btn-delete-reg');
+                const id = button.dataset.id;
+                const name = button.dataset.name;
+                this.deleteRegistration(id, name);
+            });
+        });
 
         // Bind Detail Buttons
         tbody.querySelectorAll('.btn-view-details').forEach(btn => {
@@ -541,6 +574,58 @@ class RemissaoApp {
                 if (reg) this.openRegistrationDetailsModal(reg);
             });
         });
+    }
+
+    async updateRegistrationStatus(id, newStatus) {
+        try {
+            if (supabaseClient) {
+                const { error } = await supabaseClient
+                    .from('registrations')
+                    .update({ payment_status: newStatus })
+                    .eq('id', id);
+
+                if (error) throw error;
+            }
+
+            const reg = this.state.registrations.find(r => r.id === id);
+            if (reg) {
+                reg.payment_status = newStatus;
+            }
+
+            this.renderAdminKPIs();
+            this.renderRegistrationsTable();
+            this.showToast('✅ Status atualizado com sucesso!');
+        } catch (err) {
+            console.error('Erro ao atualizar status:', err);
+            alert('Erro ao atualizar status: ' + (err.message || 'Tente novamente.'));
+            this.renderRegistrationsTable();
+        }
+    }
+
+    async deleteRegistration(id, fullName) {
+        if (!confirm(`Tem certeza que deseja excluir permanentemente a inscrição de "${fullName}"?\n\nEsta ação não poderá ser desfeita.`)) {
+            return;
+        }
+
+        try {
+            if (supabaseClient) {
+                const { error } = await supabaseClient
+                    .from('registrations')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+            }
+
+            this.state.registrations = this.state.registrations.filter(r => r.id !== id);
+            this.renderAdminKPIs();
+            this.renderRegistrationsTable();
+            this.closeModal('registrationDetailsModal');
+            this.showToast('🗑️ Inscrição excluída com sucesso!');
+        } catch (err) {
+            console.error('Erro ao excluir inscrição:', err);
+            alert('Erro ao excluir inscrição: ' + (err.message || 'Tente novamente.'));
+        }
     }
 
     openRegistrationDetailsModal(reg) {
@@ -553,6 +638,7 @@ class RemissaoApp {
         let statusBadge = '<span class="status-pill status-pending">⏳ Pendente</span>';
         if (reg.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">✅ Pago</span>';
         if (reg.payment_status === 'cancelled' || reg.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">❌ Cancelado</span>';
+        if (reg.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">🔄 Reembolsado</span>';
 
         if (pill) pill.innerHTML = statusBadge;
 
@@ -570,7 +656,32 @@ class RemissaoApp {
                 <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0.5rem 0;">
                 <div><strong>ID Inscrição:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.id || '—'}</code></div>
                 <div><strong>Data da Inscrição:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 2px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                        <label style="font-weight: 700; font-size: 0.9rem; color: #334155;">Editar Status:</label>
+                        <select id="modalStatusSelect" style="padding: 0.45rem 0.8rem; border-radius: 8px; border: 1.5px solid #CBD5E1; font-weight: 700; background: #F8FAFC; color: #0F172A; cursor: pointer;">
+                            <option value="pending" ${reg.payment_status === 'pending' ? 'selected' : ''}>⏳ Pendente</option>
+                            <option value="paid" ${reg.payment_status === 'paid' ? 'selected' : ''}>✅ Pago</option>
+                            <option value="cancelled" ${reg.payment_status === 'cancelled' || reg.payment_status === 'expired' ? 'selected' : ''}>❌ Cancelado</option>
+                            <option value="refunded" ${reg.payment_status === 'refunded' ? 'selected' : ''}>🔄 Reembolsado</option>
+                        </select>
+                    </div>
+                    <button id="modalDeleteBtn" style="padding: 0.45rem 1rem; background: #EF4444; color: #FFF; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s ease;">
+                        🗑️ Excluir Inscrição
+                    </button>
+                </div>
             `;
+
+            document.getElementById('modalStatusSelect')?.addEventListener('change', (e) => {
+                this.updateRegistrationStatus(reg.id, e.target.value);
+                const modal = document.getElementById('registrationDetailsModal');
+                if (modal) modal.classList.remove('active');
+            });
+
+            document.getElementById('modalDeleteBtn')?.addEventListener('click', () => {
+                this.deleteRegistration(reg.id, reg.full_name);
+            });
         }
 
         const modal = document.getElementById('registrationDetailsModal');
