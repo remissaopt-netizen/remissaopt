@@ -297,7 +297,7 @@ class RemissaoApp {
                         previous_participant: previousParticipant,
                         notes,
                         event_name: 'Remission to the Nations Portugal 2026',
-                        event_price: 80.00,
+                        event_price: 85.00,
                         payment_status: 'pending',
                         currency: 'EUR'
                     }])
@@ -431,8 +431,8 @@ class RemissaoApp {
         const paid = regs.filter(r => r.payment_status === 'paid');
         const pending = regs.filter(r => r.payment_status === 'pending');
 
-        const totalRevenue = paid.reduce((acc, r) => acc + (parseFloat(r.amount_paid || r.event_price || 80)), 0);
-        const pendingRevenue = pending.reduce((acc, r) => acc + (parseFloat(r.event_price || 80)), 0);
+        const totalRevenue = paid.reduce((acc, r) => acc + (parseFloat(r.amount_paid || r.event_price || 85)), 0);
+        const pendingRevenue = pending.reduce((acc, r) => acc + (parseFloat(r.event_price || 85)), 0);
         const conversionRate = total > 0 ? Math.round((paid.length / total) * 100) : 0;
 
         document.getElementById('statTotalRegistrations').textContent = total;
@@ -522,7 +522,7 @@ class RemissaoApp {
                         </span>
                     </td>
                     <td style="padding: 1rem 1.25rem;">${dateStr}</td>
-                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">€${parseFloat(r.event_price || 80).toFixed(2)}</td>
+                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">€${parseFloat(r.event_price || 85).toFixed(2)}</td>
                     <td style="padding: 1rem 1.25rem;">${statusBadge}</td>
                     <td style="padding: 1rem 1.25rem; text-align: right;">
                         <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">
@@ -601,7 +601,7 @@ class RemissaoApp {
             `"${r.previous_participant || ''}"`,
             `"${(r.notes || '').replace(/"/g, '""')}"`,
             `"${r.payment_status || 'pending'}"`,
-            `"${r.event_price || 80}"`,
+            `"${r.event_price || 85}"`,
             `"${r.stripe_session_id || ''}"`,
             `"${new Date(r.created_at).toLocaleString('pt-PT')}"`
         ]);

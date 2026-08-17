@@ -28,7 +28,7 @@ const initialEventsDB = [
         country: 'Portugal',
         locationName: 'Av. Irene Lisboa, 19 – Armazém A, 2º Piso',
         fullAddress: 'Av. Irene Lisboa, 19 – Armazém A, 2º Piso, Sintra – Lisboa',
-        priceEUR: 80.00,
+        priceEUR: 85.00,
         currency: 'EUR',
         status: 'inscriçoes_abertas',
         totalCapacity: 150,
@@ -429,7 +429,7 @@ class RemissaoApp {
             },
             {
                 q: 'Como é realizado o pagamento e a inscrição?',
-                a: 'Toda a inscrição é realizada diretamente aqui no site com pagamento online seguro via Stripe. O investimento único para os 3 módulos presenciais é de €80.'
+                a: 'Toda a inscrição é realizada diretamente aqui no site com pagamento online seguro via Stripe. O investimento único para os 3 módulos presenciais é de €85.'
             },
             {
                 q: 'Quais são as datas e horários dos 3 Módulos em Sintra?',
@@ -437,7 +437,7 @@ class RemissaoApp {
             },
             {
                 q: 'Qual o valor do investimento para os 3 Módulos?',
-                a: 'O valor total do investimento é de €80,00 por participante, cobrindo o acesso aos 3 módulos e material ministrado.'
+                a: 'O valor total do investimento é de €85,00 por participante, cobrindo o acesso aos 3 módulos e material ministrado.'
             },
             {
                 q: 'Como posso levar o Seminário Remir para a minha igreja?',
