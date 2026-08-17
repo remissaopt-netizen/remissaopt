@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    MINIST├ëRIO REMISS├âO PORTUGAL ÔÇö Clean Header Logo & Admin Auth System
    ========================================================================== */
 
@@ -435,9 +435,9 @@ h1, h2, h3, .font-heading {
     scroll-margin-top: 100px;
     background-image: linear-gradient(90deg, 
         rgba(18, 15, 12, 0.98) 0%, 
-        rgba(18, 15, 12, 0.94) 45%, 
-        rgba(18, 15, 12, 0.65) 75%, 
-        rgba(18, 15, 12, 0.25) 100%
+        rgba(18, 15, 12, 0.94) 35%, 
+        rgba(18, 15, 12, 0.4) 60%, 
+        rgba(18, 15, 12, 0) 80%
     ), url('assets/banner-hero.webp');
     background-size: cover;
     background-position: center;
