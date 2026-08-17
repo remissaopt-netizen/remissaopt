@@ -803,34 +803,173 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="modal-overlay" id="einscricaoModal">
-        <div class="modal-dialog" style="max-width: 780px;">
-            <button class="modal-close" id="closeEinscricaoModal">&times;</button>
-            <h3 class="font-serif" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.5rem;">
-                Inscrição Oficial — Seminário Sintra
-            </h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-                Você será direcionado para a finalização do seu cadastro e pagamento seguro do Seminário.
-            </p>
-
-            <div
-                style="background: rgba(18, 15, 12, 0.94); border: 1px solid var(--border-subtle); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; margin-bottom: 1.5rem;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
-                <h4 id="einscricaoModalEventTitle" style="margin-bottom: 0.3rem;">Remission to the Nations — Sintra 2026</h4>
-                <p id="einscricaoModalEventMeta"
-                    style="color: var(--gold-light); font-size: 0.85rem; margin-bottom: 1rem;">Sintra – Lisboa • Av.
-                    Irene Lisboa, 19 • Investimento: €85,00</p>
-
-                <a href="seminario.html#inscricao" id="directEinscricaoBtn" class="btn btn-primary btn-lg"
-                    style="width: 100%;">
-                    <span>🚀 Iniciar Inscrição & Pagamento (€85)</span>
-                </a>
+    <!-- ==================== NATIVE REGISTRATION FORM MODAL (#registrationModal) ==================== -->
+    <div class="registration-modal-overlay" id="registrationModal">
+        <div class="registration-modal-card">
+            <button class="registration-modal-close" id="closeRegistrationModalBtn">&times;</button>
+            
+            <div class="reg-modal-header">
+                <span class="reg-modal-tag">INSCRIÇÃO OFICIAL</span>
+                <h2 class="reg-modal-title">Seminário Remission to the Nations 2026</h2>
+                <p style="color: #64748B; font-size: 0.95rem; margin-top: 0.25rem;">
+                    Preencha os dados abaixo para garantir a sua vaga no evento presencial em Sintra — Lisboa.
+                </p>
             </div>
 
-            <p style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">
-                Inscrição e pagamento protegidos com criptografia de ponta a ponta.
-            </p>
+            <form id="nativeRegistrationForm">
+                <!-- 1. Dados Pessoais -->
+                <div class="form-section-title">
+                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;"><svg class="icon-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 1. Dados Pessoais</span>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Nome Completo <span class="req">*</span></label>
+                    <input type="text" id="regFullName" class="form-input" placeholder="Ex: João Pedro Silva" required>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Email <span class="req">*</span></label>
+                        <input type="email" id="regEmail" class="form-input" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telemóvel / WhatsApp <span class="req">*</span></label>
+                        <input type="tel" id="regPhone" class="form-input" placeholder="+351 912 345 678" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Data de Nascimento <span class="req">*</span></label>
+                        <input type="date" id="regBirthDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">País de Residência <span class="req">*</span></label>
+                        <input type="text" id="regCountry" class="form-input" placeholder="Ex: Portugal" value="Portugal" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Cidade <span class="req">*</span></label>
+                    <input type="text" id="regCity" class="form-input" placeholder="Ex: Sintra, Lisboa, Porto..." required>
+                </div>
+
+                <!-- 2. CAMISETA OFICIAL INCLUSA CARD SECTION -->
+                <div class="shirt-gift-card">
+                    <div class="shirt-gift-header">
+                        <span style="display: inline-flex; align-items: center; gap: 0.5rem;"><svg class="icon-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-light, #F5D061);"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg> Camiseta Oficial Inclusa no Valor da Inscrição</span>
+                    </div>
+                    <p class="shirt-gift-text">
+                        O valor da inscrição (€85) já inclui <strong>1 camiseta oficial do Remission to the Nations Portugal 2026</strong>. Para que possamos providenciar a sua camiseta com excelência, selecione abaixo o tamanho desejado. <em>Após a confirmação da inscrição, não será possível alterar o tamanho escolhido.</em>
+                    </p>
+                    
+                    <label class="form-label" style="margin-bottom: 0.75rem; display: block;">
+                        Qual o tamanho da sua camiseta? <span class="req">*</span>
+                    </label>
+
+                    <div class="shirt-size-selector">
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="XS" required>
+                            <div class="shirt-option-label">
+                                <span>XS</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra P</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="S" required>
+                            <div class="shirt-option-label">
+                                <span>S</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Pequeno (P)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="M" checked required>
+                            <div class="shirt-option-label">
+                                <span>M</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Médio (M)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="L" required>
+                            <div class="shirt-option-label">
+                                <span>L</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Grande (G)</span>
+                            </div>
+                        </label>
+
+                        <label class="shirt-option-card">
+                            <input type="radio" name="shirt_size" value="XL" required>
+                            <div class="shirt-option-label">
+                                <span>XL</span>
+                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra G</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3. Dados da Igreja -->
+                <div class="form-section-title">
+                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;"><svg class="icon-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 22V7l-6-4-6 4v15"></path><path d="M12 3v4"></path><path d="M10 5h4"></path><path d="M12 14v8"></path><path d="M10 18h4"></path></svg> 2. Dados da sua Igreja</span>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Nome da sua Igreja</label>
+                        <input type="text" id="regChurch" class="form-input" placeholder="Ex: Igreja Comunidade Cristã">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nome do seu Pastor</label>
+                        <input type="text" id="regPastor" class="form-input" placeholder="Ex: Pr. Manuel Ribeiro">
+                    </div>
+                </div>
+
+                <!-- 4. Informações Adicionais -->
+                <div class="form-section-title">
+                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;"><svg class="icon-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> 3. Informações Adicionais</span>
+                </div>
+
+                <div class="form-grid-2" style="margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label class="form-label">Como conheceu o evento?</label>
+                        <select id="regHowFound" class="form-select">
+                            <option value="Instagram / Redes Sociais">Instagram / Redes Sociais</option>
+                            <option value="Recomendação de Amigos / Família">Recomendação de Amigos / Família</option>
+                            <option value="Indicação da Igreja / Pastor">Indicação da Igreja / Pastor</option>
+                            <option value="Google / Pesquisa Web">Google / Pesquisa Web</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Já participou do Seminário Remissão?</label>
+                        <select id="regPreviousParticipant" class="form-select">
+                            <option value="Não, será minha 1ª vez">Não, será minha 1ª vez</option>
+                            <option value="Sim, no Brasil">Sim, no Brasil</option>
+                            <option value="Sim, em Portugal">Sim, em Portugal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label class="form-label">Observações ou pedidos de oração (opcional)</label>
+                    <textarea id="regNotes" class="form-textarea" rows="2" placeholder="Escreva aqui se tiver alguma observação específica..."></textarea>
+                </div>
+
+                <!-- RGPD Checkbox -->
+                <div class="rgpd-checkbox-box">
+                    <input type="checkbox" id="regRgpdAccepted" required>
+                    <label for="regRgpdAccepted">
+                        Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para efeitos de gestão da inscrição conforme o RGPD. <span class="req">*</span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit-registration" id="btnSubmitRegistration">
+                    <span>Continuar para Pagamento (€85) →</span>
+                </button>
+            </form>
         </div>
     </div>
 

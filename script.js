@@ -10,6 +10,11 @@
 const APP_CONFIG = {
     DEFAULT_LANG: 'pt',
     ADMIN_PASS_HASH: 'remissao2027', // Default admin password
+    CHECKOUT_URL: 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01', // URL oficial do Checkout Stripe
+    SUPABASE: {
+        URL: 'https://jcpjgowdxcmqditgvmeq.supabase.co',
+        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcGpnb3dkeGNtcWRpdGd2bWVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDIwNTAsImV4cCI6MjEwMjMxODA1MH0.MCdmZqHdRFDaS-FzHCuDmWEdtd08qyJFYhXumepwZ8Y'
+    },
     STORAGE_KEYS: {
         LANG: 'remissao_pt_lang',
         CRM: 'remissao_pt_crm_leads',
@@ -17,6 +22,16 @@ const APP_CONFIG = {
         AUTH: 'remissao_pt_admin_session'
     }
 };
+
+// Initialize Supabase JS Client if available
+let supabaseClient = null;
+if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+    try {
+        supabaseClient = window.supabase.createClient(APP_CONFIG.SUPABASE.URL, APP_CONFIG.SUPABASE.ANON_KEY);
+    } catch (e) {
+        console.warn('Supabase initialization failed:', e);
+    }
+}
 
 // Initial Events Database
 const initialEventsDB = [
@@ -149,15 +164,11 @@ class RemissaoApp {
             });
         }
 
-        // Registration CTA Buttons
+        // Registration CTA Buttons (Opens Native Registration Modal)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.btn-registration-trigger, .btn-open-registration-modal, #heroPrimaryCta, .floating-sticky-btn')) {
+            if (e.target.closest('.btn-registration-trigger, .btn-open-registration-modal, #heroPrimaryCta, .floating-sticky-btn, .btn-einscricao-active, #heroMainCta, #navRegisterBtn')) {
                 e.preventDefault();
-                window.open('https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01', '_blank', 'noopener,noreferrer');
-            }
-            if (e.target.closest('.btn-einscricao-active')) {
-                const event = this.getActiveEvent();
-                this.openEinscricaoModal(event);
+                this.openRegistrationModal();
             }
             const accordionHeader = e.target.closest('.faq-accordion-header');
             if (accordionHeader) {
@@ -173,17 +184,33 @@ class RemissaoApp {
             }
         });
 
+        // Close Registration Modal
+        document.getElementById('closeRegistrationModalBtn')?.addEventListener('click', () => this.closeModal('registrationModal'));
+
+        // Native Registration Form Submit
+        const regForm = document.getElementById('nativeRegistrationForm');
+        if (regForm) {
+            regForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleNativeRegistrationSubmit();
+            });
+        }
+
         // Modal Close Buttons
-        document.getElementById('closeEinscricaoModal')?.addEventListener('click', () => this.closeModal('einscricaoModal'));
         document.getElementById('closeShareModal')?.addEventListener('click', () => this.closeModal('shareModal'));
         document.getElementById('closeAdminAuthModal')?.addEventListener('click', () => this.closeModal('adminAuthModal'));
 
         // Close Modals on Overlay Click
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
+        document.querySelectorAll('.modal-overlay, .registration-modal-overlay').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) this.closeModal(modal.id);
             });
         });
+
+        // Open registration directly if #inscricao in URL
+        if (window.location.hash === '#inscricao') {
+            this.openRegistrationModal();
+        }
 
         // Church Host Form Submission (CRM)
         const churchForm = document.getElementById('churchHostForm');
@@ -463,22 +490,145 @@ class RemissaoApp {
         item.classList.toggle('active');
     }
 
-    openEinscricaoModal(event) {
-        const titleEl = document.getElementById('einscricaoModalEventTitle');
-        const metaEl = document.getElementById('einscricaoModalEventMeta');
-        const linkEl = document.getElementById('directEinscricaoBtn');
-
-        if (titleEl) titleEl.textContent = event.title;
-        if (metaEl) metaEl.textContent = `📍 ${event.city} • ${event.locationName} • Investimento: €${event.priceEUR.toFixed(2).replace('.', ',')}`;
-        if (linkEl) linkEl.href = event.einscricaoUrl;
-
-        const modal = document.getElementById('einscricaoModal');
-        if (modal) modal.classList.add('active');
+    openRegistrationModal() {
+        const modal = document.getElementById('registrationModal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     closeModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.remove('active');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    async handleNativeRegistrationSubmit() {
+        const submitBtn = document.getElementById('btnSubmitRegistration');
+        const originalText = submitBtn.innerHTML;
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>⏳ Processando inscrição...</span>';
+
+            const fullName = document.getElementById('regFullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const birthDate = document.getElementById('regBirthDate').value;
+            const country = document.getElementById('regCountry').value.trim();
+            const city = document.getElementById('regCity').value.trim();
+
+            const selectedShirt = document.querySelector('input[name="shirt_size"]:checked');
+            const shirtSize = selectedShirt ? selectedShirt.value : '';
+
+            const church = document.getElementById('regChurch').value.trim();
+            const pastor = document.getElementById('regPastor').value.trim();
+            const howFound = document.getElementById('regHowFound').value;
+            const previousParticipant = document.getElementById('regPreviousParticipant').value;
+            const notes = document.getElementById('regNotes').value.trim();
+            const rgpdAccepted = document.getElementById('regRgpdAccepted').checked;
+
+            if (!fullName || !email || !phone || !birthDate || !country || !city || !shirtSize) {
+                alert('Por favor, preencha todos os campos obrigatórios (*), incluindo o tamanho da camiseta.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+
+            if (!rgpdAccepted) {
+                alert('Por favor, confirme a autorização de tratamento de dados conforme o RGPD.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
+
+            const payload = {
+                full_name: fullName,
+                email,
+                phone,
+                birth_date: birthDate,
+                country,
+                city,
+                shirt_size: shirtSize,
+                church,
+                pastor,
+                how_found: howFound,
+                previous_participant: previousParticipant,
+                notes,
+                rgpd_accepted: rgpdAccepted
+            };
+
+            // Call Backend API /api/register if available
+            let response;
+            try {
+                response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.warn('Backend server not reachable directly, attempting Supabase direct fallback:', err);
+            }
+
+            if (response && response.ok) {
+                const data = await response.json();
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                    return;
+                }
+            }
+
+            // Direct Supabase JS Client Fallback
+            if (supabaseClient) {
+                const { data: reg, error: supErr } = await supabaseClient
+                    .from('registrations')
+                    .insert([{
+                        full_name: fullName,
+                        email,
+                        phone,
+                        birth_date: birthDate,
+                        country,
+                        city,
+                        shirt_size: shirtSize,
+                        church,
+                        pastor,
+                        how_found: howFound,
+                        previous_participant: previousParticipant,
+                        notes,
+                        event_name: 'Remission to the Nations Portugal 2026',
+                        event_price: 85.00,
+                        payment_status: 'pending',
+                        currency: 'EUR'
+                    }])
+                    .select()
+                    .single();
+
+                if (supErr) throw supErr;
+
+                this.closeModal('registrationModal');
+                
+                // Redirect to Stripe Checkout with client_reference_id
+                if (APP_CONFIG.CHECKOUT_URL) {
+                    const checkoutUrl = new URL(APP_CONFIG.CHECKOUT_URL);
+                    checkoutUrl.searchParams.set('client_reference_id', reg.id);
+                    window.location.href = checkoutUrl.toString();
+                    return;
+                }
+
+            } else {
+                alert('Inscrição salva com sucesso! Entraremos em contacto para o pagamento.');
+            }
+
+        } catch (err) {
+            console.error('Registration Error:', err);
+            alert('Erro ao enviar inscrição: ' + (err.message || 'Tente novamente.'));
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
     }
 
     handleChurchFormSubmit() {
