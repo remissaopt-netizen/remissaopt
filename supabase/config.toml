@@ -1,0 +1,5 @@
+# Configuration for Supabase Edge Functions
+# This file is automatically read by the Supabase CLI when deploying functions.
+
+[functions.stripe-webhook]
+verify_jwt = false

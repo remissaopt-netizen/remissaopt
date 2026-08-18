@@ -579,12 +579,16 @@ class RemissaoApp {
     async updateRegistrationStatus(id, newStatus) {
         try {
             if (supabaseClient) {
-                const { error } = await supabaseClient
+                const { data, error } = await supabaseClient
                     .from('registrations')
                     .update({ payment_status: newStatus })
-                    .eq('id', id);
+                    .eq('id', id)
+                    .select();
 
                 if (error) throw error;
+                if (!data || data.length === 0) {
+                    throw new Error('A alteração não foi persistida no Supabase. Verifique se as políticas de RLS (Row Level Security) permitem UPDATE.');
+                }
             }
 
             const reg = this.state.registrations.find(r => r.id === id);
@@ -609,12 +613,16 @@ class RemissaoApp {
 
         try {
             if (supabaseClient) {
-                const { error } = await supabaseClient
+                const { data, error } = await supabaseClient
                     .from('registrations')
                     .delete()
-                    .eq('id', id);
+                    .eq('id', id)
+                    .select();
 
                 if (error) throw error;
+                if (!data || data.length === 0) {
+                    throw new Error('O registo não foi excluído no Supabase. Verifique se as políticas de RLS (Row Level Security) da tabela registrations permitem DELETE para o cliente.');
+                }
             }
 
             this.state.registrations = this.state.registrations.filter(r => r.id !== id);
