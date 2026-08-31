@@ -53,11 +53,11 @@
 
     <!-- Top Announcement Bar -->
     <div class="announcement-bar" id="announcementBar">
-        <span class="announcement-badge" id="announcementBadge"> Inscrições Abertas</span>
-        <span id="announcementText">Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) •
+        <span class="announcement-badge" id="announcementBadge" data-i18n="announcement.badge">✨ Inscrições Abertas</span>
+        <span id="announcementText" data-i18n-html="announcement.text">Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) •
             Investimento: €85,00</span>
         <button class="btn btn-sm btn-primary btn-einscricao-active"
-            style="padding: 0.25rem 0.75rem; font-size: 0.75rem;">
+            style="padding: 0.25rem 0.75rem; font-size: 0.75rem;" data-i18n="announcement.cta">
             Inscrever-me agora
         </button>
     </div>
@@ -73,18 +73,18 @@
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">MINISTÉRIO <span class="gold-gradient-text">REMISSÃO</span></span>
-                    <span class="brand-subtitle">EUROPA</span>
+                    <span class="brand-subtitle" data-i18n="nav.brand_sub">EUROPA</span>
                 </div>
             </a>
 
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link active" data-i18n="nav.home">Início</a></li>
-                <li><a href="#sobre" class="nav-link" data-i18n="nav.sobre">Sobre Nós</a></li>
-                <li><a href="#temas" class="nav-link">Áreas de Ensino</a></li>
-                <li><a href="#testemunhos" class="nav-link" data-i18n="nav.testemunhos">Testemunhos</a></li>
-                <li><a href="#levar-igreja" class="nav-link" data-i18n="nav.levar_igreja">Levar à minha Igreja</a></li>
+                <li><a href="#sobre" class="nav-link" data-i18n="nav.about">Sobre Nós</a></li>
+                <li><a href="#temas" class="nav-link" data-i18n="nav.themes">Áreas de Ensino</a></li>
+                <li><a href="#testemunhos" class="nav-link" data-i18n="nav.testimonials">Testemunhos</a></li>
+                <li><a href="#levar-igreja" class="nav-link" data-i18n="nav.church">Levar à minha Igreja</a></li>
                 <li><a href="#faq" class="nav-link" data-i18n="nav.faq">Perguntas Frequentes</a></li>
-                <li><a href="#contato" class="nav-link">Contacto</a></li>
+                <li><a href="#contato" class="nav-link" data-i18n="nav.contact">Contacto</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -102,7 +102,7 @@
 
                 <!-- Primary CTA to active Registration Form -->
                 <button class="btn btn-primary btn-sm btn-einscricao-active" id="navRegisterBtn">
-                    <span>⚡ Inscrever-me</span>
+                    <span data-i18n="nav.register">⚡ Inscrever-me</span>
                 </button>
 
                 <!-- Hamburger Menu Toggle Button -->
@@ -125,14 +125,14 @@
             <section class="hero-section" id="home">
                 <div class="hero-content">
                     <div class="hero-tag">
-                        <span> REMISSION TO THE NATIONS • PORTUGAL</span>
+                        <span data-i18n="hero.tag">🕊️ REMISSION TO THE NATIONS • PORTUGAL</span>
                     </div>
 
-                    <h1 class="hero-title">
+                    <h1 class="hero-title" data-i18n-html="hero.title">
                         Cura <span class="gold-gradient-text">da Alma</span> & Libertação em Portugal.
                     </h1>
 
-                    <p class="hero-subtitle">
+                    <p class="hero-subtitle" data-i18n="hero.subtitle">
                         Através de um ensino bíblico sólido e de ministrações direcionadas, ajudamos pessoas a romper
                         cadeias espirituais, restaurar a identidade em Cristo e viver a liberdade que Jesus conquistou
                         na cruz.
@@ -140,16 +140,16 @@
 
                     <div class="hero-cta-group">
                         <button class="btn btn-primary btn-lg btn-einscricao-active" id="heroMainCta">
-                            <span>Inscrever-me Agora</span>
+                            <span data-i18n="hero.cta_register">Inscrever-me Agora</span>
                         </button>
 
-                        <a href="seminario.html" class="btn btn-secondary btn-lg">
+                        <a href="seminario.html" class="btn btn-secondary btn-lg" data-i18n="hero.cta_seminar">
                             Conhecer o Seminário
                         </a>
                     </div>
 
                     <div class="hero-guarantee">
-                        <span>🔒 Inscrição e pagamento online 100% seguros diretamente no site</span>
+                        <span data-i18n="hero.guarantee">🔒 Inscrição e pagamento online 100% seguros diretamente no site</span>
                     </div>
 
                     <!-- Counter Stats -->
@@ -163,10 +163,10 @@
                                     <circle cx="9" cy="7" r="4"></circle>
                                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
-                                <h4 class="counter-val">2k+</h4>
+                                    </svg>
+                                <h4 class="counter-val" id="stat1Val">2k+</h4>
                             </div>
-                            <p class="stat-label">VIDAS ALCANÇADAS NO BRASIL</p>
+                            <p class="stat-label" data-i18n="hero.stat1_label">VIDAS ALCANÇADAS NO BRASIL</p>
                         </div>
                         <div class="stat-card">
                             <div class="stat-header">
@@ -176,9 +176,9 @@
                                     <path d="M12 15l-2 5l9-5l-9-5l2 5z"></path>
                                     <circle cx="12" cy="8" r="5"></circle>
                                 </svg>
-                                <h4 class="counter-val">10+</h4>
+                                <h4 class="counter-val" id="stat2Val">10+</h4>
                             </div>
-                            <p class="stat-label">ANOS DE MINISTÉRIO</p>
+                            <p class="stat-label" data-i18n="hero.stat2_label">ANOS DE MINISTÉRIO</p>
                         </div>
                         <div class="stat-card" style="display: none;">
                             <div class="stat-header">
@@ -191,7 +191,7 @@
                                         d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
                                     </path>
                                 </svg>
-                                <h4 class="counter-val">Brasel e Portugal</h4>
+                                <h4 class="counter-val">Brasil e Portugal</h4>
                             </div>
                             <p class="stat-label">PAÍSES ALCANÇADOS</p>
                         </div>
@@ -204,10 +204,10 @@
             <!-- ==================== ABOUT / SOBRE NÓS ==================== -->
             <section class="section" id="sobre">
                 <div class="section-header">
-                    <span class="section-tag">Nossa Trajetória</span>
-                    <h2 class="section-title">Do Brasil para Portugal e <span class="gold-gradient-text">Toda a
+                    <span class="section-tag" data-i18n="about.tag">Nossa Trajetória</span>
+                    <h2 class="section-title" data-i18n-html="about.title">Do Brasil para Portugal e <span class="gold-gradient-text">Toda a
                             Europa</span></h2>
-                    <p class="section-subtitle">
+                    <p class="section-subtitle" data-i18n="about.subtitle">
                         Com base consolidada em Joinville (Brasil) e milhares de vidas restauradas, o Ministério
                         Remissão expande sua missão oficial para Portugal.
                     </p>
@@ -215,9 +215,9 @@
 
                 <div class="grid-2" style="align-items: center;">
                     <div class="card-glass">
-                        <h3 class="card-title font-serif" style="font-size: 2rem; color: var(--gold-light);">Servindo ao
+                        <h3 class="card-title font-serif" style="font-size: 2rem; color: var(--gold-light);" data-i18n="about.card_title">Servindo ao
                             Corpo de Cristo</h3>
-                        <p class="card-desc" style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                        <p class="card-desc" style="font-size: 1.05rem; margin-bottom: 1.5rem;" data-i18n="about.card_desc">
                             Nossa missão é auxiliar filhos de Deus que, mesmo após a confissão de fé em Cristo Jesus,
                             continuam sofrendo com as adversidades e prisões da alma deste mundo.
                         </p>
@@ -225,20 +225,20 @@
                         <div class="timeline-track">
                             <div class="timeline-step">
                                 <div class="timeline-dot"></div>
-                                <div class="timeline-year">Consolidação no Brasil</div>
-                                <p class="card-desc">Anos de ministração em Joinville e São Francisco do Sul formando
+                                <div class="timeline-year" data-i18n="about.t1_title">Consolidação no Brasil</div>
+                                <p class="card-desc" data-i18n="about.t1_desc">Anos de ministração em Joinville e São Francisco do Sul formando
                                     intercessores e restaurando milhares de vidas.</p>
                             </div>
                             <div class="timeline-step">
                                 <div class="timeline-dot"></div>
-                                <div class="timeline-year">2026/2027 - Sintra, Portugal</div>
-                                <p class="card-desc">Instalação da base europeia na Av. Irene Lisboa, 19, Sintra –
+                                <div class="timeline-year" data-i18n="about.t2_title">2026/2027 - Sintra, Portugal</div>
+                                <p class="card-desc" data-i18n="about.t2_desc">Instalação da base europeia na Av. Irene Lisboa, 19, Sintra –
                                     Lisboa, abrindo turmas internacionais.</p>
                             </div>
                             <div class="timeline-step">
                                 <div class="timeline-dot"></div>
-                                <div class="timeline-year">Expansão Europeia</div>
-                                <p class="card-desc">Levar os seminários para Porto, Lisboa, Braga, Faro, Coimbra e
+                                <div class="timeline-year" data-i18n="about.t3_title">Expansão Europeia</div>
+                                <p class="card-desc" data-i18n="about.t3_desc">Levar os seminários para Porto, Lisboa, Braga, Faro, Coimbra e
                                     nações europeias.</p>
                             </div>
                         </div>
@@ -249,23 +249,23 @@
                             <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">
                                 <div id="instaHeaderIcon"
                                     style="display:inline-block; vertical-align:middle; margin-right:0.5rem;"></div>
-                                Acompanhe no Instagram
+                                <span data-i18n="about.insta_title">Acompanhe no Instagram</span>
                             </h4>
-                            <p class="card-desc" style="margin-bottom: 1rem;">Veja fotos, vídeos e testemunhos diários
+                            <p class="card-desc" style="margin-bottom: 1rem;" data-i18n="about.insta_desc">Veja fotos, vídeos e testemunhos diários
                                 do Ministério Remissão em Portugal.</p>
                             <a href="https://www.instagram.com/ministerioremissaopt/" target="_blank" rel="noopener"
                                 class="btn btn-outline-gold btn-sm">
-                                <div id="instagramVue"></div> Seguir @ministerioremissaopt
+                                <div id="instagramVue"></div> <span data-i18n="about.insta_btn">Seguir @ministerioremissaopt</span>
                             </a>
                         </div>
 
                         <div class="card-glass">
-                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">🇧🇷 Ministério Brasil</h4>
-                            <p class="card-desc" style="margin-bottom: 1rem;">Conheça a plataforma de origem do
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;" data-i18n="about.br_title">🇧🇷 Ministério Brasil</h4>
+                            <p class="card-desc" style="margin-bottom: 1rem;" data-i18n="about.br_desc">Conheça a plataforma de origem do
                                 ministério no Brasil.</p>
                             <a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener"
                                 class="btn btn-secondary btn-sm">
-                                🌐 Visitar ministerioremissao.com.br
+                                <span data-i18n="about.br_btn">🌐 Visitar ministerioremissao.com.br</span>
                             </a>
                         </div>
                     </div>
@@ -275,9 +275,9 @@
             <!-- ==================== ÁREAS DE ENSINO SECTION ==================== -->
             <section class="section themes-section" id="temas">
                 <div class="section-header">
-                    <span class="section-tag">Fundamentação Bíblica & Ministração</span>
-                    <h2 class="section-title">Áreas de <span class="gold-gradient-text">Ensino Ministradas</span></h2>
-                    <p class="section-subtitle">
+                    <span class="section-tag" data-i18n="themes.tag">Fundamentação Bíblica & Ministração</span>
+                    <h2 class="section-title" data-i18n-html="themes.title">Áreas de <span class="gold-gradient-text">Ensino Ministradas</span></h2>
+                    <p class="section-subtitle" data-i18n="themes.subtitle">
                         Uma imersão profunda que aborda os pilares fundamentais para a completa cura da alma e
                         libertação de jugos espirituais.
                     </p>
@@ -316,7 +316,7 @@
                                 <div class="themes-cta-wrap">
                                     <button class="btn btn-primary btn-themes-cta btn-einscricao-active"
                                         id="themeCtaBtn">
-                                        <span>Saiba mais →</span>
+                                        <span data-i18n="themes.cta_btn">Saiba mais →</span>
                                     </button>
                                 </div>
                             </div>
@@ -424,9 +424,9 @@
             <!-- ==================== TESTIMONIALS SECTION ==================== -->
             <section class="section" id="testemunhos">
                 <div class="section-header">
-                    <span class="section-tag">Testemunhos Reais</span>
-                    <h2 class="section-title">O que Dizem <span class="gold-gradient-text">Nossos Alunos</span></h2>
-                    <p class="section-subtitle">
+                    <span class="section-tag" data-i18n="testimonials.tag">Testemunhos Reais</span>
+                    <h2 class="section-title" data-i18n-html="testimonials.title">O que Dizem <span class="gold-gradient-text">Nossos Alunos</span></h2>
+                    <p class="section-subtitle" data-i18n="testimonials.subtitle">
                         Relatos de pastores, líderes e alunos transformados pelo poder da palavra de Deus.
                     </p>
                 </div>
@@ -440,91 +440,91 @@
             <section class="section" id="levar-igreja">
                 <div class="grid-2" style="align-items: center;">
                     <div>
-                        <span class="section-tag">Expansão Ministerial</span>
-                        <h2 class="section-title">Leve o Seminário para a <span class="gold-gradient-text">Sua
+                        <span class="section-tag" data-i18n="church.tag">Expansão Ministerial</span>
+                        <h2 class="section-title" data-i18n-html="church.title">Leve o Seminário para a <span class="gold-gradient-text">Sua
                                 Igreja</span></h2>
-                        <p class="section-subtitle" style="text-align: left; margin-bottom: 2rem;">
+                        <p class="section-subtitle" style="text-align: left; margin-bottom: 2rem;" data-i18n="church.subtitle">
                             É pastor ou líder ministerial em Portugal ou na Europa? Leve a equipe e apostilas do
                             Ministério Remissão para ministrar cura e libertação na sua igreja local.
                         </p>
 
                         <div class="card-glass" style="margin-bottom: 1.5rem;">
-                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">Suporte Ministerial à Sua
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;" data-i18n="church.card1_title">Suporte Ministerial à Sua
                                 Liderança</h4>
-                            <p class="card-desc">Total sigilo, embasamento bíblico e alinhamento com o pastor local
+                            <p class="card-desc" data-i18n="church.card1_desc">Total sigilo, embasamento bíblico e alinhamento com o pastor local
                                 durante todas as ministrações.</p>
                         </div>
 
                         <div class="card-glass">
-                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;">Para Qualquer Cidade
+                            <h4 style="color: var(--gold-light); margin-bottom: 0.5rem;" data-i18n="church.card2_title">Para Qualquer Cidade
                                 Europeia</h4>
-                            <p class="card-desc">Atendemos igrejas em Portugal, Espanha, França, Suíça, Alemanha e Reino
+                            <p class="card-desc" data-i18n="church.card2_desc">Atendemos igrejas em Portugal, Espanha, França, Suíça, Alemanha e Reino
                                 Unido.</p>
                         </div>
                     </div>
 
                     <div class="form-card">
                         <h3 class="font-serif"
-                            style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;">
+                            style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;" data-i18n="church.form_title">
                             Solicitar Seminário na Minha Igreja
                         </h3>
 
                         <form id="churchHostForm">
                             <div class="form-group">
-                                <label class="form-label" for="chName">Seu Nome Completo *</label>
+                                <label class="form-label" for="chName" data-i18n="church.label_name">Seu Nome Completo *</label>
                                 <input type="text" id="chName" class="form-control" placeholder="Pr. Nome Sobrenome..."
-                                    required>
+                                    data-i18n-placeholder="church.ph_name" required>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="chChurch">Nome da Igreja / Ministério *</label>
+                                <label class="form-label" for="chChurch" data-i18n="church.label_church">Nome da Igreja / Ministério *</label>
                                 <input type="text" id="chChurch" class="form-control"
-                                    placeholder="Ex: Igreja Evangélica em Sintra" required>
+                                    placeholder="Ex: Igreja Evangélica em Sintra" data-i18n-placeholder="church.ph_church" required>
                             </div>
 
                             <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
                                 <div class="form-group">
-                                    <label class="form-label" for="chCity">Cidade *</label>
+                                    <label class="form-label" for="chCity" data-i18n="church.label_city">Cidade *</label>
                                     <input type="text" id="chCity" class="form-control" placeholder="Ex: Sintra"
-                                        required>
+                                        data-i18n-placeholder="church.ph_city" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="chCountry">País *</label>
+                                    <label class="form-label" for="chCountry" data-i18n="church.label_country">País *</label>
                                     <input type="text" id="chCountry" class="form-control" placeholder="Ex: Portugal"
-                                        required>
+                                        data-i18n-placeholder="church.ph_country" required>
                                 </div>
                             </div>
 
                             <div class="grid-2" style="gap: 1rem; margin-bottom: 0;">
                                 <div class="form-group">
-                                    <label class="form-label" for="chPhone">WhatsApp / Telefone *</label>
+                                    <label class="form-label" for="chPhone" data-i18n="church.label_phone">WhatsApp / Telefone *</label>
                                     <input type="tel" id="chPhone" class="form-control" placeholder="+351 928 364 086"
-                                        required>
+                                        data-i18n-placeholder="church.ph_phone" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="chEmail">E-mail *</label>
+                                    <label class="form-label" for="chEmail" data-i18n="church.label_email">E-mail *</label>
                                     <input type="email" id="chEmail" class="form-control"
-                                        placeholder="contato@igreja.pt" required>
+                                        placeholder="contato@igreja.pt" data-i18n-placeholder="church.ph_email" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="chCapacity">Número Estimado de Participantes</label>
+                                <label class="form-label" for="chCapacity" data-i18n="church.label_capacity">Número Estimado de Participantes</label>
                                 <select id="chCapacity" class="form-control">
-                                    <option value="30-50">30 a 50 pessoas</option>
-                                    <option value="50-100">50 a 100 pessoas</option>
-                                    <option value="100-200">100 a 200 pessoas</option>
-                                    <option value="200+">Mais de 200 pessoas</option>
+                                    <option value="30-50" data-i18n="church.cap_opt1">30 a 50 pessoas</option>
+                                    <option value="50-100" data-i18n="church.cap_opt2">50 a 100 pessoas</option>
+                                    <option value="100-200" data-i18n="church.cap_opt3">100 a 200 pessoas</option>
+                                    <option value="200+" data-i18n="church.cap_opt4">Mais de 200 pessoas</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="chMessage">Mensagem / Observações</label>
+                                <label class="form-label" for="chMessage" data-i18n="church.label_message">Mensagem / Observações</label>
                                 <textarea id="chMessage" class="form-control"
-                                    placeholder="Conte-nos sobre sua comunidade e datas pretendidas..."></textarea>
+                                    placeholder="Conte-nos sobre sua comunidade e datas pretendidas..." data-i18n-placeholder="church.ph_message"></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="church.submit_btn">
                                 📩 Enviar Solicitação Pastoral
                             </button>
                         </form>
@@ -535,9 +535,9 @@
             <!-- ==================== PERGUNTAS FREQUENTES SECTION ==================== -->
             <section class="section" id="faq">
                 <div class="section-header">
-                    <span class="section-tag">Esclarecimento de Dúvidas</span>
-                    <h2 class="section-title">Perguntas <span class="gold-gradient-text">Frequentes</span></h2>
-                    <p class="section-subtitle">
+                    <span class="section-tag" data-i18n="faq.tag">Esclarecimento de Dúvidas</span>
+                    <h2 class="section-title" data-i18n-html="faq.title">Perguntas <span class="gold-gradient-text">Frequentes</span></h2>
+                    <p class="section-subtitle" data-i18n="faq.subtitle">
                         Saiba como funcionam os módulos em Sintra, valores, horários e inscrições online no site.
                     </p>
                 </div>
@@ -550,26 +550,23 @@
             <!-- ==================== CONTACTO SECTION ==================== -->
             <section class="section" id="contato">
                 <div class="section-header">
-                    <span class="section-tag">Atendimento Oficial</span>
-                    <h2 class="section-title">Fale Conosco em <span class="gold-gradient-text">Portugal</span></h2>
-                    <p class="section-subtitle">Estamos à disposição para atender você e tirar dúvidas sobre a próxima
+                    <span class="section-tag" data-i18n="contact.tag">Atendimento Oficial</span>
+                    <h2 class="section-title" data-i18n-html="contact.title">Fale Conosco em <span class="gold-gradient-text">Portugal</span></h2>
+                    <p class="section-subtitle" data-i18n="contact.subtitle">Estamos à disposição para atender você e tirar dúvidas sobre a próxima
                         turma em Sintra.</p>
                 </div>
 
                 <div class="grid-3">
                     <a href="https://www.instagram.com/ministerioremissaopt/" target="_blank" class="card-glass"
                         style="text-decoration: none; color: inherit; text-align: center;">
-                        <!-- switch.my_switch:
-  friendly_name: My Switch
-  icon: mdi:instagram -->
                         <div class="card-icon-wrap" style="margin: 0 auto 1.25rem;">
                             <div id="instagramReactContact"
                                 style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                             </div>
                         </div>
-                        <h4 class="card-title">Instagram Oficial</h4>
+                        <h4 class="card-title" data-i18n="contact.insta_title">Instagram Oficial</h4>
                         <p class="card-desc">@ministerioremissaopt</p>
-                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;">Ver Publicações</span>
+                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;" data-i18n="contact.insta_btn">Ver Publicações</span>
                     </a>
 
                     <a href="https://wa.me/351928364086" target="_blank" class="card-glass"
@@ -579,9 +576,9 @@
                                 style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                             </div>
                         </div>
-                        <h4 class="card-title">WhatsApp Oficial</h4>
+                        <h4 class="card-title" data-i18n="contact.wa_title">WhatsApp Oficial</h4>
                         <p class="card-desc">+351 928 364 086</p>
-                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;">Iniciar Conversa</span>
+                        <span class="btn btn-outline-gold btn-sm" style="margin-top: 1rem;" data-i18n="contact.wa_btn">Iniciar Conversa</span>
                     </a>
 
                     <div class="card-glass" style="text-align: center;">
@@ -590,11 +587,11 @@
                                 style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                             </div>
                         </div>
-                        <h4 class="card-title">Local do Seminário (Sintra)</h4>
-                        <p class="card-desc" style="font-size: 0.85rem;">Av. Irene Lisboa, 19 – Armazém A, 2º
+                        <h4 class="card-title" data-i18n="contact.venue_title">Local do Seminário (Sintra)</h4>
+                        <p class="card-desc" style="font-size: 0.85rem;" data-i18n-html="contact.venue_desc">Av. Irene Lisboa, 19 – Armazém A, 2º
                             Piso<br>Sintra – Lisboa</p>
                         <span
-                            style="font-size: 0.8rem; color: var(--gold-light); display: block; margin-top: 1rem;">Base
+                            style="font-size: 0.8rem; color: var(--gold-light); display: block; margin-top: 1rem;" data-i18n="contact.venue_sub">Base
                             Principal Europeia</span>
                     </div>
                 </div>
@@ -604,14 +601,14 @@
             <div
                 style="background: linear-gradient(180deg, var(--bg-dark) 0%, #0E0B08 100%); padding: 4rem 2rem; border-top: 1px solid var(--border-subtle); text-align: center;">
                 <div style="max-width: 800px; margin: 0 auto;">
-                    <h2 class="font-serif" style="font-size: 2.5rem; color: var(--gold-light); margin-bottom: 1rem;">
+                    <h2 class="font-serif" style="font-size: 2.5rem; color: var(--gold-light); margin-bottom: 1rem;" data-i18n="prefooter.title">
                         Garanta sua vaga no Seminário Remissão em Sintra.
                     </h2>
-                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;" data-i18n="prefooter.subtitle">
                         3 Módulos de cura e libertação. Investimento total: €85,00. Inscreva-se com pagamento online
                         seguro.
                     </p>
-                    <button class="btn btn-primary btn-lg btn-einscricao-active">
+                    <button class="btn btn-primary btn-lg btn-einscricao-active" data-i18n-html="prefooter.btn">
                         <span>Garantir Minha Vaga (€85)</span>
                     </button>
                 </div>
@@ -725,6 +722,7 @@
     </main>
 
     <!-- ==================== FOOTER ==================== -->
+    <!-- ==================== FOOTER ==================== -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">
@@ -735,53 +733,53 @@
                     </div>
                     <div class="brand-text">
                         <span class="brand-title">MINISTÉRIO <span class="gold-gradient-text">REMISSÃO</span></span>
-                        <span class="brand-subtitle">EUROPA</span>
+                        <span class="brand-subtitle" data-i18n="nav.brand_sub">EUROPA</span>
                     </div>
                 </a>
-                <p>
+                <p data-i18n="footer.brand_desc">
                     Plataforma oficial do Ministério Remissão em Portugal e Europa. Inscrições oficiais e pagamento
                     seguro disponíveis online no site.
                 </p>
             </div>
 
             <div>
-                <h4 class="footer-title">Navegação</h4>
+                <h4 class="footer-title" data-i18n="footer.col_nav">Navegação</h4>
                 <ul class="footer-links">
-                    <li><a href="#home">Início</a></li>
-                    <li><a href="#sobre">Sobre Nós</a></li>
-                    <li><a href="#temas">Áreas de Ensino</a></li>
-                    <li><a href="#programas">Formações</a></li>
-                    <li><a href="#levar-igreja">Levar à minha Igreja</a></li>
-                    <li><a href="#contato">Contacto</a></li>
+                    <li><a href="#home" data-i18n="footer.nav_home">Início</a></li>
+                    <li><a href="#sobre" data-i18n="footer.nav_about">Sobre Nós</a></li>
+                    <li><a href="#temas" data-i18n="footer.nav_themes">Áreas de Ensino</a></li>
+                    <li><a href="#programas" data-i18n="footer.nav_programs">Formações</a></li>
+                    <li><a href="#levar-igreja" data-i18n="footer.nav_church">Levar à minha Igreja</a></li>
+                    <li><a href="#contato" data-i18n="footer.nav_contact">Contacto</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="footer-title">Links Oficiais</h4>
+                <h4 class="footer-title" data-i18n="footer.col_links">Links Oficiais</h4>
                 <ul class="footer-links">
                     <li><a href="https://www.instagram.com/ministerioremissaopt/" target="_blank"
-                            rel="noopener">Instagram Portugal (@ministerioremissaopt)</a></li>
-                    <li><a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener">Site Oficial
+                            rel="noopener" data-i18n="footer.link_insta">Instagram Portugal (@ministerioremissaopt)</a></li>
+                    <li><a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener" data-i18n="footer.link_br">Site Oficial
                             Brasil</a></li>
-                    <li><a href="#home">Edição Sintra (€85)</a></li>
+                    <li><a href="#home" data-i18n="footer.link_sintra">Edição Sintra (€85)</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="footer-title">Informações Legais</h4>
+                <h4 class="footer-title" data-i18n="footer.col_legal">Informações Legais</h4>
                 <ul class="footer-links">
-                    <li><a href="#" id="privacyPolicyLink">Política de Privacidade</a></li>
-                    <li><a href="#" id="termsOfUseLink">Termos de Uso</a></li>
+                    <li><a href="#" id="privacyPolicyLink" data-i18n="footer.legal_privacy">Política de Privacidade</a></li>
+                    <li><a href="#" id="termsOfUseLink" data-i18n="footer.legal_terms">Termos de Uso</a></li>
                     <!-- Footer Link for Password Protected Admin Panel -->
-                    <li><a href="#admin" id="footerAdminLink" style="color: var(--gold-light); font-weight: 700;">🔐
+                    <li><a href="#admin" id="footerAdminLink" style="color: var(--gold-light); font-weight: 700;" data-i18n="footer.legal_admin">🔐
                             Painel Administrativo</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>&copy; 2026-2027 Ministério Remissão Portugal. Todos os direitos reservados. Efésios 1:7.</div>
-            <div>Desenvolvido por <a href="https://gdsdesign.site/" target="_blank" rel="noopener">GDS Design</a></div>
+            <div data-i18n="footer.copyright">&copy; 2026-2027 Ministério Remissão Portugal. Todos os direitos reservados. Efésios 1:7.</div>
+            <div data-i18n-html="footer.credits">Desenvolvido por <a href="https://gdsdesign.site/" target="_blank" rel="noopener">GDS Design</a></div>
         </div>
     </footer>
 
@@ -796,26 +794,26 @@
                 🔐
             </div>
 
-            <h3 class="font-serif" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.5rem;">
+            <h3 class="font-serif" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.5rem;" data-i18n="modal_admin.title">
                 Acesso Restrito ao Painel Administrativo
             </h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem;">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.75rem;" data-i18n="modal_admin.desc">
                 Digite a senha de administrador do Ministério Remissão Portugal para acessar a área de gestão.
             </p>
 
             <form id="adminAuthForm">
                 <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
-                    <label class="form-label" for="adminPasswordInput">Senha de Acesso</label>
+                    <label class="form-label" for="adminPasswordInput" data-i18n="modal_admin.label_pass">Senha de Acesso</label>
                     <input type="password" id="adminPasswordInput" class="form-control" placeholder="••••••••••••"
-                        required autocomplete="current-password">
+                        required autocomplete="current-password" data-i18n-placeholder="modal_admin.ph_pass">
                 </div>
 
                 <div id="adminAuthError"
-                    style="color: #EF4444; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600;">
+                    style="color: #EF4444; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600;" data-i18n="modal_admin.error">
                     ❌ Senha incorreta. Tente novamente.
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="modal_admin.btn">
                     🔑 Entrar no Painel Administrativo
                 </button>
             </form>
@@ -828,9 +826,9 @@
             <button class="registration-modal-close" id="closeRegistrationModalBtn">&times;</button>
 
             <div class="reg-modal-header">
-                <span class="reg-modal-tag">INSCRIÇÃO OFICIAL</span>
-                <h2 class="reg-modal-title">Seminário Remission to the Nations 2026</h2>
-                <p style="color: #64748B; font-size: 0.95rem; margin-top: 0.25rem;">
+                <span class="reg-modal-tag" data-i18n="modal_reg.tag">INSCRIÇÃO OFICIAL</span>
+                <h2 class="reg-modal-title" data-i18n="modal_reg.title">Seminário Remission to the Nations 2026</h2>
+                <p style="color: #64748B; font-size: 0.95rem; margin-top: 0.25rem;" data-i18n="modal_reg.subtitle">
                     Preencha os dados abaixo para garantir a sua vaga no evento presencial em Sintra — Lisboa.
                 </p>
             </div>
@@ -843,42 +841,42 @@
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
-                        </svg> 1. Dados Pessoais</span>
+                        </svg> <span data-i18n="modal_reg.sec1_title">1. Dados Pessoais</span></span>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.25rem;">
-                    <label class="form-label">Nome Completo <span class="req">*</span></label>
-                    <input type="text" id="regFullName" class="form-input" placeholder="Ex: João Pedro Silva" required>
+                    <label class="form-label"><span data-i18n="modal_reg.label_name">Nome Completo</span> <span class="req">*</span></label>
+                    <input type="text" id="regFullName" class="form-input" placeholder="Ex: João Pedro Silva" data-i18n-placeholder="modal_reg.ph_name" required>
                 </div>
 
                 <div class="form-grid-2" style="margin-bottom: 1.25rem;">
                     <div class="form-group">
-                        <label class="form-label">Email <span class="req">*</span></label>
+                        <label class="form-label"><span data-i18n="modal_reg.label_email">Email</span> <span class="req">*</span></label>
                         <input type="email" id="regEmail" class="form-input" placeholder="seuemail@exemplo.com"
-                            required>
+                            data-i18n-placeholder="modal_reg.ph_email" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Telemóvel / WhatsApp <span class="req">*</span></label>
+                        <label class="form-label"><span data-i18n="modal_reg.label_phone">Telemóvel / WhatsApp</span> <span class="req">*</span></label>
                         <input type="tel" id="regPhone" class="form-input" placeholder="+351 912 345 678" required>
                     </div>
                 </div>
 
                 <div class="form-grid-2" style="margin-bottom: 1.25rem;">
                     <div class="form-group">
-                        <label class="form-label">Data de Nascimento <span class="req">*</span></label>
+                        <label class="form-label"><span data-i18n="modal_reg.label_birth">Data de Nascimento</span> <span class="req">*</span></label>
                         <input type="date" id="regBirthDate" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">País de Residência <span class="req">*</span></label>
+                        <label class="form-label"><span data-i18n="modal_reg.label_country">País de Residência</span> <span class="req">*</span></label>
                         <input type="text" id="regCountry" class="form-input" placeholder="Ex: Portugal"
-                            value="Portugal" required>
+                            value="Portugal" data-i18n-placeholder="modal_reg.ph_country" required>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.25rem;">
-                    <label class="form-label">Cidade <span class="req">*</span></label>
+                    <label class="form-label"><span data-i18n="modal_reg.label_city">Cidade</span> <span class="req">*</span></label>
                     <input type="text" id="regCity" class="form-input" placeholder="Ex: Sintra, Lisboa, Porto..."
-                        required>
+                        data-i18n-placeholder="modal_reg.ph_city" required>
                 </div>
 
                 <!-- 2. CAMISETA OFICIAL INCLUSA CARD SECTION -->
@@ -893,9 +891,9 @@
                                 <line x1="12" y1="22" x2="12" y2="7"></line>
                                 <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
                                 <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                            </svg> Camiseta Oficial Inclusa no Valor da Inscrição</span>
+                            </svg> <span data-i18n="modal_reg.shirt_title">Camiseta Oficial Inclusa no Valor da Inscrição</span></span>
                     </div>
-                    <p class="shirt-gift-text">
+                    <p class="shirt-gift-text" data-i18n-html="modal_reg.shirt_desc">
                         O valor da inscrição (€85) já inclui <strong>1 camiseta oficial do Remission to the Nations
                             Portugal 2026</strong>. Para que possamos providenciar a sua camiseta com excelência,
                         selecione abaixo o tamanho desejado. <em>Após a confirmação da inscrição, não será possível
@@ -903,7 +901,7 @@
                     </p>
 
                     <label class="form-label" style="margin-bottom: 0.75rem; display: block;">
-                        Qual o tamanho da sua camiseta? <span class="req">*</span>
+                        <span data-i18n="modal_reg.shirt_question">Qual o tamanho da sua camiseta?</span> <span class="req">*</span>
                     </label>
 
                     <div class="shirt-size-selector">
@@ -911,7 +909,7 @@
                             <input type="radio" name="shirt_size" value="XS" required>
                             <div class="shirt-option-label">
                                 <span>XS</span>
-                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra P</span>
+                                <span id="shirtLabelXS" style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;" data-i18n="modal_reg.shirt_xs">Extra P</span>
                             </div>
                         </label>
 
@@ -919,7 +917,7 @@
                             <input type="radio" name="shirt_size" value="S" required>
                             <div class="shirt-option-label">
                                 <span>S</span>
-                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Pequeno (P)</span>
+                                <span id="shirtLabelS" style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;" data-i18n="modal_reg.shirt_s">Pequeno (P)</span>
                             </div>
                         </label>
 
@@ -927,7 +925,7 @@
                             <input type="radio" name="shirt_size" value="M" checked required>
                             <div class="shirt-option-label">
                                 <span>M</span>
-                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Médio (M)</span>
+                                <span id="shirtLabelM" style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;" data-i18n="modal_reg.shirt_m">Médio (M)</span>
                             </div>
                         </label>
 
@@ -935,7 +933,7 @@
                             <input type="radio" name="shirt_size" value="L" required>
                             <div class="shirt-option-label">
                                 <span>L</span>
-                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Grande (G)</span>
+                                <span id="shirtLabelL" style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;" data-i18n="modal_reg.shirt_l">Grande (G)</span>
                             </div>
                         </label>
 
@@ -943,7 +941,7 @@
                             <input type="radio" name="shirt_size" value="XL" required>
                             <div class="shirt-option-label">
                                 <span>XL</span>
-                                <span style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;">Extra G</span>
+                                <span id="shirtLabelXL" style="font-size: 0.65rem; font-weight: 500; opacity: 0.8;" data-i18n="modal_reg.shirt_xl">Extra G</span>
                             </div>
                         </label>
                     </div>
@@ -959,17 +957,17 @@
                             <path d="M10 5h4"></path>
                             <path d="M12 14v8"></path>
                             <path d="M10 18h4"></path>
-                        </svg> 2. Dados da sua Igreja</span>
+                        </svg> <span data-i18n="modal_reg.sec2_title">2. Dados da sua Igreja</span></span>
                 </div>
 
                 <div class="form-grid-2" style="margin-bottom: 1.25rem;">
                     <div class="form-group">
-                        <label class="form-label">Nome da sua Igreja</label>
-                        <input type="text" id="regChurch" class="form-input" placeholder="Ex: Igreja Comunidade Cristã">
+                        <label class="form-label" data-i18n="modal_reg.label_church">Nome da sua Igreja</label>
+                        <input type="text" id="regChurch" class="form-input" placeholder="Ex: Igreja Comunidade Cristã" data-i18n-placeholder="modal_reg.ph_church">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Nome do seu Pastor</label>
-                        <input type="text" id="regPastor" class="form-input" placeholder="Ex: Pr. Manuel Ribeiro">
+                        <label class="form-label" data-i18n="modal_reg.label_pastor">Nome do seu Pastor</label>
+                        <input type="text" id="regPastor" class="form-input" placeholder="Ex: Pr. Manuel Ribeiro" data-i18n-placeholder="modal_reg.ph_pastor">
                     </div>
                 </div>
 
@@ -981,47 +979,47 @@
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="16" x2="12" y2="12"></line>
                             <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                        </svg> 3. Informações Adicionais</span>
+                        </svg> <span data-i18n="modal_reg.sec3_title">3. Informações Adicionais</span></span>
                 </div>
 
                 <div class="form-grid-2" style="margin-bottom: 1.25rem;">
                     <div class="form-group">
-                        <label class="form-label">Como conheceu o evento?</label>
+                        <label class="form-label" data-i18n="modal_reg.label_how_found">Como conheceu o evento?</label>
                         <select id="regHowFound" class="form-select">
-                            <option value="Instagram / Redes Sociais">Instagram / Redes Sociais</option>
-                            <option value="Recomendação de Amigos / Família">Recomendação de Amigos / Família</option>
-                            <option value="Indicação da Igreja / Pastor">Indicação da Igreja / Pastor</option>
-                            <option value="Google / Pesquisa Web">Google / Pesquisa Web</option>
-                            <option value="Outro">Outro</option>
+                            <option value="Instagram / Redes Sociais" data-i18n="modal_reg.how_opt1">Instagram / Redes Sociais</option>
+                            <option value="Recomendação de Amigos / Família" data-i18n="modal_reg.how_opt2">Recomendação de Amigos / Família</option>
+                            <option value="Indicação da Igreja / Pastor" data-i18n="modal_reg.how_opt3">Indicação da Igreja / Pastor</option>
+                            <option value="Google / Pesquisa Web" data-i18n="modal_reg.how_opt4">Google / Pesquisa Web</option>
+                            <option value="Outro" data-i18n="modal_reg.how_opt5">Outro</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Já participou do Seminário Remissão?</label>
+                        <label class="form-label" data-i18n="modal_reg.label_prev_part">Já participou do Seminário Remissão?</label>
                         <select id="regPreviousParticipant" class="form-select">
-                            <option value="Não, será minha 1ª vez">Não, será minha 1ª vez</option>
-                            <option value="Sim, no Brasil">Sim, no Brasil</option>
-                            <option value="Sim, em Portugal">Sim, em Portugal</option>
+                            <option value="Não, será minha 1ª vez" data-i18n="modal_reg.prev_opt1">Não, será minha 1ª vez</option>
+                            <option value="Sim, no Brasil" data-i18n="modal_reg.prev_opt2">Sim, no Brasil</option>
+                            <option value="Sim, em Portugal" data-i18n="modal_reg.prev_opt3">Sim, em Portugal</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.25rem;">
-                    <label class="form-label">Observações ou pedidos de oração (opcional)</label>
+                    <label class="form-label" data-i18n="modal_reg.label_notes">Observações ou pedidos de oração (opcional)</label>
                     <textarea id="regNotes" class="form-textarea" rows="2"
-                        placeholder="Escreva aqui se tiver alguma observação específica..."></textarea>
+                        placeholder="Escreva aqui se tiver alguma observação específica..." data-i18n-placeholder="modal_reg.ph_notes"></textarea>
                 </div>
 
                 <!-- RGPD Checkbox -->
                 <div class="rgpd-checkbox-box">
                     <input type="checkbox" id="regRgpdAccepted" required>
                     <label for="regRgpdAccepted">
-                        Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para
-                        efeitos de gestão da inscrição conforme o RGPD. <span class="req">*</span>
+                        <span data-i18n="modal_reg.rgpd_text">Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para
+                        efeitos de gestão da inscrição conforme o RGPD.</span> <span class="req">*</span>
                     </label>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn-submit-registration" id="btnSubmitRegistration">
+                <button type="submit" class="btn-submit-registration" id="btnSubmitRegistration" data-i18n-html="modal_reg.submit_btn">
                     <span>Continuar para Pagamento (€85) →</span>
                 </button>
             </form>
@@ -1032,7 +1030,7 @@
     <div class="modal-overlay" id="shareModal">
         <div class="modal-dialog">
             <button class="modal-close" id="closeShareModal">&times;</button>
-            <h3 class="font-serif" style="font-size: 1.6rem; color: var(--gold-light); margin-bottom: 1rem;">
+            <h3 class="font-serif" style="font-size: 1.6rem; color: var(--gold-light); margin-bottom: 1rem;" data-i18n="modal_share.title">
                 Compartilhar Evento
             </h3>
 
@@ -1041,10 +1039,10 @@
             </div>
 
             <div class="grid-2" style="gap: 0.75rem;">
-                <button class="btn btn-secondary btn-sm" id="shareWaBtn">📱 WhatsApp</button>
-                <button class="btn btn-secondary btn-sm" id="shareFbBtn">📘 Facebook</button>
-                <button class="btn btn-secondary btn-sm" id="shareTgBtn">✈️ Telegram</button>
-                <button class="btn btn-secondary btn-sm" id="shareCopyBtn">📋 Copiar Link</button>
+                <button class="btn btn-secondary btn-sm" id="shareWaBtn" data-i18n="modal_share.wa_btn">📱 WhatsApp</button>
+                <button class="btn btn-secondary btn-sm" id="shareFbBtn" data-i18n="modal_share.fb_btn">📘 Facebook</button>
+                <button class="btn btn-secondary btn-sm" id="shareTgBtn" data-i18n="modal_share.tg_btn">✈️ Telegram</button>
+                <button class="btn btn-secondary btn-sm" id="shareCopyBtn" data-i18n="modal_share.copy_btn">📋 Copiar Link</button>
             </div>
         </div>
     </div>
@@ -1053,7 +1051,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Script File -->
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=15"></script>
 </body>
 
 </html>
