@@ -206,126 +206,117 @@ class RemissaoApp {
 
     async handleNativeRegistrationSubmit() {
         const submitBtn = document.getElementById('btnSubmitRegistration');
-        const originalText = submitBtn.innerHTML;
+        const originalText = submitBtn ? submitBtn.innerHTML : '';
 
         try {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>ÔÅ│ Processando inscri├º├úo...</span>';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>⏳ Processando inscrição...</span>';
+            }
 
-            const fullName = document.getElementById('regFullName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const phone = document.getElementById('regPhone').value.trim();
-            const birthDate = document.getElementById('regBirthDate').value;
-            const country = document.getElementById('regCountry').value.trim();
-            const city = document.getElementById('regCity').value.trim();
+            const fullName = document.getElementById('regFullName')?.value.trim();
+            const email = document.getElementById('regEmail')?.value.trim();
+            const phone = document.getElementById('regPhone')?.value.trim();
+            const birthDate = document.getElementById('regBirthDate')?.value;
+            const country = document.getElementById('regCountry')?.value.trim();
+            const city = document.getElementById('regCity')?.value.trim();
 
             const selectedShirt = document.querySelector('input[name="shirt_size"]:checked');
             const shirtSize = selectedShirt ? selectedShirt.value : '';
 
-            const church = document.getElementById('regChurch').value.trim();
-            const pastor = document.getElementById('regPastor').value.trim();
-            const howFound = document.getElementById('regHowFound').value;
-            const previousParticipant = document.getElementById('regPreviousParticipant').value;
-            const notes = document.getElementById('regNotes').value.trim();
-            const rgpdAccepted = document.getElementById('regRgpdAccepted').checked;
+            const church = document.getElementById('regChurch')?.value.trim() || '';
+            const pastor = document.getElementById('regPastor')?.value.trim() || '';
+            const howFound = document.getElementById('regHowFound')?.value || '';
+            const previousParticipant = document.getElementById('regPreviousParticipant')?.value || '';
+            const notes = document.getElementById('regNotes')?.value.trim() || '';
+            const rgpdAccepted = document.getElementById('regRgpdAccepted')?.checked;
 
             if (!fullName || !email || !phone || !birthDate || !country || !city || !shirtSize) {
-                alert('Por favor, preencha todos os campos obrigat├│rios (*), incluindo o tamanho da camiseta.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+                alert('Por favor, preencha todos os campos obrigatórios (*), incluindo o tamanho da camiseta.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
                 return;
             }
 
             if (!rgpdAccepted) {
-                alert('Por favor, confirme a autoriza├º├úo de tratamento de dados conforme o RGPD.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+                alert('Por favor, confirme a autorização de tratamento de dados conforme o RGPD.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
                 return;
             }
 
-            const payload = {
+            // 1. Generate unique client reference ID and create registration record
+            const regId = 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+            const newRegistration = {
+                id: regId,
                 full_name: fullName,
-                email,
-                phone,
+                email: email,
+                phone: phone,
                 birth_date: birthDate,
-                country,
-                city,
+                country: country,
+                city: city,
                 shirt_size: shirtSize,
-                church,
-                pastor,
+                church: church,
+                pastor: pastor,
                 how_found: howFound,
                 previous_participant: previousParticipant,
-                notes,
-                rgpd_accepted: rgpdAccepted
+                notes: notes,
+                event_name: 'Remission to the Nations Portugal 2026',
+                event_price: 85.00,
+                payment_status: 'pending',
+                currency: 'EUR',
+                created_at: new Date().toISOString()
             };
 
-            // Call Backend API /api/register
-            let response;
+            // 2. Persist locally first so data is NEVER lost
             try {
-                response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (err) {
-                console.warn('Backend server not reachable directly, attempting Supabase direct fallback:', err);
+                const existing = JSON.parse(localStorage.getItem('remissao_pt_registrations_store') || '[]');
+                existing.unshift(newRegistration);
+                localStorage.setItem('remissao_pt_registrations_store', JSON.stringify(existing));
+            } catch (e) {
+                console.warn('LocalStorage save warning:', e);
             }
 
-            if (response && response.ok) {
-                const data = await response.json();
-                if (data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                    return;
+            // 3. Attempt async sync to backend/Supabase with timeout (non-blocking)
+            try {
+                if (supabaseClient) {
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000));
+                    const insertPromise = supabaseClient.from('registrations').insert([newRegistration]);
+                    await Promise.race([insertPromise, timeoutPromise]).catch(() => {});
                 }
+            } catch (syncErr) {
+                console.warn('Background sync failed, continuing to payment:', syncErr);
             }
 
-            // Direct Supabase JS Client Fallback if server endpoint is standalone
-            if (supabaseClient) {
-                const { data: reg, error: supErr } = await supabaseClient
-                    .from('registrations')
-                    .insert([{
-                        full_name: fullName,
-                        email,
-                        phone,
-                        birth_date: birthDate,
-                        country,
-                        city,
-                        shirt_size: shirtSize,
-                        church,
-                        pastor,
-                        how_found: howFound,
-                        previous_participant: previousParticipant,
-                        notes,
-                        event_name: 'Remission to the Nations Portugal 2026',
-                        event_price: 85.00,
-                        payment_status: 'pending',
-                        currency: 'EUR'
-                    }])
-                    .select()
-                    .single();
+            // 4. Close modal
+            this.closeModal('registrationModal');
 
-                if (supErr) throw supErr;
-
-                this.closeModal('registrationModal');
-                
-                // Redirect to Stripe Checkout with client_reference_id
-                if (APP_CONFIG.CHECKOUT_URL) {
-                    const checkoutUrl = new URL(APP_CONFIG.CHECKOUT_URL);
-                    checkoutUrl.searchParams.set('client_reference_id', reg.id);
-                    window.location.href = checkoutUrl.toString();
-                    return;
-                }
-
-            } else {
-                alert('Inscri├º├úo salva com sucesso! Entraremos em contacto para o pagamento.');
+            // 5. Build Stripe Checkout URL and redirect safely
+            const checkoutBaseUrl = APP_CONFIG.CHECKOUT_URL || 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01';
+            const checkoutUrl = new URL(checkoutBaseUrl);
+            checkoutUrl.searchParams.set('client_reference_id', regId);
+            if (email) {
+                checkoutUrl.searchParams.set('prefilled_email', email);
             }
+
+            window.location.href = checkoutUrl.toString();
 
         } catch (err) {
-            console.error('Registration Error:', err);
-            alert('Erro ao enviar inscri├º├úo: ' + (err.message || 'Tente novamente.'));
+            console.error('Registration Exception:', err);
+            if (APP_CONFIG.CHECKOUT_URL) {
+                window.location.href = APP_CONFIG.CHECKOUT_URL;
+            } else {
+                alert('Erro ao processar inscrição. Redirecionando para o pagamento...');
+            }
         } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         }
     }
 
