@@ -81,9 +81,9 @@ const I18N = {
     pt: {
         dropdown_label: 'PT',
         announcement: {
-            badge: '✨ Inscrições Abertas',
-            text: 'Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) • Investimento: €85,00',
-            cta: 'Inscrever-me agora'
+            badge: '✨ EM BREVE',
+            text: 'Seminário Remissão • <strong>1º Semestre de 2027</strong> • Novas inscrições em breve',
+            cta: 'Conhecer o Seminário'
         },
         nav: {
             brand_sub: 'EUROPA',
@@ -94,15 +94,15 @@ const I18N = {
             church: 'Levar à minha Igreja',
             faq: 'Perguntas Frequentes',
             contact: 'Contacto',
-            register: '⚡ Inscrever-me'
+            register: '⚡ Inscrições em Breve'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
             title: 'Cura <span class="gold-gradient-text">da Alma</span> & Libertação em Portugal.',
             subtitle: 'Através de um ensino bíblico sólido e de ministrações direcionadas, ajudamos pessoas a romper cadeias espirituais, restaurar a identidade em Cristo e viver a liberdade que Jesus conquistou na cruz.',
-            cta_register: 'Inscrever-me Agora',
-            cta_seminar: 'Conhecer o Seminário',
-            guarantee: '🔒 Inscrição e pagamento online 100% seguros diretamente no site',
+            cta_register: 'Conhecer o Seminário',
+            cta_seminar: 'Ver Informações',
+            guarantee: '✨ Em breve abrirão as inscrições para a turma do 1º semestre de 2027.',
             stat1_label: 'VIDAS ALCANÇADAS NO BRASIL',
             stat2_label: 'ANOS DE MINISTÉRIO'
         },
@@ -153,14 +153,14 @@ const I18N = {
             subtitle: 'Relatos de pastores, líderes e alunos transformados pelo poder da palavra de Deus.',
             items: [
                 {
-                    quote: '"Participar do Seminário Remir em Sintra transformou radicalmente minha visão sobre paternidade e cativeiros espirituais. Fui verdadeiramente liberto."',
+                    quote: '"Participar do Seminário Remir transformou radicalmente minha visão sobre paternidade e cativeiros espirituais. Fui verdadeiramente liberto."',
                     name: 'Pr. Carlos Mendes',
                     role: 'Líder Ministerial em Lisboa'
                 },
                 {
-                    quote: '"As ministrações sobre cura de rejeição e abusos do passado curaram feridas que eu carregava há mais de 15 anos. Glória a Deus por este ministério em Portugal!"',
+                    quote: '"As ministrações sobre cura de rejeição e abusos do passado curaram feridas que eu carregava há mais de 15 anos. Glória a Deus por este ministério!"',
                     name: 'Ana Sofia Ribeiro',
-                    role: 'Aluna da Turma de Sintra'
+                    role: 'Aluna do Seminário Remissão'
                 },
                 {
                     quote: '"Receber a equipe do Ministério Remissão na nossa comunidade trouxe um avivamento de libertação e cura entre nossas famílias."',
@@ -203,26 +203,18 @@ const I18N = {
         faq: {
             tag: 'Esclarecimento de Dúvidas',
             title: 'Perguntas <span class="gold-gradient-text">Frequentes</span>',
-            subtitle: 'Saiba como funcionam os módulos em Sintra, valores, horários e inscrições online no site.',
+            subtitle: 'Esclarecimentos sobre o funcionamento do Seminário Remissão.',
             items: [
                 {
-                    q: 'Onde acontecem os módulos presenciais em Portugal?',
-                    a: 'A edição principal acontece em Sintra - Lisboa, no endereço: Av. Irene Lisboa, 19 – Armazém A, 2º Piso, Sintra – Lisboa.'
+                    q: 'Quando serão abertas as novas inscrições?',
+                    a: 'As inscrições para a próxima turma do Seminário Remissão serão abertas em breve para o 1º semestre de 2027. Acompanhe nossas redes sociais para receber as novidades.'
                 },
                 {
-                    q: 'Como é realizado o pagamento e a inscrição?',
-                    a: 'Toda a inscrição é realizada diretamente aqui no site com pagamento online seguro via Stripe. O investimento único para os 3 módulos presenciais é de €85.'
+                    q: 'Como funciona a estrutura do Seminário Remissão?',
+                    a: 'Durante 3 meses, ministramos temas de libertação e cura da alma em 10 ministrações presenciais e o encerramento com um Retiro de três dias.'
                 },
                 {
-                    q: 'Quais são as datas e horários dos 3 Módulos em Sintra?',
-                    a: 'O seminário é dividido em 3 Módulos presenciais: 1º Módulo (02 e 03 de Outubro), 2º Módulo (16 e 17 de Outubro) e 3º Módulo (23 e 24 de Outubro). Horários: Sextas às 20h00 e Sábados às 09h30.'
-                },
-                {
-                    q: 'Qual o valor do investimento para os 3 Módulos?',
-                    a: 'O valor total do investimento é de €85,00 por participante, cobrindo o acesso aos 3 módulos e material ministrado.'
-                },
-                {
-                    q: 'Como posso levar o Seminário Remir para a minha igreja?',
+                    q: 'Como posso levar o Seminário para a minha igreja?',
                     a: 'Pastores e líderes podem solicitar a realização do seminário em sua igreja local acessando o menu "Levar à minha Igreja" e preenchendo o formulário de contato ministerial.'
                 }
             ]
@@ -230,22 +222,22 @@ const I18N = {
         contact: {
             tag: 'Atendimento Oficial',
             title: 'Fale Conosco em <span class="gold-gradient-text">Portugal</span>',
-            subtitle: 'Estamos à disposição para atender você e tirar dúvidas sobre a próxima turma em Sintra.',
+            subtitle: 'Estamos à disposição para atender você e tirar dúvidas sobre as próximas turmas.',
             insta_title: 'Instagram Oficial',
             insta_btn: 'Ver Publicações',
             wa_title: 'WhatsApp Oficial',
             wa_btn: 'Iniciar Conversa',
-            venue_title: 'Local do Seminário (Sintra)',
+            venue_title: 'Base do Seminário (Sintra)',
             venue_desc: 'Av. Irene Lisboa, 19 – Armazém A, 2º Piso<br>Sintra – Lisboa',
             venue_sub: 'Base Principal Europeia'
         },
         prefooter: {
-            title: 'Garanta sua vaga no Seminário Remissão em Sintra.',
-            subtitle: '3 Módulos de cura e libertação. Investimento total: €85,00. Inscreva-se com pagamento online seguro.',
-            btn: '<span>Garantir Minha Vaga (€85)</span>'
+            title: 'Seminário Remissão',
+            subtitle: 'Em breve abrirão as inscrições para a turma do 1º semestre de 2027.',
+            btn: '<span>Conhecer o Seminário</span>'
         },
         footer: {
-            brand_desc: 'Plataforma oficial do Ministério Remissão em Portugal e Europa. Inscrições oficiais e pagamento seguro disponíveis online no site.',
+            brand_desc: 'Plataforma oficial do Ministério Remissão em Portugal e Europa. Restaurando vidas, curando a alma e proclamando libertação em Cristo. Efésios 1:7.',
             col_nav: 'Navegação',
             nav_home: 'Início',
             nav_about: 'Sobre Nós',
@@ -256,7 +248,7 @@ const I18N = {
             col_links: 'Links Oficiais',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Site Oficial Brasil',
-            link_sintra: 'Edição Sintra (€85)',
+            link_sintra: 'Seminário Remissão (Inscrições em Breve)',
             col_legal: 'Informações Legais',
             legal_privacy: 'Política de Privacidade',
             legal_terms: 'Termos de Uso',
@@ -266,8 +258,8 @@ const I18N = {
         },
         modal_reg: {
             tag: 'INSCRIÇÃO OFICIAL',
-            title: 'Seminário Remission to the Nations 2026',
-            subtitle: 'Preencha os dados abaixo para garantir a sua vaga no evento presencial em Sintra — Lisboa.',
+            title: 'Seminário Remissão',
+            subtitle: 'Em breve abrirão as novas inscrições para a turma do 1º semestre de 2027.',
             sec1_title: '1. Dados Pessoais',
             label_name: 'Nome Completo',
             ph_name: 'Ex: João Pedro Silva',
@@ -279,8 +271,8 @@ const I18N = {
             ph_country: 'Ex: Portugal',
             label_city: 'Cidade',
             ph_city: 'Ex: Sintra, Lisboa, Porto...',
-            shirt_title: 'Camiseta Oficial Inclusa no Valor da Inscrição',
-            shirt_desc: 'O valor da inscrição (€85) já inclui <strong>1 camiseta oficial do Remission to the Nations Portugal 2026</strong>. Para que possamos providenciar a sua camiseta com excelência, selecione abaixo o tamanho desejado. <em>Após a confirmação da inscrição, não será possível alterar o tamanho escolhido.</em>',
+            shirt_title: 'Camiseta Oficial Inclusa',
+            shirt_desc: 'As inscrições para o 1º semestre de 2027 serão abertas em breve.',
             shirt_question: 'Qual o tamanho da sua camiseta?',
             shirt_xs: 'Extra P',
             shirt_s: 'Pequeno (P)',
@@ -306,11 +298,11 @@ const I18N = {
             label_notes: 'Observações ou pedidos de oração (opcional)',
             ph_notes: 'Escreva aqui se tiver alguma observação específica...',
             rgpd_text: 'Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para efeitos de gestão da inscrição conforme o RGPD.',
-            submit_btn: '<span>Continuar para Pagamento (€85) →</span>',
-            val_required: 'Por favor, preencha todos os campos obrigatórios (*), incluindo o tamanho da camiseta.',
+            submit_btn: '<span>Enviar Inscrição →</span>',
+            val_required: 'Por favor, preencha todos os campos obrigatórios (*).',
             val_rgpd: 'Por favor, confirme a autorização de tratamento de dados conforme o RGPD.',
             processing: '<span>⏳ Processando inscrição...</span>',
-            direct_success: 'Inscrição salva com sucesso! Entraremos em contacto para o pagamento.',
+            direct_success: 'Inscrição registrada! Entraremos em contacto assim que abrirem as vagas.',
             error_prefix: 'Erro ao enviar inscrição: '
         },
         modal_admin: {
@@ -337,9 +329,9 @@ const I18N = {
     en: {
         dropdown_label: 'EN',
         announcement: {
-            badge: '✨ Registration Open',
-            text: 'Remission to the Nations 2026/2027: <strong>Sintra - Lisbon</strong> (3 Modules) • Investment: €85.00',
-            cta: 'Register now'
+            badge: '✨ COMING SOON',
+            text: 'Remission Seminar • <strong>1st Semester of 2027</strong> • New registrations coming soon',
+            cta: 'Learn More'
         },
         nav: {
             brand_sub: 'EUROPE',
@@ -350,47 +342,47 @@ const I18N = {
             church: 'Bring to My Church',
             faq: 'FAQ',
             contact: 'Contact',
-            register: '⚡ Register'
+            register: '⚡ Registrations Soon'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
-            title: 'Soul <span class="gold-gradient-text">Healing</span> & Deliverance in Portugal.',
-            subtitle: 'Through solid biblical teaching and targeted ministrations, we help people break spiritual chains, restore their identity in Christ, and live the freedom Jesus won on the cross.',
-            cta_register: 'Register Now',
-            cta_seminar: 'Explore the Seminar',
-            guarantee: '🔒 100% secure online registration and payment directly on the website',
-            stat1_label: 'LIVES IMPACTED IN BRAZIL',
+            title: 'Soul <span class="gold-gradient-text">Healing</span> & Deliverance.',
+            subtitle: 'Through solid biblical teaching and targeted ministrations, we help people break spiritual strongholds, restore identity in Christ, and experience divine freedom.',
+            cta_register: 'Learn More',
+            cta_seminar: 'View Information',
+            guarantee: '✨ Registrations for the 1st semester of 2027 class will open soon.',
+            stat1_label: 'LIVES REACHED IN BRAZIL',
             stat2_label: 'YEARS OF MINISTRY'
         },
         about: {
             tag: 'Our Journey',
             title: 'From Brazil to Portugal and <span class="gold-gradient-text">All of Europe</span>',
-            subtitle: 'With a consolidated base in Joinville (Brazil) and thousands of restored lives, Ministério Remissão expands its official mission to Portugal.',
+            subtitle: 'With a consolidated base in Joinville (Brazil) and thousands of lives restored, Ministério Remissão expands its official mission to Europe.',
             card_title: 'Serving the Body of Christ',
-            card_desc: 'Our mission is to assist children of God who, even after confessing faith in Christ Jesus, continue to suffer from the adversities and spiritual strongholds of this world.',
+            card_desc: 'Our mission is to help God\'s children break spiritual prisons and walk in emotional and spiritual freedom.',
             t1_title: 'Consolidation in Brazil',
-            t1_desc: 'Years of ministry in Joinville and São Francisco do Sul training intercessors and restoring thousands of lives.',
+            t1_desc: 'Years of ministration in Joinville forming intercessors and restoring thousands of lives.',
             t2_title: '2026/2027 - Sintra, Portugal',
-            t2_desc: 'Establishment of the European base at Av. Irene Lisboa, 19, Sintra – Lisbon, opening international classes.',
+            t2_desc: 'Installation of the European base in Sintra – Lisbon, opening international classes.',
             t3_title: 'European Expansion',
             t3_desc: 'Bringing seminars to Porto, Lisbon, Braga, Faro, Coimbra, and European nations.',
             insta_title: 'Follow on Instagram',
-            insta_desc: 'See daily photos, videos, and testimonies from Ministério Remissão in Portugal.',
+            insta_desc: 'See photos, videos, and daily testimonies of Ministério Remissão in Portugal.',
             insta_btn: 'Follow @ministerioremissaopt',
             br_title: '🇧🇷 Brazil Ministry',
-            br_desc: 'Discover the founding platform of the ministry in Brazil.',
+            br_desc: 'Learn about the origin platform of the ministry in Brazil.',
             br_btn: '🌐 Visit ministerioremissao.com.br'
         },
         themes: {
             tag: 'Biblical Foundation & Ministration',
-            title: 'Teaching <span class="gold-gradient-text">Areas Covered</span>',
-            subtitle: 'A deep immersion covering the fundamental pillars for complete soul healing and deliverance from spiritual bondages.',
+            title: 'Taught <span class="gold-gradient-text">Teaching Areas</span>',
+            subtitle: 'A deep immersion addressing fundamental pillars for complete soul healing and deliverance.',
             cta_btn: 'Learn more →',
             items: [
-                { badge: 'THEME 01', titulo: 'PATERNITY', descricao: 'Healing of inner orphanhood, restoration of the Heavenly Father’s image, and acceptance as a beloved child of God.' },
-                { badge: 'THEME 02', titulo: 'REJECTION', descricao: 'Deliverance from wounds of abandonment, betrayal, inferiority complexes, and childhood trauma.' },
-                { badge: 'THEME 03', titulo: 'SPIRITUAL CAPTIVITY', descricao: 'Identification and breaking of soul prisons, spiritual bondages, and generational chains.' },
-                { badge: 'THEME 04', titulo: 'RELATIONSHIPS', descricao: 'Healing of toxic bonds, marital restoration, family alignment, and forgiveness of offenses.' },
+                { badge: 'THEME 01', titulo: 'FATHERHOOD', descricao: 'Healing inner orphanhood, restoring the image of the Heavenly Father, and receiving filial identity.' },
+                { badge: 'THEME 02', titulo: 'REJECTION', descricao: 'Deliverance from wounds of abandonment, betrayal, inferiority complex, and childhood trauma.' },
+                { badge: 'THEME 03', titulo: 'SPIRITUAL CAPTIVITIES', descricao: 'Identifying and breaking soul prisons, spiritual ties, and generational chains.' },
+                { badge: 'THEME 04', titulo: 'RELATIONSHIPS', descricao: 'Healing toxic bonds, marital restoration, family alignment, and forgiveness of offenses.' },
                 { badge: 'THEME 05', titulo: 'CHARACTER', descricao: 'Mind transformation, fruit of the Spirit, integrity, and putting to death the deeds of the flesh.' },
                 { badge: 'THEME 06', titulo: 'FINANCES', descricao: 'Breaking spirits of scarcity, the devourer, financial curses, and biblical principles of prosperity.' },
                 { badge: 'THEME 07', titulo: 'SEXUALITY', descricao: 'Cleansing from immorality, pornography, sexual deviations, and healing memories of past abuse.' },
@@ -409,14 +401,14 @@ const I18N = {
             subtitle: 'Accounts of pastors, leaders, and students transformed by the power of God’s word.',
             items: [
                 {
-                    quote: '"Participating in the Remission Seminar in Sintra radically transformed my perspective on fatherhood and spiritual strongholds. I was truly set free."',
+                    quote: '"Participating in the Remission Seminar radically transformed my perspective on fatherhood and spiritual strongholds."',
                     name: 'Pr. Carlos Mendes',
                     role: 'Ministerial Leader in Lisbon'
                 },
                 {
-                    quote: '"The ministrations on healing from rejection and past abuse healed wounds I had carried for over 15 years. Glory to God for this ministry in Portugal!"',
+                    quote: '"The ministrations on healing from rejection and past abuse healed wounds I had carried for over 15 years. Glory to God!"',
                     name: 'Ana Sofia Ribeiro',
-                    role: 'Student of Sintra Class'
+                    role: 'Student of Remission Seminar'
                 },
                 {
                     quote: '"Welcoming the team of Ministério Remissão into our community brought a revival of deliverance and healing among our families."',
@@ -428,21 +420,21 @@ const I18N = {
         church: {
             tag: 'Ministerial Expansion',
             title: 'Bring the Seminar to <span class="gold-gradient-text">Your Church</span>',
-            subtitle: 'Are you a pastor or ministerial leader in Portugal or Europe? Bring the team and workbooks of Ministério Remissão to minister healing and deliverance in your local church.',
-            card1_title: 'Ministerial Support for Your Leadership',
-            card1_desc: 'Complete confidentiality, biblical foundation, and alignment with the local pastor throughout all ministrations.',
+            subtitle: 'Are you a pastor or leader? Bring the team of Ministério Remissão to minister in your local church.',
+            card1_title: 'Ministerial Support',
+            card1_desc: 'Complete confidentiality and biblical alignment with local pastorship.',
             card2_title: 'For Any European City',
-            card2_desc: 'We serve churches in Portugal, Spain, France, Switzerland, Germany, and the United Kingdom.',
+            card2_desc: 'Serving churches across Portugal and Europe.',
             form_title: 'Request Seminar at My Church',
             label_name: 'Your Full Name *',
-            ph_name: 'Pastor Name Surname...',
-            label_church: 'Church / Ministry Name *',
-            ph_church: 'E.g., Evangelical Church in Sintra',
+            ph_name: 'Pastor Name...',
+            label_church: 'Church Name *',
+            ph_church: 'E.g., Evangelical Church',
             label_city: 'City *',
             ph_city: 'E.g., Sintra',
             label_country: 'Country *',
             ph_country: 'E.g., Portugal',
-            label_phone: 'WhatsApp / Phone *',
+            label_phone: 'WhatsApp *',
             ph_phone: '+351 928 364 086',
             label_email: 'Email *',
             ph_email: 'contact@church.pt',
@@ -451,31 +443,23 @@ const I18N = {
             cap_opt2: '50 to 100 people',
             cap_opt3: '100 to 200 people',
             cap_opt4: 'More than 200 people',
-            label_message: 'Message / Notes',
-            ph_message: 'Tell us about your community and intended dates...',
+            label_message: 'Message',
+            ph_message: 'Tell us about your community...',
             submit_btn: '📩 Send Pastoral Request',
-            success_toast: '✅ Pastoral request sent successfully! We will contact you via WhatsApp.'
+            success_toast: '✅ Request sent successfully!'
         },
         faq: {
-            tag: 'Frequently Asked Questions',
+            tag: 'FAQ',
             title: 'Frequently Asked <span class="gold-gradient-text">Questions</span>',
-            subtitle: 'Learn how the modules in Sintra work, pricing, schedules, and online registration on the website.',
+            subtitle: 'Information about the Remission Seminar.',
             items: [
                 {
-                    q: 'Where do the in-person modules take place in Portugal?',
-                    a: 'The main edition takes place in Sintra - Lisbon, at the address: Av. Irene Lisboa, 19 – Warehouse A, 2nd Floor, Sintra – Lisbon.'
+                    q: 'When will registrations open?',
+                    a: 'Registrations for the 1st semester of 2027 class will open soon. Follow our social media for updates.'
                 },
                 {
-                    q: 'How are payment and registration completed?',
-                    a: 'All registration is completed directly here on the website with secure online payment via Stripe. The single investment for all 3 in-person modules is €85.'
-                },
-                {
-                    q: 'What are the dates and times for the 3 Modules in Sintra?',
-                    a: 'The seminar is divided into 3 in-person Modules: Module 1 (October 02 & 03), Module 2 (October 16 & 17), and Module 3 (October 23 & 24). Schedule: Fridays at 8:00 PM and Saturdays at 9:30 AM.'
-                },
-                {
-                    q: 'What is the investment cost for all 3 Modules?',
-                    a: 'The total investment cost is €85.00 per participant, covering access to all 3 modules and ministered course materials.'
+                    q: 'How does the Remission Seminar work?',
+                    a: 'Over 3 months, we teach soul healing and deliverance themes across 10 in-person sessions concluding with a 3-day Retreat.'
                 },
                 {
                     q: 'How can I bring the Remission Seminar to my church?',
@@ -486,22 +470,22 @@ const I18N = {
         contact: {
             tag: 'Official Support',
             title: 'Contact Us in <span class="gold-gradient-text">Portugal</span>',
-            subtitle: 'We are available to assist you and answer any questions regarding the upcoming class in Sintra.',
+            subtitle: 'We are available to assist you regarding upcoming classes.',
             insta_title: 'Official Instagram',
             insta_btn: 'View Posts',
             wa_title: 'Official WhatsApp',
             wa_btn: 'Start Chat',
-            venue_title: 'Seminar Venue (Sintra)',
+            venue_title: 'Seminar Base (Sintra)',
             venue_desc: 'Av. Irene Lisboa, 19 – Warehouse A, 2nd Floor<br>Sintra – Lisbon',
             venue_sub: 'Main European Base'
         },
         prefooter: {
-            title: 'Secure your place at the Remission Seminar in Sintra.',
-            subtitle: '3 Modules of healing and deliverance. Total investment: €85.00. Register with secure online payment.',
-            btn: '<span>Secure My Spot (€85)</span>'
+            title: 'Remission Seminar',
+            subtitle: 'Registrations for the 1st semester of 2027 class will open soon.',
+            btn: '<span>Learn More</span>'
         },
         footer: {
-            brand_desc: 'Official platform of Ministério Remissão in Portugal and Europe. Official registration and secure payment available online on the website.',
+            brand_desc: 'Official platform of Ministério Remissão in Portugal and Europe. Restoring lives, healing the soul, and proclaiming deliverance in Christ. Ephesians 1:7.',
             col_nav: 'Navigation',
             nav_home: 'Home',
             nav_about: 'About Us',
@@ -512,7 +496,7 @@ const I18N = {
             col_links: 'Official Links',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Official Brazil Website',
-            link_sintra: 'Sintra Edition (€85)',
+            link_sintra: 'Remission Seminar (Coming Soon)',
             col_legal: 'Legal Information',
             legal_privacy: 'Privacy Policy',
             legal_terms: 'Terms of Use',
@@ -522,8 +506,8 @@ const I18N = {
         },
         modal_reg: {
             tag: 'OFFICIAL REGISTRATION',
-            title: 'Seminar Remission to the Nations 2026',
-            subtitle: 'Fill in the details below to secure your spot at the in-person event in Sintra — Lisbon.',
+            title: 'Remission Seminar',
+            subtitle: 'Registrations for the 1st semester of 2027 class will open soon.',
             sec1_title: '1. Personal Information',
             label_name: 'Full Name',
             ph_name: 'E.g., John Smith',
@@ -535,8 +519,8 @@ const I18N = {
             ph_country: 'E.g., Portugal',
             label_city: 'City',
             ph_city: 'E.g., Sintra, Lisbon, Porto...',
-            shirt_title: 'Official T-Shirt Included in Registration Fee',
-            shirt_desc: 'The registration fee (€85) already includes <strong>1 official Remission to the Nations Portugal 2026 t-shirt</strong>. To ensure we provide your t-shirt with excellence, please select your desired size below. <em>After registration is confirmed, the selected size cannot be changed.</em>',
+            shirt_title: 'Official T-Shirt Included',
+            shirt_desc: 'Registrations for the 1st semester of 2027 will open soon.',
             shirt_question: 'What is your t-shirt size?',
             shirt_xs: 'Extra S',
             shirt_s: 'Small (S)',
@@ -561,12 +545,12 @@ const I18N = {
             prev_opt3: 'Yes, in Portugal',
             label_notes: 'Notes or prayer requests (optional)',
             ph_notes: 'Write here if you have any specific notes...',
-            rgpd_text: 'I confirm that I have read the event information and authorize the processing of my personal data for registration management purposes under GDPR.',
-            submit_btn: '<span>Proceed to Payment (€85) →</span>',
-            val_required: 'Please fill in all required fields (*), including the t-shirt size.',
+            rgpd_text: 'I confirm that I have read the event information and authorize data processing under GDPR.',
+            submit_btn: '<span>Submit Registration →</span>',
+            val_required: 'Please fill in all required fields (*).',
             val_rgpd: 'Please confirm authorization for data processing under GDPR.',
             processing: '<span>⏳ Processing registration...</span>',
-            direct_success: 'Registration saved successfully! We will contact you for payment.',
+            direct_success: 'Registration saved! We will contact you as soon as spots open.',
             error_prefix: 'Error submitting registration: '
         },
         modal_admin: {
@@ -593,9 +577,9 @@ const I18N = {
     es: {
         dropdown_label: 'ES',
         announcement: {
-            badge: '✨ Inscripciones Abiertas',
-            text: 'Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) • Inversión: €85,00',
-            cta: 'Inscribirme ahora'
+            badge: '✨ PRÓXIMAMENTE',
+            text: 'Seminario Remisión • <strong>1º Semestre de 2027</strong> • Nuevas inscripciones próximamente',
+            cta: 'Conocer más'
         },
         nav: {
             brand_sub: 'EUROPA',
@@ -604,17 +588,17 @@ const I18N = {
             themes: 'Áreas de Enseñanza',
             testimonials: 'Testimonios',
             church: 'Llevar a mi Iglesia',
-            faq: 'Preguntas Frecuentes',
+            faq: 'Preguntas Frequentes',
             contact: 'Contacto',
-            register: '⚡ Inscribirme'
+            register: '⚡ Próximamente'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
-            title: 'Sanidad <span class="gold-gradient-text">del Alma</span> & Liberación en Portugal.',
-            subtitle: 'A través de una sólida enseñanza bíblica y ministraciones dirigidas, ayudamos a las personas a romper cadenas espirituales, restaurar la identidad en Cristo y vivir la libertad que Jesús conquistó en la cruz.',
-            cta_register: 'Inscribirme Ahora',
-            cta_seminar: 'Conocer el Seminario',
-            guarantee: '🔒 Inscripción y pago en línea 100% seguros directamente en el sitio web',
+            title: 'Sanidad <span class="gold-gradient-text">del Alma</span> & Liberación.',
+            subtitle: 'A través de una sólida enseñanza bíblica y ministraciones dirigidas, ayudamos a las personas a romper cadenas espirituales, restaurar la identidad en Cristo y vivir la libertad divina.',
+            cta_register: 'Conocer el Seminario',
+            cta_seminar: 'Ver Información',
+            guarantee: '✨ Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
             stat1_label: 'VIDAS ALCANZADAS EN BRASIL',
             stat2_label: 'AÑOS DE MINISTERIO'
         },
@@ -623,11 +607,11 @@ const I18N = {
             title: 'De Brasil a Portugal y <span class="gold-gradient-text">Toda Europa</span>',
             subtitle: 'Con una base consolidada en Joinville (Brasil) y miles de vidas restauradas, el Ministerio Remisión expande su misión oficial a Portugal.',
             card_title: 'Sirviendo al Cuerpo de Cristo',
-            card_desc: 'Nuestra misión es ayudar a los hijos de Dios que, aun después de confesar su fe en Cristo Jesús, continúan sufriendo las adversidades y prisiones del alma de este mundo.',
+            card_desc: 'Nuestra misión es ayudar a los hijos de Dios a romper prisiones del alma y caminar en libertad espiritual.',
             t1_title: 'Consolidación en Brasil',
-            t1_desc: 'Años de ministración en Joinville y São Francisco do Sul formando intercesores y restaurando miles de vidas.',
+            t1_desc: 'Años de ministración en Joinville formando intercesores y restaurando miles de vidas.',
             t2_title: '2026/2027 - Sintra, Portugal',
-            t2_desc: 'Instalación de la base europea en Av. Irene Lisboa, 19, Sintra – Lisboa, abriendo grupos internacionales.',
+            t2_desc: 'Instalación de la base europea en Sintra – Lisboa, abriendo grupos internacionales.',
             t3_title: 'Expansión Europea',
             t3_desc: 'Llevar los seminarios a Oporto, Lisboa, Braga, Faro, Coimbra y naciones europeas.',
             insta_title: 'Síguenos en Instagram',
@@ -640,10 +624,10 @@ const I18N = {
         themes: {
             tag: 'Fundamentación Bíblica y Ministración',
             title: 'Áreas de <span class="gold-gradient-text">Enseñanza Impartidas</span>',
-            subtitle: 'Una inmersión profunda que aborda los pilares fundamentales para la completa sanidad del alma y liberación de yugos espirituales.',
+            subtitle: 'Una inmersión profunda que aborda los pilares fundamentales para la completa sanidad del alma.',
             cta_btn: 'Saber más →',
             items: [
-                { badge: 'TEMA 01', titulo: 'PATERNIDAD', descricao: 'Sanidad de la orfandad interior, restauración de la imagen del Padre Celestial y aceptación como hijo amado de Dios.' },
+                { badge: 'TEMA 01', titulo: 'PATERNIDAD', descricao: 'Sanidad de la orfandade interior, restauración de la imagen del Padre Celestial y filiación divina.' },
                 { badge: 'TEMA 02', titulo: 'RECHAZO', descricao: 'Liberación de heridas de abandono, traición, complejo de inferioridad y traumas de la infancia.' },
                 { badge: 'TEMA 03', titulo: 'CAUTIVERIOS ESPIRITUALES', descricao: 'Identificación y ruptura de prisiones del alma, ataduras espirituales y cadenas generacionales.' },
                 { badge: 'TEMA 04', titulo: 'RELACIONES', descricao: 'Sanidad de vínculos tóxicos, restauración conyugal, alineamiento familiar y perdón de ofensas.' },
@@ -662,17 +646,17 @@ const I18N = {
         testimonials: {
             tag: 'Testimonios Reales',
             title: 'Lo que Dicen <span class="gold-gradient-text">Nuestros Alumnos</span>',
-            subtitle: 'Relatos de pastores, líderes y alumnos transformados por el poder de la palabra de Dios.',
+            subtitle: 'Relatos de pastores, líderes y alumnos transformados por la palabra de Dios.',
             items: [
                 {
-                    quote: '"Participar en el Seminario Remisión en Sintra transformó radicalmente mi visión sobre la paternidad y cautiverios espirituales. Fui verdaderamente liberado."',
+                    quote: '"Participar en el Seminario Remisión transformó mi visión sobre paternidad y cautiverios espirituales."',
                     name: 'Pr. Carlos Mendes',
                     role: 'Líder Ministerial en Lisboa'
                 },
                 {
-                    quote: '"Las ministraciones sobre sanidad del rechazo y abusos del pasado sanaron heridas que cargaba desde hacía más de 15 años. ¡Gloria a Dios por este ministerio en Portugal!"',
+                    quote: '"Las ministraciones sobre sanidad del rechazo y abusos del pasado sanaron heridas que cargaba desde hacía más de 15 años. ¡Gloria a Dios!"',
                     name: 'Ana Sofia Ribeiro',
-                    role: 'Alumna del Grupo de Sintra'
+                    role: 'Alumna del Seminario Remisión'
                 },
                 {
                     quote: '"Recibir al equipo del Ministerio Remisión en nuestra comunidad trajo un avivamiento de liberación y sanidad entre nuestras familias."',
@@ -683,55 +667,47 @@ const I18N = {
         },
         church: {
             tag: 'Expansión Ministerial',
-            title: 'Lleve el Seminario a <span class="gold-gradient-text">Su Iglesia</span>',
-            subtitle: '¿Es pastor o líder ministerial en Portugal o Europa? Lleve al equipo y los manuales del Ministerio Remisión para ministrar sanidad y liberación en su iglesia local.',
-            card1_title: 'Soporte Ministerial a su Liderazgo',
-            card1_desc: 'Total confidencialidad, fundamento bíblico y alineamiento con el pastor local durante todas las ministraciones.',
+            title: 'Lleve el Seminario a <span class="gold-gradient-text">su Iglesia</span>',
+            subtitle: '¿Es pastor o líder ministerial? Lleve el equipo de Ministerio Remisión para ministrar en su iglesia local.',
+            card1_title: 'Soporte Ministerial',
+            card1_desc: 'Total confidencialidad y alineamiento bíblico con el pastor local.',
             card2_title: 'Para Cualquier Ciudad Europea',
-            card2_desc: 'Atendemos iglesias en Portugal, España, Francia, Suiza, Alemania y el Reino Unido.',
-            form_title: 'Solicitar Seminario en Mi Iglesia',
+            card2_desc: 'Atendemos iglesias en Portugal y toda Europa.',
+            form_title: 'Solicitar Seminario en mi Iglesia',
             label_name: 'Su Nombre Completo *',
-            ph_name: 'Pr. Nombre Apellido...',
-            label_church: 'Nombre de la Iglesia / Ministerio *',
-            ph_church: 'Ej: Iglesia Evangélica en Sintra',
+            ph_name: 'Pr. Nombre...',
+            label_church: 'Nombre de la Iglesia *',
+            ph_church: 'Ej: Iglesia Evangélica',
             label_city: 'Ciudad *',
             ph_city: 'Ej: Sintra',
             label_country: 'País *',
             ph_country: 'Ej: Portugal',
-            label_phone: 'WhatsApp / Teléfono *',
+            label_phone: 'WhatsApp *',
             ph_phone: '+351 928 364 086',
-            label_email: 'Correo Electrónico *',
+            label_email: 'Correo *',
             ph_email: 'contacto@iglesia.pt',
             label_capacity: 'Número Estimado de Participantes',
             cap_opt1: '30 a 50 personas',
             cap_opt2: '50 a 100 personas',
             cap_opt3: '100 a 200 personas',
             cap_opt4: 'Más de 200 personas',
-            label_message: 'Mensaje / Observaciones',
-            ph_message: 'Cuéntenos sobre su comunidad y fechas deseadas...',
+            label_message: 'Mensaje',
+            ph_message: 'Cuéntenos sobre su comunidad...',
             submit_btn: '📩 Enviar Solicitud Pastoral',
-            success_toast: '✅ ¡Solicitud pastoral enviada con éxito! Nos pondremos en contacto vía WhatsApp.'
+            success_toast: '¡Solicitud enviada con éxito!'
         },
         faq: {
-            tag: 'Aclaración de Dudas',
+            tag: 'Preguntas Frecuentes',
             title: 'Preguntas <span class="gold-gradient-text">Frecuentes</span>',
-            subtitle: 'Conozca cómo funcionan los módulos en Sintra, valores, horarios e inscripciones online en el sitio.',
+            subtitle: 'Información sobre el Seminario Remisión.',
             items: [
                 {
-                    q: '¿Dónde se realizan los módulos presenciales en Portugal?',
-                    a: 'La edición principal se realiza en Sintra - Lisboa, en la dirección: Av. Irene Lisboa, 19 – Nave A, 2º Piso, Sintra – Lisboa.'
+                    q: '¿Cuándo se abrirán las nuevas inscripciones?',
+                    a: 'Las inscripciones para el 1º semestre de 2027 se abrirán próximamente. Siga nuestras redes sociales para recibir las novedades.'
                 },
                 {
-                    q: '¿Cómo se realiza el pago y la inscripción?',
-                    a: 'Toda la inscripción se realiza directamente aquí en el sitio con pago seguro en línea a través de Stripe. La inversión única para los 3 módulos presenciales es de 85 €.'
-                },
-                {
-                    q: '¿Cuáles son las fechas y horarios de los 3 Módulos en Sintra?',
-                    a: 'El seminario se divide en 3 Módulos presenciales: 1º Módulo (02 y 03 de Octubre), 2º Módulo (16 e 17 de Octubre) y 3º Módulo (23 y 24 de Octubre). Horarios: Viernes a las 20:00 y Sábados a las 09:30.'
-                },
-                {
-                    q: '¿Cuál es el valor de la inversión para los 3 Módulos?',
-                    a: 'El valor total de la inversión es de 85,00 € por participante, cubriendo el acceso a los 3 módulos y el material impartido.'
+                    q: '¿Cómo funciona el Seminario Remisión?',
+                    a: 'Durante 3 meses, impartimos temas de liberación y sanidad del alma en 10 sesiones presenciales y el cierre con un Retiro de tres días.'
                 },
                 {
                     q: '¿Cómo puedo llevar el Seminario Remisión a mi iglesia?',
@@ -742,33 +718,33 @@ const I18N = {
         contact: {
             tag: 'Atención Oficial',
             title: 'Contáctenos en <span class="gold-gradient-text">Portugal</span>',
-            subtitle: 'Estamos a su disposición para atenderle y resolver dudas sobre el próximo grupo en Sintra.',
+            subtitle: 'Estamos a su disposición para atenderle sobre las próximas clases.',
             insta_title: 'Instagram Oficial',
             insta_btn: 'Ver Publicaciones',
             wa_title: 'WhatsApp Oficial',
-            wa_btn: 'Iniciar Conversación',
-            venue_title: 'Lugar del Seminario (Sintra)',
-            venue_desc: 'Av. Irene Lisboa, 19 – Nave A, 2º Piso<br>Sintra – Lisboa',
+            wa_btn: 'Iniciar Chat',
+            venue_title: 'Base del Seminario (Sintra)',
+            venue_desc: 'Av. Irene Lisboa, 19 – Armazém A, 2º Piso<br>Sintra – Lisboa',
             venue_sub: 'Base Principal Europea'
         },
         prefooter: {
-            title: 'Asegure su lugar en el Seminario Remisión en Sintra.',
-            subtitle: '3 Módulos de sanidad y liberación. Inversión total: 85,00 €. Inscríbase con pago seguro en línea.',
-            btn: '<span>Asegurar Mi Lugar (85 €)</span>'
+            title: 'Seminario Remisión',
+            subtitle: 'Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
+            btn: '<span>Conocer el Seminario</span>'
         },
         footer: {
-            brand_desc: 'Plataforma oficial del Ministerio Remisión en Portugal y Europa. Inscripciones oficiales y pago seguro disponibles online en el sitio web.',
+            brand_desc: 'Plataforma oficial del Ministerio Remisión en Portugal y Europa. Restaurando vidas, sanando el alma y proclamando liberación en Cristo. Efesios 1:7.',
             col_nav: 'Navegación',
             nav_home: 'Inicio',
             nav_about: 'Sobre Nosotros',
             nav_themes: 'Áreas de Enseñanza',
-            nav_programs: 'Programas',
+            nav_programs: 'Formaciones',
             nav_church: 'Llevar a mi Iglesia',
             nav_contact: 'Contacto',
             col_links: 'Enlaces Oficiales',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Sitio Oficial Brasil',
-            link_sintra: 'Edición Sintra (85 €)',
+            link_sintra: 'Seminario Remisión (Próximamente)',
             col_legal: 'Información Legal',
             legal_privacy: 'Política de Privacidad',
             legal_terms: 'Términos de Uso',
@@ -778,27 +754,27 @@ const I18N = {
         },
         modal_reg: {
             tag: 'INSCRIPCIÓN OFICIAL',
-            title: 'Seminario Remission to the Nations 2026',
-            subtitle: 'Complete los datos a continuación para asegurar su lugar en el evento presencial en Sintra — Lisboa.',
+            title: 'Seminario Remisión',
+            subtitle: 'Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
             sec1_title: '1. Datos Personales',
             label_name: 'Nombre Completo',
             ph_name: 'Ej: Juan Pérez',
-            label_email: 'Correo Electrónico',
-            ph_email: 'tucorreo@ejemplo.com',
+            label_email: 'Correo',
+            ph_email: 'suemail@ejemplo.com',
             label_phone: 'Móvil / WhatsApp',
             label_birth: 'Fecha de Nacimiento',
             label_country: 'País de Residencia',
             ph_country: 'Ej: Portugal',
             label_city: 'Ciudad',
             ph_city: 'Ej: Sintra, Lisboa, Oporto...',
-            shirt_title: 'Camiseta Oficial Incluida en la Inscripción',
-            shirt_desc: 'El valor de la inscripción (85 €) ya incluye <strong>1 camiseta oficial del Remission to the Nations Portugal 2026</strong>. Para que podamos proveer su camiseta con excelencia, seleccione abajo el tamaño deseado. <em>Tras la confirmación de la inscripción, no será posible cambiar la talla elegida.</em>',
-            shirt_question: '¿Cuál es la talla de su camiseta?',
-            shirt_xs: 'Extra P',
-            shirt_s: 'Pequeño (P)',
-            shirt_m: 'Mediano (M)',
+            shirt_title: 'Camiseta Oficial Incluida',
+            shirt_desc: 'Las inscripciones para el 1º semestre de 2027 se abrirán próximamente.',
+            shirt_question: '¿Cuál es su talla de camiseta?',
+            shirt_xs: 'Extra S',
+            shirt_s: 'Pequeña (S)',
+            shirt_m: 'Mediana (M)',
             shirt_l: 'Grande (G)',
-            shirt_xl: 'Extra G',
+            shirt_xl: 'Extra L',
             sec2_title: '2. Datos de su Iglesia',
             label_church: 'Nombre de su Iglesia',
             ph_church: 'Ej: Iglesia Comunidad Cristiana',
@@ -817,12 +793,12 @@ const I18N = {
             prev_opt3: 'Sí, en Portugal',
             label_notes: 'Observaciones o peticiones de oración (opcional)',
             ph_notes: 'Escriba aquí si tiene alguna observación específica...',
-            rgpd_text: 'Confirmo que he leído la información del evento y autorizo el tratamiento de mis datos personales para fines de gestión de inscripción según el RGPD.',
-            submit_btn: '<span>Continuar al Pago (85 €) →</span>',
-            val_required: 'Por favor, complete todos los campos obligatorios (*), incluyendo la talla de la camiseta.',
+            rgpd_text: 'Confirmo que he leído la información del evento y autorizo el tratamiento de mis datos personales según el RGPD.',
+            submit_btn: '<span>Enviar Inscripción →</span>',
+            val_required: 'Por favor, complete todos los campos obligatorios (*).',
             val_rgpd: 'Por favor, confirme la autorización para el tratamiento de datos según el RGPD.',
             processing: '<span>⏳ Procesando inscripción...</span>',
-            direct_success: '¡Inscripción guardada con éxito! Nos pondremos en contacto para el pago.',
+            direct_success: '¡Inscripción registrada! Nos pondremos en contacto tan pronto como se abran las plazas.',
             error_prefix: 'Error al enviar inscripción: '
         },
         modal_admin: {

@@ -53,13 +53,12 @@
 
     <!-- Top Announcement Bar -->
     <div class="announcement-bar" id="announcementBar">
-        <span class="announcement-badge" id="announcementBadge" data-i18n="announcement.badge">✨ Inscrições Abertas</span>
-        <span id="announcementText" data-i18n-html="announcement.text">Remission to the Nations 2026/2027: <strong>Sintra - Lisboa</strong> (3 Módulos) •
-            Investimento: €85,00</span>
-        <button class="btn btn-sm btn-primary btn-einscricao-active"
-            style="padding: 0.25rem 0.75rem; font-size: 0.75rem;" data-i18n="announcement.cta">
-            Inscrever-me agora
-        </button>
+        <span class="announcement-badge" id="announcementBadge" style="background: rgba(245, 208, 97, 0.2); color: #FFF; border: 1px solid rgba(245, 208, 97, 0.4);" data-i18n="announcement.badge">✨ EM BREVE</span>
+        <span id="announcementText" data-i18n-html="announcement.text">Seminário Remissão • <strong>1º Semestre de 2027</strong> • Novas inscrições em breve</span>
+        <a href="seminario.html" class="btn btn-sm btn-primary"
+            style="padding: 0.25rem 0.75rem; font-size: 0.75rem; text-decoration: none;" data-i18n="announcement.cta">
+            Conhecer o Seminário
+        </a>
     </div>
 
     <!-- Main Navigation Header -->
@@ -100,10 +99,10 @@
                     </div>
                 </div>
 
-                <!-- Primary CTA to active Registration Form -->
-                <button class="btn btn-primary btn-sm btn-einscricao-active" id="navRegisterBtn">
-                    <span data-i18n="nav.register">⚡ Inscrever-me</span>
-                </button>
+                <!-- Primary CTA to Seminário Page -->
+                <a href="seminario.html" class="btn btn-primary btn-sm" id="navRegisterBtn" style="text-decoration: none;">
+                    <span data-i18n="nav.register">⚡ Inscrições em Breve</span>
+                </a>
 
                 <!-- Hamburger Menu Toggle Button -->
                 <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
@@ -139,17 +138,13 @@
                     </p>
 
                     <div class="hero-cta-group">
-                        <button class="btn btn-primary btn-lg btn-einscricao-active" id="heroMainCta">
-                            <span data-i18n="hero.cta_register">Inscrever-me Agora</span>
-                        </button>
-
-                        <a href="seminario.html" class="btn btn-secondary btn-lg" data-i18n="hero.cta_seminar">
-                            Conhecer o Seminário
+                        <a href="seminario.html" class="btn btn-primary btn-lg" id="heroMainCta" style="text-decoration: none;">
+                            <span data-i18n="hero.cta_register">Conhecer o Seminário</span>
                         </a>
                     </div>
 
                     <div class="hero-guarantee">
-                        <span data-i18n="hero.guarantee">🔒 Inscrição e pagamento online 100% seguros diretamente no site</span>
+                        <span data-i18n="hero.guarantee">✨ Em breve abrirão as inscrições para a turma do 1º semestre de 2027.</span>
                     </div>
 
                     <!-- Counter Stats -->
@@ -602,15 +597,14 @@
                 style="background: linear-gradient(180deg, var(--bg-dark) 0%, #0E0B08 100%); padding: 4rem 2rem; border-top: 1px solid var(--border-subtle); text-align: center;">
                 <div style="max-width: 800px; margin: 0 auto;">
                     <h2 class="font-serif" style="font-size: 2.5rem; color: var(--gold-light); margin-bottom: 1rem;" data-i18n="prefooter.title">
-                        Garanta sua vaga no Seminário Remissão em Sintra.
+                        Seminário Remissão
                     </h2>
                     <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;" data-i18n="prefooter.subtitle">
-                        3 Módulos de cura e libertação. Investimento total: €85,00. Inscreva-se com pagamento online
-                        seguro.
+                        Em breve abrirão as inscrições para a turma do 1º semestre de 2027.
                     </p>
-                    <button class="btn btn-primary btn-lg btn-einscricao-active" data-i18n-html="prefooter.btn">
-                        <span>Garantir Minha Vaga (€85)</span>
-                    </button>
+                    <a href="seminario.html" class="btn btn-primary btn-lg" style="text-decoration: none;" data-i18n-html="prefooter.btn">
+                        <span>Conhecer o Seminário</span>
+                    </a>
                 </div>
             </div>
 
@@ -761,7 +755,7 @@
                             rel="noopener" data-i18n="footer.link_insta">Instagram Portugal (@ministerioremissaopt)</a></li>
                     <li><a href="https://ministerioremissao.com.br/" target="_blank" rel="noopener" data-i18n="footer.link_br">Site Oficial
                             Brasil</a></li>
-                    <li><a href="#home" data-i18n="footer.link_sintra">Edição Sintra (€85)</a></li>
+                    <li><a href="seminario.html" data-i18n="footer.link_sintra">Seminário Remissão (Inscrições em Breve)</a></li>
                 </ul>
             </div>
 
@@ -1051,7 +1045,19 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Script File -->
-    <script src="script.js?v=15"></script>
+    <script src="script.js?v=16"></script>
+
+    <!--
+    =============================================================================
+    FUTURAS ATUALIZAÇÕES — ESTRUTURA PARA REATIVAÇÃO DE INSCRIÇÕES NO SITE PRINCIPAL
+    Para reativar futuramente as informações de inscrições abertas (com Datas, Valores, Lotes e Botões):
+    1. Reative os botões com a classe 'btn-einscricao-active' e links de formulário de pagamento.
+    2. Atualize o dicionário I18N no arquivo script.js com os novos valores (€), datas e lotes da próxima turma.
+    =============================================================================
+    -->
+    <template id="futureRegistrationMainSiteTemplate">
+        <!-- Estrutura preservada para reativação simples sem necessidade de reconstrução do site -->
+    </template>
 </body>
 
 </html>

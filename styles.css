@@ -3044,5 +3044,91 @@ body.admin-mode .floating-sticky-cta {
     margin-right: 0.35rem;
 }
 
+/* ==========================================================================
+   INSCRIÇÕES EM BREVE — SOCIAL CHANNELS & CARDS STYLES
+   ========================================================================== */
+.social-channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.social-channel-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.25rem 1.5rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 18px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.social-channel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+    border-color: var(--gold-primary, #E6B83B);
+}
+
+.social-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.social-channel-card:hover .social-icon-box {
+    transform: scale(1.08);
+}
+
+/* Specific Channel Gradient Accents */
+.social-instagram .social-icon-box {
+    background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+    color: #FFFFFF;
+}
+
+.social-facebook .social-icon-box {
+    background: #1877F2;
+    color: #FFFFFF;
+}
+
+.social-youtube .social-icon-box {
+    background: #FF0000;
+    color: #FFFFFF;
+}
+
+.social-whatsapp .social-icon-box {
+    background: #25D366;
+    color: #FFFFFF;
+}
+
+.social-channel-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.social-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0F172A;
+    line-height: 1.2;
+}
+
+.social-handle {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+}
+
+
 
 
