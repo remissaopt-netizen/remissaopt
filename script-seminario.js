@@ -141,6 +141,21 @@ class RemissaoApp {
         document.getElementById('closeConfirmationModalBtn')?.addEventListener('click', () => this.closeModal('confirmationModal'));
         document.getElementById('btnCloseConfirmation')?.addEventListener('click', () => this.closeModal('confirmationModal'));
         document.getElementById('closeDetailsModalBtn')?.addEventListener('click', () => this.closeModal('registrationDetailsModal'));
+        document.getElementById('closeWhatsappModalBtn')?.addEventListener('click', () => this.closeModal('whatsappConfirmationModal'));
+        document.getElementById('btnCloseWhatsappModal')?.addEventListener('click', () => this.closeModal('whatsappConfirmationModal'));
+
+        // Toggle Payment Method Submit Button Text
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const btnText = document.getElementById('btnSubmitRegistrationText');
+                if (!btnText) return;
+                if (e.target.value === 'whatsapp_manual') {
+                    btnText.textContent = 'Concluir Inscrição e Falar no WhatsApp →';
+                } else {
+                    btnText.textContent = 'Ir para Pagamento Online Seguro (€85) →';
+                }
+            });
+        });
 
         // Close Modal when clicking outside card
         document.querySelectorAll('.registration-modal-overlay').forEach(modal => {
@@ -254,6 +269,8 @@ class RemissaoApp {
             const selectedShirt = document.querySelector('input[name="shirt_size"]:checked');
             const shirtSize = selectedShirt ? selectedShirt.value : '';
 
+            const selectedPayment = document.querySelector('input[name="payment_method"]:checked')?.value || 'whatsapp_manual';
+
             const church = document.getElementById('regChurch')?.value.trim() || '';
             const pastor = document.getElementById('regPastor')?.value.trim() || '';
             const howFound = document.getElementById('regHowFound')?.value || '';
@@ -295,9 +312,10 @@ class RemissaoApp {
                 how_found: howFound,
                 previous_participant: previousParticipant,
                 notes: notes,
-                event_name: 'Remission to the Nations Portugal 2026',
+                event_name: 'Seminário Remissão Portugal 2027',
                 event_price: 85.00,
                 payment_status: 'pending',
+                payment_method: selectedPayment,
                 currency: 'EUR',
                 created_at: new Date().toISOString()
             };
@@ -319,13 +337,32 @@ class RemissaoApp {
                     await Promise.race([insertPromise, timeoutPromise]).catch(() => {});
                 }
             } catch (syncErr) {
-                console.warn('Background sync failed, continuing to payment:', syncErr);
+                console.warn('Background sync failed, continuing:', syncErr);
             }
 
-            // 4. Close modal
+            // 4. Close registration form modal
             this.closeModal('registrationModal');
 
-            // 5. Build Stripe Checkout URL and redirect safely
+            // 5. Check if user selected WhatsApp / Manual or Online Stripe
+            if (selectedPayment === 'whatsapp_manual') {
+                const waNameEl = document.getElementById('waConfirmName');
+                const waShirtEl = document.getElementById('waConfirmShirt');
+                if (waNameEl) waNameEl.textContent = fullName;
+                if (waShirtEl) waShirtEl.textContent = shirtSize;
+
+                const waMessage = `Olá Pastor Ezequias! Acabei de me inscrever no Seminário Remissão (Inscrito: ${fullName}, Camiseta: ${shirtSize}, Cidade: ${city}). Gostaria de combinar o pagamento via MB WAY / Transferência.`;
+                const waUrl = `https://wa.me/351928364086?text=${encodeURIComponent(waMessage)}`;
+                const waBtn = document.getElementById('btnOpenWhatsAppDirect');
+                if (waBtn) waBtn.href = waUrl;
+
+                const waModal = document.getElementById('whatsappConfirmationModal');
+                if (waModal) waModal.classList.add('active');
+
+                this.showToast('✅ Inscrição registrada! Fale com o Pr. Ezequias no WhatsApp.');
+                return;
+            }
+
+            // 6. Online Stripe Checkout
             const checkoutBaseUrl = APP_CONFIG.CHECKOUT_URL || 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01';
             const checkoutUrl = new URL(checkoutBaseUrl);
             checkoutUrl.searchParams.set('client_reference_id', regId);
@@ -337,11 +374,7 @@ class RemissaoApp {
 
         } catch (err) {
             console.error('Registration Exception:', err);
-            if (APP_CONFIG.CHECKOUT_URL) {
-                window.location.href = APP_CONFIG.CHECKOUT_URL;
-            } else {
-                alert('Erro ao processar inscrição. Redirecionando para o pagamento...');
-            }
+            alert('Ocorreu um erro ao processar. Por favor, tente novamente ou fale conosco pelo WhatsApp.');
         } finally {
             if (submitBtn) {
                 submitBtn.disabled = false;
@@ -682,6 +715,13 @@ class RemissaoApp {
                 <div><strong>Como Conheceu:</strong> ${reg.how_found || '—'}</div>
                 <div><strong>Já Participou:</strong> ${reg.previous_participant || '—'}</div>
                 <div><strong>Observações:</strong> ${reg.notes || 'Nenhuma'}</div>
+                <div><strong>Forma de Pagamento:</strong> ${reg.payment_method === 'online_stripe' ? '<span style="color:#0B4F8A; font-weight:700;">💳 Stripe Online</span>' : '<span style="color:#15803D; font-weight:700;">💬 WhatsApp / MB WAY (Pr. Ezequias)</span>'}</div>
+                <div style="margin-top: 0.6rem;">
+                    <a href="https://wa.me/${(reg.phone || '').replace(/[^0-9]/g, '')}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.4rem; background: #25D366; color: #FFF; text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        Conversar com Inscrito no WhatsApp
+                    </a>
+                </div>
                 <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 0.5rem 0;">
                 <div><strong>ID Inscrição:</strong> <code style="font-size: 0.8rem; background: #F1F5F9; padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.id || '—'}</code></div>
                 <div><strong>Data da Inscrição:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
