@@ -104,6 +104,36 @@ class RemissaoApp {
                 this.state.activeFilter = filterPill.dataset.filter;
                 this.renderRegistrationsTable();
             }
+
+            // Cronograma Filter Pills
+            const cronoPill = e.target.closest('#cronogramaFilterPills .cronograma-pill-btn');
+            if (cronoPill) {
+                e.preventDefault();
+                document.querySelectorAll('#cronogramaFilterPills .cronograma-pill-btn').forEach(btn => btn.classList.remove('active'));
+                cronoPill.classList.add('active');
+                const filter = cronoPill.dataset.filter || 'all';
+                const rows = document.querySelectorAll('#cronogramaTable tbody tr');
+                let count = 0;
+                rows.forEach(row => {
+                    const cat = row.getAttribute('data-category');
+                    if (filter === 'all' || cat === filter) {
+                        row.style.display = '';
+                        count++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                const countBadge = document.getElementById('cronogramaActiveCount');
+                if (countBadge) {
+                    if (filter === 'all') {
+                        countBadge.textContent = 'Exibindo todos os 14 encontros';
+                    } else if (filter === 'aula') {
+                        countBadge.textContent = `Exibindo ${count} aulas temáticas`;
+                    } else {
+                        countBadge.textContent = `Exibindo ${count} encontros especiais`;
+                    }
+                }
+            }
         });
 
         // Close Modals

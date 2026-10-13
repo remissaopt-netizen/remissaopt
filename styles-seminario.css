@@ -93,6 +93,18 @@ h1, h2, h3, .font-heading {
     display: inline-block;
 }
 
+/* High-Contrast Gold for Light/White Backgrounds */
+.gold-gradient-contrast,
+.section-light .gold-gradient-text,
+.cronograma-section .gold-gradient-text {
+    background: linear-gradient(135deg, #784E04 0%, #A8740B 35%, #8A5B06 70%, #684102 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: #8A5B06;
+    display: inline-block;
+    filter: drop-shadow(0 1px 1px rgba(120, 78, 4, 0.12));
+}
+
 /* Top Announcement Bar ÔÇö Banner Theme */
 .announcement-bar {
     background: linear-gradient(90deg, #061826 0%, #0B4F8A 50%, #00CFC8 100%);
@@ -2964,5 +2976,390 @@ body.admin-mode .floating-sticky-cta {
     font-weight: 800;
     color: #FFF3A8;
 }
+
+/* ==========================================================================
+   CRONOGRAMA DO SEMINÁRIO REMISSÃO (1º SEMESTRE 2027)
+   ========================================================================== */
+.cronograma-section {
+    background: #FFFFFF;
+    position: relative;
+    padding: 5rem 1.5rem;
+    border-top: 1px solid #E2E8F0;
+}
+
+.cronograma-container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+/* Quick highlights metrics grid */
+.cronograma-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.cronograma-highlight-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 1.35rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.cronograma-highlight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(11, 79, 138, 0.08);
+    border-color: rgba(0, 207, 200, 0.4);
+}
+
+.cronograma-highlight-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.cronograma-highlight-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cronograma-highlight-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748B;
+    font-weight: 700;
+}
+
+.cronograma-highlight-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #061826;
+    margin-top: 0.15rem;
+}
+
+.cronograma-highlight-desc {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-top: 0.2rem;
+    line-height: 1.35;
+}
+
+/* Filter controls bar */
+.cronograma-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.25rem;
+    background: #F1F5F9;
+    border-radius: 16px;
+    border: 1px solid #E2E8F0;
+}
+
+.cronograma-filter-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.cronograma-pill-btn {
+    border: none;
+    background: transparent;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cronograma-pill-btn:hover {
+    color: #0B4F8A;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.cronograma-pill-btn.active {
+    background: #0B4F8A;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(11, 79, 138, 0.25);
+}
+
+.cronograma-count-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748B;
+}
+
+/* Table Card Wrapper */
+.cronograma-table-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 22px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Schedule Table */
+.cronograma-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.cronograma-table thead {
+    background: linear-gradient(135deg, #061826 0%, #0B4F8A 100%);
+    color: #FFFFFF;
+}
+
+.cronograma-table th {
+    padding: 1.15rem 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #E2E8F0;
+    border: none;
+}
+
+.cronograma-table tbody tr {
+    border-bottom: 1px solid #F1F5F9;
+    transition: background-color 0.2s ease;
+}
+
+.cronograma-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.cronograma-table tbody tr:hover {
+    background-color: #F8FAFC;
+}
+
+.cronograma-table td {
+    padding: 1.15rem 1.25rem;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+/* Row types special accents */
+.row-abertura {
+    background: rgba(147, 51, 234, 0.02);
+}
+.row-abertura:hover {
+    background: rgba(147, 51, 234, 0.05) !important;
+}
+
+.row-mapeamento {
+    background: rgba(249, 115, 22, 0.02);
+}
+.row-mapeamento:hover {
+    background: rgba(249, 115, 22, 0.05) !important;
+}
+
+.row-retiro {
+    background: rgba(16, 185, 129, 0.035);
+}
+.row-retiro:hover {
+    background: rgba(16, 185, 129, 0.07) !important;
+}
+
+/* Number cell */
+.col-num-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.num-seq {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #F1F5F9;
+    color: #475569;
+    font-weight: 800;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.num-code {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #64748B;
+    background: #F8FAFC;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #E2E8F0;
+}
+
+/* Date cell */
+.date-primary {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0F172A;
+    display: block;
+    letter-spacing: -0.01em;
+}
+
+.date-weekday {
+    font-size: 0.8rem;
+    color: #64748B;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.15rem;
+    font-weight: 600;
+}
+
+/* Badges for types */
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.badge-abertura {
+    background: rgba(147, 51, 234, 0.12);
+    color: #7E22CE;
+    border: 1px solid rgba(147, 51, 234, 0.25);
+}
+
+.badge-aula {
+    background: rgba(230, 184, 59, 0.16);
+    color: #8C650A;
+    border: 1px solid rgba(230, 184, 59, 0.4);
+}
+
+.badge-mapeamento {
+    background: rgba(249, 115, 22, 0.12);
+    color: #C2410C;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.badge-retiro {
+    background: rgba(16, 185, 129, 0.15);
+    color: #065F46;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* Topic / Theme cell */
+.theme-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: #0B4F8A;
+    display: block;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.01em;
+}
+
+.theme-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mode status tag */
+.mode-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+    white-space: nowrap;
+}
+
+.mode-tag.mode-retreat {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FFFFFF;
+    font-weight: 800;
+    border: none;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.mode-tag.mode-special {
+    background: rgba(11, 79, 138, 0.08);
+    color: #0B4F8A;
+    border-color: rgba(11, 79, 138, 0.2);
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 820px) {
+    .cronograma-table thead {
+        display: none;
+    }
+    
+    .cronograma-table, .cronograma-table tbody, .cronograma-table tr, .cronograma-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .cronograma-table tbody tr {
+        padding: 1.35rem;
+        border-bottom: 1px solid #E2E8F0;
+        position: relative;
+    }
+    
+    .cronograma-table td {
+        padding: 0.3rem 0;
+    }
+    
+    .cronograma-table td.td-meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cronograma-table td.td-date-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .cronograma-table td.td-theme-row {
+        margin-top: 0.25rem;
+    }
+}
+
 
 
