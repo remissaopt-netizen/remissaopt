@@ -81,9 +81,9 @@ const I18N = {
     pt: {
         dropdown_label: 'PT',
         announcement: {
-            badge: '✨ EM BREVE',
-            text: 'Seminário Remissão • <strong>1º Semestre de 2027</strong> • Novas inscrições em breve',
-            cta: 'Conhecer o Seminário'
+            badge: '✨ Inscrições Abertas',
+            text: 'Seminário Remissão: <strong>Sintra - Lisboa</strong> • Investimento: €85,00',
+            cta: 'Inscrever-me agora'
         },
         nav: {
             brand_sub: 'EUROPA',
@@ -94,15 +94,15 @@ const I18N = {
             church: 'Levar à minha Igreja',
             faq: 'Perguntas Frequentes',
             contact: 'Contacto',
-            register: '⚡ Inscrições em Breve'
+            register: '⚡ Inscrever-me'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
             title: 'Cura <span class="gold-gradient-text">da Alma</span> & Libertação em Portugal.',
             subtitle: 'Através de um ensino bíblico sólido e de ministrações direcionadas, ajudamos pessoas a romper cadeias espirituais, restaurar a identidade em Cristo e viver a liberdade que Jesus conquistou na cruz.',
-            cta_register: 'Conhecer o Seminário',
-            cta_seminar: 'Ver Informações',
-            guarantee: '✨ Em breve abrirão as inscrições para a turma do 1º semestre de 2027.',
+            cta_register: 'Inscrever-me Agora',
+            cta_seminar: 'Conhecer o Seminário',
+            guarantee: '🔒 Inscrição e pagamento online 100% seguros diretamente no site',
             stat1_label: 'VIDAS ALCANÇADAS NO BRASIL',
             stat2_label: 'ANOS DE MINISTÉRIO'
         },
@@ -232,9 +232,9 @@ const I18N = {
             venue_sub: 'Base Principal Europeia'
         },
         prefooter: {
-            title: 'Seminário Remissão',
-            subtitle: 'Em breve abrirão as inscrições para a turma do 1º semestre de 2027.',
-            btn: '<span>Conhecer o Seminário</span>'
+            title: 'Garanta sua vaga no Seminário Remissão em Sintra.',
+            subtitle: 'Jornada de cura e libertação. Investimento total: €85,00. Inscreva-se com pagamento seguro ou via WhatsApp.',
+            btn: '<span>Garantir Minha Vaga (€85)</span>'
         },
         footer: {
             brand_desc: 'Plataforma oficial do Ministério Remissão em Portugal e Europa. Restaurando vidas, curando a alma e proclamando libertação em Cristo. Efésios 1:7.',
@@ -248,7 +248,7 @@ const I18N = {
             col_links: 'Links Oficiais',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Site Oficial Brasil',
-            link_sintra: 'Seminário Remissão (Inscrições em Breve)',
+            link_sintra: 'Seminário Remissão (Inscrições Abertas • €85)',
             col_legal: 'Informações Legais',
             legal_privacy: 'Política de Privacidade',
             legal_terms: 'Termos de Uso',
@@ -259,7 +259,7 @@ const I18N = {
         modal_reg: {
             tag: 'INSCRIÇÃO OFICIAL',
             title: 'Seminário Remissão',
-            subtitle: 'Em breve abrirão as novas inscrições para a turma do 1º semestre de 2027.',
+            subtitle: 'Preencha os dados abaixo para garantir a sua vaga no evento presencial em Sintra — Lisboa.',
             sec1_title: '1. Dados Pessoais',
             label_name: 'Nome Completo',
             ph_name: 'Ex: João Pedro Silva',
@@ -272,7 +272,7 @@ const I18N = {
             label_city: 'Cidade',
             ph_city: 'Ex: Sintra, Lisboa, Porto...',
             shirt_title: 'Camiseta Oficial Inclusa',
-            shirt_desc: 'As inscrições para o 1º semestre de 2027 serão abertas em breve.',
+            shirt_desc: 'O valor da inscrição (€85) já inclui <strong>1 camiseta oficial do Seminário Remissão Portugal</strong>. Selecione abaixo o tamanho desejado.',
             shirt_question: 'Qual o tamanho da sua camiseta?',
             shirt_xs: 'Extra P',
             shirt_s: 'Pequeno (P)',
@@ -298,7 +298,7 @@ const I18N = {
             label_notes: 'Observações ou pedidos de oração (opcional)',
             ph_notes: 'Escreva aqui se tiver alguma observação específica...',
             rgpd_text: 'Confirmo que li as informações do evento e autorizo o tratamento dos meus dados pessoais para efeitos de gestão da inscrição conforme o RGPD.',
-            submit_btn: '<span>Enviar Inscrição →</span>',
+            submit_btn: '<span>Concluir Inscrição e Falar no WhatsApp →</span>',
             val_required: 'Por favor, preencha todos os campos obrigatórios (*).',
             val_rgpd: 'Por favor, confirme a autorização de tratamento de dados conforme o RGPD.',
             processing: '<span>⏳ Processando inscrição...</span>',
@@ -329,9 +329,9 @@ const I18N = {
     en: {
         dropdown_label: 'EN',
         announcement: {
-            badge: '✨ COMING SOON',
-            text: 'Remission Seminar • <strong>1st Semester of 2027</strong> • New registrations coming soon',
-            cta: 'Learn More'
+            badge: '✨ Registrations Open',
+            text: 'Remission Seminar: <strong>Sintra - Lisbon</strong> • Investment: €85.00',
+            cta: 'Register Now'
         },
         nav: {
             brand_sub: 'EUROPE',
@@ -342,15 +342,15 @@ const I18N = {
             church: 'Bring to My Church',
             faq: 'FAQ',
             contact: 'Contact',
-            register: '⚡ Registrations Soon'
+            register: '⚡ Register Now'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
             title: 'Soul <span class="gold-gradient-text">Healing</span> & Deliverance.',
             subtitle: 'Through solid biblical teaching and targeted ministrations, we help people break spiritual strongholds, restore identity in Christ, and experience divine freedom.',
-            cta_register: 'Learn More',
-            cta_seminar: 'View Information',
-            guarantee: '✨ Registrations for the 1st semester of 2027 class will open soon.',
+            cta_register: 'Register Now',
+            cta_seminar: 'Learn More',
+            guarantee: '🔒 100% secure registration and online payment directly on the site',
             stat1_label: 'LIVES REACHED IN BRAZIL',
             stat2_label: 'YEARS OF MINISTRY'
         },
@@ -480,9 +480,9 @@ const I18N = {
             venue_sub: 'Main European Base'
         },
         prefooter: {
-            title: 'Remission Seminar',
-            subtitle: 'Registrations for the 1st semester of 2027 class will open soon.',
-            btn: '<span>Learn More</span>'
+            title: 'Secure your spot at the Remission Seminar in Sintra.',
+            subtitle: 'Journey of healing and deliverance. Total investment: €85.00. Register with secure payment or via WhatsApp.',
+            btn: '<span>Secure My Spot (€85)</span>'
         },
         footer: {
             brand_desc: 'Official platform of Ministério Remissão in Portugal and Europe. Restoring lives, healing the soul, and proclaiming deliverance in Christ. Ephesians 1:7.',
@@ -496,7 +496,7 @@ const I18N = {
             col_links: 'Official Links',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Official Brazil Website',
-            link_sintra: 'Remission Seminar (Coming Soon)',
+            link_sintra: 'Remission Seminar (Open Registrations • €85)',
             col_legal: 'Legal Information',
             legal_privacy: 'Privacy Policy',
             legal_terms: 'Terms of Use',
@@ -507,7 +507,7 @@ const I18N = {
         modal_reg: {
             tag: 'OFFICIAL REGISTRATION',
             title: 'Remission Seminar',
-            subtitle: 'Registrations for the 1st semester of 2027 class will open soon.',
+            subtitle: 'Fill in the details below to secure your spot at the in-person event in Sintra — Lisbon.',
             sec1_title: '1. Personal Information',
             label_name: 'Full Name',
             ph_name: 'E.g., John Smith',
@@ -520,7 +520,7 @@ const I18N = {
             label_city: 'City',
             ph_city: 'E.g., Sintra, Lisbon, Porto...',
             shirt_title: 'Official T-Shirt Included',
-            shirt_desc: 'Registrations for the 1st semester of 2027 will open soon.',
+            shirt_desc: 'The registration fee (€85) includes <strong>1 official Remission Seminar Portugal t-shirt</strong>. Please select your size below.',
             shirt_question: 'What is your t-shirt size?',
             shirt_xs: 'Extra S',
             shirt_s: 'Small (S)',
@@ -546,7 +546,7 @@ const I18N = {
             label_notes: 'Notes or prayer requests (optional)',
             ph_notes: 'Write here if you have any specific notes...',
             rgpd_text: 'I confirm that I have read the event information and authorize data processing under GDPR.',
-            submit_btn: '<span>Submit Registration →</span>',
+            submit_btn: '<span>Complete Registration & Open WhatsApp →</span>',
             val_required: 'Please fill in all required fields (*).',
             val_rgpd: 'Please confirm authorization for data processing under GDPR.',
             processing: '<span>⏳ Processing registration...</span>',
@@ -577,9 +577,9 @@ const I18N = {
     es: {
         dropdown_label: 'ES',
         announcement: {
-            badge: '✨ PRÓXIMAMENTE',
-            text: 'Seminario Remisión • <strong>1º Semestre de 2027</strong> • Nuevas inscripciones próximamente',
-            cta: 'Conocer más'
+            badge: '✨ Inscripciones Abiertas',
+            text: 'Seminario Remisión: <strong>Sintra - Lisboa</strong> • Inversión: €85,00',
+            cta: 'Inscribirme ahora'
         },
         nav: {
             brand_sub: 'EUROPA',
@@ -590,15 +590,15 @@ const I18N = {
             church: 'Llevar a mi Iglesia',
             faq: 'Preguntas Frequentes',
             contact: 'Contacto',
-            register: '⚡ Próximamente'
+            register: '⚡ Inscribirme'
         },
         hero: {
             tag: '🕊️ REMISSION TO THE NATIONS • PORTUGAL',
             title: 'Sanidad <span class="gold-gradient-text">del Alma</span> & Liberación.',
             subtitle: 'A través de una sólida enseñanza bíblica y ministraciones dirigidas, ayudamos a las personas a romper cadenas espirituales, restaurar la identidad en Cristo y vivir la libertad divina.',
-            cta_register: 'Conocer el Seminario',
-            cta_seminar: 'Ver Información',
-            guarantee: '✨ Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
+            cta_register: 'Inscribirme Ahora',
+            cta_seminar: 'Conocer el Seminario',
+            guarantee: '🔒 Inscripción y pago online 100% seguros directamente en el sitio',
             stat1_label: 'VIDAS ALCANZADAS EN BRASIL',
             stat2_label: 'AÑOS DE MINISTERIO'
         },
@@ -703,7 +703,7 @@ const I18N = {
             items: [
                 {
                     q: '¿Cuándo se abrirán las nuevas inscripciones?',
-                    a: 'Las inscripciones para el 1º semestre de 2027 se abrirán próximamente. Siga nuestras redes sociales para recibir las novedades.'
+                    a: 'Las inscripciones para la próxima clase del Seminario Remisión ya están abiertas para el 1º semestre de 2027. ¡Asegure su plaza en nuestro sitio!'
                 },
                 {
                     q: '¿Cómo funciona el Seminario Remisión?',
@@ -728,9 +728,9 @@ const I18N = {
             venue_sub: 'Base Principal Europea'
         },
         prefooter: {
-            title: 'Seminario Remisión',
-            subtitle: 'Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
-            btn: '<span>Conocer el Seminario</span>'
+            title: 'Asegura tu plaza en el Seminario Remisión en Sintra.',
+            subtitle: 'Jornada de sanidad y liberación. Inversión total: €85,00. Inscríbete con pago seguro o vía WhatsApp.',
+            btn: '<span>Asegurar Mi Plaza (€85)</span>'
         },
         footer: {
             brand_desc: 'Plataforma oficial del Ministerio Remisión en Portugal y Europa. Restaurando vidas, sanando el alma y proclamando liberación en Cristo. Efesios 1:7.',
@@ -744,7 +744,7 @@ const I18N = {
             col_links: 'Enlaces Oficiales',
             link_insta: 'Instagram Portugal (@ministerioremissaopt)',
             link_br: 'Sitio Oficial Brasil',
-            link_sintra: 'Seminario Remisión (Próximamente)',
+            link_sintra: 'Seminario Remisión (Inscripciones Abiertas • €85)',
             col_legal: 'Información Legal',
             legal_privacy: 'Política de Privacidad',
             legal_terms: 'Términos de Uso',
@@ -755,7 +755,7 @@ const I18N = {
         modal_reg: {
             tag: 'INSCRIPCIÓN OFICIAL',
             title: 'Seminario Remisión',
-            subtitle: 'Próximamente se abrirán las inscripciones para la clase del 1º semestre de 2027.',
+            subtitle: 'Completa los datos a continuación para asegurar tu plaza en el evento presencial en Sintra — Lisboa.',
             sec1_title: '1. Datos Personales',
             label_name: 'Nombre Completo',
             ph_name: 'Ej: Juan Pérez',
@@ -768,7 +768,7 @@ const I18N = {
             label_city: 'Ciudad',
             ph_city: 'Ej: Sintra, Lisboa, Oporto...',
             shirt_title: 'Camiseta Oficial Incluida',
-            shirt_desc: 'Las inscripciones para el 1º semestre de 2027 se abrirán próximamente.',
+            shirt_desc: 'La tarifa de inscripción (€85) incluye <strong>1 camiseta oficial del Seminario Remisión Portugal</strong>. Selecciona tu talla a continuación.',
             shirt_question: '¿Cuál es su talla de camiseta?',
             shirt_xs: 'Extra S',
             shirt_s: 'Pequeña (S)',
@@ -794,7 +794,7 @@ const I18N = {
             label_notes: 'Observaciones o peticiones de oración (opcional)',
             ph_notes: 'Escriba aquí si tiene alguna observación específica...',
             rgpd_text: 'Confirmo que he leído la información del evento y autorizo el tratamiento de mis datos personales según el RGPD.',
-            submit_btn: '<span>Enviar Inscripción →</span>',
+            submit_btn: '<span>Completar Inscripción y Hablar por WhatsApp →</span>',
             val_required: 'Por favor, complete todos los campos obligatorios (*).',
             val_rgpd: 'Por favor, confirme la autorización para el tratamiento de datos según el RGPD.',
             processing: '<span>⏳ Procesando inscripción...</span>',
@@ -958,6 +958,21 @@ class RemissaoApp {
 
         // Close Registration Modal
         document.getElementById('closeRegistrationModalBtn')?.addEventListener('click', () => this.closeModal('registrationModal'));
+        document.getElementById('closeWhatsappModalBtn')?.addEventListener('click', () => this.closeModal('whatsappConfirmationModal'));
+        document.getElementById('btnCloseWhatsappModal')?.addEventListener('click', () => this.closeModal('whatsappConfirmationModal'));
+
+        // Toggle Payment Method Submit Button Text
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const btnText = document.getElementById('btnSubmitRegistrationText');
+                if (!btnText) return;
+                if (e.target.value === 'whatsapp_manual') {
+                    btnText.textContent = 'Concluir Inscrição e Falar no WhatsApp →';
+                } else {
+                    btnText.textContent = 'Ir para Pagamento Online Seguro (€85) →';
+                }
+            });
+        });
 
         // Native Registration Form Submit
         const regForm = document.getElementById('nativeRegistrationForm');
@@ -1274,6 +1289,8 @@ class RemissaoApp {
             const selectedShirt = document.querySelector('input[name="shirt_size"]:checked');
             const shirtSize = selectedShirt ? selectedShirt.value : '';
 
+            const selectedPayment = document.querySelector('input[name="payment_method"]:checked')?.value || 'whatsapp_manual';
+
             const church = document.getElementById('regChurch')?.value.trim() || '';
             const pastor = document.getElementById('regPastor')?.value.trim() || '';
             const howFound = document.getElementById('regHowFound')?.value || '';
@@ -1315,9 +1332,10 @@ class RemissaoApp {
                 how_found: howFound,
                 previous_participant: previousParticipant,
                 notes: notes,
-                event_name: 'Remission to the Nations Portugal 2026',
+                event_name: 'Seminário Remissão Portugal 2027',
                 event_price: 85.00,
                 payment_status: 'pending',
+                payment_method: selectedPayment,
                 currency: 'EUR',
                 created_at: new Date().toISOString()
             };
@@ -1339,13 +1357,32 @@ class RemissaoApp {
                     await Promise.race([insertPromise, timeoutPromise]).catch(() => {});
                 }
             } catch (syncErr) {
-                console.warn('Background sync failed, continuing to payment:', syncErr);
+                console.warn('Background sync failed, continuing:', syncErr);
             }
 
             // 4. Close modal
             this.closeModal('registrationModal');
 
-            // 5. Build Stripe Checkout URL and redirect safely
+            // 5. Check if user selected WhatsApp / Manual or Online Stripe
+            if (selectedPayment === 'whatsapp_manual') {
+                const waNameEl = document.getElementById('waConfirmName');
+                const waShirtEl = document.getElementById('waConfirmShirt');
+                if (waNameEl) waNameEl.textContent = fullName;
+                if (waShirtEl) waShirtEl.textContent = shirtSize;
+
+                const waMessage = `Olá Pastor Ezequias! Acabei de me inscrever no Seminário Remissão (Inscrito: ${fullName}, Camiseta: ${shirtSize}, Cidade: ${city}). Gostaria de combinar o pagamento via MB WAY / Transferência.`;
+                const waUrl = `https://wa.me/351928364086?text=${encodeURIComponent(waMessage)}`;
+                const waBtn = document.getElementById('btnOpenWhatsAppDirect');
+                if (waBtn) waBtn.href = waUrl;
+
+                const waModal = document.getElementById('whatsappConfirmationModal');
+                if (waModal) waModal.classList.add('active');
+
+                this.showToast('✅ Inscrição registrada! Fale com o Pr. Ezequias no WhatsApp.');
+                return;
+            }
+
+            // 6. Online Stripe Checkout
             const checkoutBaseUrl = APP_CONFIG.CHECKOUT_URL || 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01';
             const checkoutUrl = new URL(checkoutBaseUrl);
             checkoutUrl.searchParams.set('client_reference_id', regId);
