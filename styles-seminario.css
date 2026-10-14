@@ -3481,3 +3481,51 @@ body.admin-mode .floating-sticky-cta {
     line-height: 1.45;
     margin: 0;
 }
+
+/* Supabase Cloud Connection Status Banner */
+.supabase-status-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.4rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.45;
+    animation: fadeIn 0.3s ease;
+}
+
+.supabase-status-banner.online {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #6EE7B7;
+}
+
+.supabase-status-banner.offline {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #FCD34D;
+}
+
+.supabase-status-banner a.btn-restore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(245, 158, 11, 0.25);
+    color: #FFF;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.supabase-status-banner a.btn-restore-link:hover {
+    background: rgba(245, 158, 11, 0.45);
+    border-color: #F59E0B;
+}
+

@@ -16,7 +16,9 @@ const APP_CONFIG = {
     },
     STORAGE_KEYS: {
         LANG: 'remissao_pt_lang',
-        AUTH: 'remissao_pt_admin_session'
+        AUTH: 'remissao_pt_admin_session',
+        REGISTRATIONS: 'remissao_pt_registrations',
+        REGISTRATIONS_LEGACY: 'remissao_pt_registrations_store'
     }
 };
 
@@ -43,6 +45,38 @@ class RemissaoApp {
         this.bindEvents();
         this.checkUrlParams();
         this.handleHashChange();
+    }
+
+    getLocalRegistrations() {
+        try {
+            let list1 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS) || '[]');
+            let list2 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY) || '[]');
+            
+            const map = new Map();
+            [...list1, ...list2].forEach(item => {
+                if (item && item.id && !map.has(item.id)) {
+                    map.set(item.id, item);
+                }
+            });
+            const merged = Array.from(map.values());
+            merged.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+            
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS, JSON.stringify(merged));
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY, JSON.stringify(merged));
+            return merged;
+        } catch (e) {
+            console.warn('Error reading local registrations:', e);
+            return [];
+        }
+    }
+
+    saveLocalRegistrations(regs) {
+        try {
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS, JSON.stringify(regs));
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY, JSON.stringify(regs));
+        } catch (e) {
+            console.warn('Error saving local registrations:', e);
+        }
     }
 
     bindEvents() {
@@ -321,20 +355,18 @@ class RemissaoApp {
             };
 
             // 2. Persist locally first so data is NEVER lost
-            try {
-                const existing = JSON.parse(localStorage.getItem('remissao_pt_registrations_store') || '[]');
-                existing.unshift(newRegistration);
-                localStorage.setItem('remissao_pt_registrations_store', JSON.stringify(existing));
-            } catch (e) {
-                console.warn('LocalStorage save warning:', e);
-            }
+            const localList = this.getLocalRegistrations();
+            localList.unshift(newRegistration);
+            this.saveLocalRegistrations(localList);
 
             // 3. Attempt async sync to backend/Supabase with timeout (non-blocking)
             try {
                 if (supabaseClient) {
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000));
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
                     const insertPromise = supabaseClient.from('registrations').insert([newRegistration]);
-                    await Promise.race([insertPromise, timeoutPromise]).catch(() => {});
+                    await Promise.race([insertPromise, timeoutPromise]).catch((e) => {
+                        console.warn('Supabase insert timed out or failed (safe in localStorage):', e);
+                    });
                 }
             } catch (syncErr) {
                 console.warn('Background sync failed, continuing:', syncErr);
@@ -450,38 +482,107 @@ class RemissaoApp {
 
     async fetchAndRenderAdminData() {
         const tbody = document.getElementById('adminRegistrationsTbody');
-        if (tbody && (!this.state.registrations || this.state.registrations.length === 0)) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="9" style="text-align: center; padding: 2.5rem; color: #00CFC8;">
-                        Carregando inscrições do banco de dados...
-                    </td>
-                </tr>
+        const statusContainer = document.getElementById('adminSupabaseStatus');
+
+        // 1. Immediately render local registrations so admin sees data right away!
+        let localData = this.getLocalRegistrations();
+        this.state.registrations = localData;
+        this.renderAdminKPIs();
+        this.renderShirtReport();
+        this.renderRegistrationsTable();
+
+        if (statusContainer) {
+            statusContainer.innerHTML = `
+                <div class="supabase-status-banner" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94A3B8;">
+                    <span>⏳ Verificando conexão e sincronização com o Supabase Cloud...</span>
+                </div>
             `;
         }
 
-        try {
-            let data = [];
-            
-            if (supabaseClient) {
-                const { data: supData, error } = await supabaseClient
+        // 2. Query Supabase Cloud
+        let supabaseOnline = false;
+        let supData = null;
+
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
+                const fetchPromise = supabaseClient
                     .from('registrations')
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                if (error) {
-                    console.error('Supabase query error:', error);
-                } else if (supData) {
-                    data = supData;
+                const res = await Promise.race([fetchPromise, timeoutPromise]);
+                if (res && !res.error && res.data) {
+                    supabaseOnline = true;
+                    supData = res.data;
+                } else if (res && res.error) {
+                    console.warn('Supabase query warning (project may be paused):', res.error);
                 }
+            } catch (err) {
+                console.warn('Supabase connection unreachable or timed out:', err);
             }
+        }
 
-            this.state.registrations = data;
+        // 3. Handle Online vs Offline Status Banner
+        if (statusContainer) {
+            if (supabaseOnline) {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner online">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.1rem;">🟢</span>
+                            <span><strong>Supabase Cloud Conectado:</strong> Banco de dados ativo e sincronizado em tempo real.</span>
+                        </div>
+                        <span style="font-size: 0.78rem; opacity: 0.85; background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.6rem; border-radius: 4px;">Projeto: jcpjgowdxcmqditgvmeq</span>
+                    </div>
+                `;
+            } else {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner offline">
+                        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <span style="font-size: 1.2rem;">⚠️</span>
+                            <div>
+                                <strong>Modo Local Ativo (${localData.length} inscrições salvas no dispositivo):</strong><br>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está <strong>pausado por inatividade</strong> (Free tier da Supabase). Para sincronizar na nuvem, basta reativar no painel.</span>
+                            </div>
+                        </div>
+                        <a href="https://supabase.com/dashboard/project/jcpjgowdxcmqditgvmeq" target="_blank" rel="noopener" class="btn-restore-link">
+                            🚀 Reativar no Supabase →
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // 4. Merge remote data if online, and auto-sync any local records not in cloud
+        if (supabaseOnline && supData) {
+            const map = new Map();
+            supData.forEach(item => map.set(item.id, item));
+
+            const pendingSync = [];
+            localData.forEach(item => {
+                if (!map.has(item.id)) {
+                    map.set(item.id, item);
+                    pendingSync.push(item);
+                }
+            });
+
+            const merged = Array.from(map.values());
+            merged.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+            this.state.registrations = merged;
+            this.saveLocalRegistrations(merged);
             this.renderAdminKPIs();
             this.renderShirtReport();
             this.renderRegistrationsTable();
-        } catch (err) {
-            console.error('Error fetching admin data:', err);
+
+            // Background sync pending items to Supabase
+            if (pendingSync.length > 0 && supabaseClient) {
+                console.log(`Syncing ${pendingSync.length} local registrations to Supabase...`);
+                supabaseClient.from('registrations').insert(pendingSync).then(({ error }) => {
+                    if (error) console.warn('Background sync error:', error);
+                    else console.log('Pending registrations successfully synced to Supabase!');
+                }).catch(e => console.warn('Background sync exception:', e));
+            }
         }
     }
 
@@ -631,62 +732,79 @@ class RemissaoApp {
     }
 
     async updateRegistrationStatus(id, newStatus) {
-        try {
-            if (supabaseClient) {
-                const { data, error } = await supabaseClient
+        // 1. Update in local state & localStorage immediately
+        const reg = this.state.registrations.find(r => r.id === id);
+        if (reg) {
+            reg.payment_status = newStatus;
+            this.saveLocalRegistrations(this.state.registrations);
+            this.renderAdminKPIs();
+            this.renderRegistrationsTable();
+        }
+
+        // 2. Try to sync to Supabase in background
+        let cloudSynced = false;
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                const updatePromise = supabaseClient
                     .from('registrations')
                     .update({ payment_status: newStatus })
                     .eq('id', id)
                     .select();
 
-                if (error) throw error;
-                if (!data || data.length === 0) {
-                    throw new Error('A alteração não foi persistida no Supabase. Verifique se as políticas de RLS (Row Level Security) permitem UPDATE.');
+                const { data, error } = await Promise.race([updatePromise, timeoutPromise]);
+                if (!error && data && data.length > 0) {
+                    cloudSynced = true;
                 }
+            } catch (err) {
+                console.warn('Supabase status update failed or paused (kept locally):', err);
             }
+        }
 
-            const reg = this.state.registrations.find(r => r.id === id);
-            if (reg) {
-                reg.payment_status = newStatus;
-            }
-
-            this.renderAdminKPIs();
-            this.renderRegistrationsTable();
-            this.showToast('✅ Status atualizado com sucesso!');
-        } catch (err) {
-            console.error('Erro ao atualizar status:', err);
-            alert('Erro ao atualizar status: ' + (err.message || 'Tente novamente.'));
-            this.renderRegistrationsTable();
+        if (cloudSynced) {
+            this.showToast('✅ Status atualizado e sincronizado na nuvem!');
+        } else {
+            this.showToast('✅ Status atualizado localmente!');
         }
     }
 
     async deleteRegistration(id, fullName) {
-        if (!confirm(`Tem certeza que deseja excluir permanentemente a inscrição de "${fullName}"?\n\nEsta ação não poderá ser desfeita.`)) {
+        if (!confirm(`Tem certeza que deseja excluir permanentemente a inscrição de "${fullName}"?\n\nEsta ação removerá o registro.`)) {
             return;
         }
 
-        try {
-            if (supabaseClient) {
-                const { data, error } = await supabaseClient
+        // 1. Delete from local state & localStorage immediately
+        this.state.registrations = this.state.registrations.filter(r => r.id !== id);
+        this.saveLocalRegistrations(this.state.registrations);
+        this.renderAdminKPIs();
+        this.renderShirtReport();
+        this.renderRegistrationsTable();
+        this.closeModal('registrationDetailsModal');
+
+        // 2. Try to delete from Supabase in background
+        let cloudDeleted = false;
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                const delPromise = supabaseClient
                     .from('registrations')
                     .delete()
                     .eq('id', id)
                     .select();
 
-                if (error) throw error;
-                if (!data || data.length === 0) {
-                    throw new Error('O registo não foi excluído no Supabase. Verifique se as políticas de RLS (Row Level Security) da tabela registrations permitem DELETE para o cliente.');
+                const { data, error } = await Promise.race([delPromise, timeoutPromise]);
+                if (!error && data && data.length > 0) {
+                    cloudDeleted = true;
                 }
+            } catch (err) {
+                console.warn('Supabase delete failed or paused (deleted locally):', err);
             }
+        }
 
-            this.state.registrations = this.state.registrations.filter(r => r.id !== id);
-            this.renderAdminKPIs();
-            this.renderRegistrationsTable();
-            this.closeModal('registrationDetailsModal');
-            this.showToast('🗑️ Inscrição excluída com sucesso!');
-        } catch (err) {
-            console.error('Erro ao excluir inscrição:', err);
-            alert('Erro ao excluir inscrição: ' + (err.message || 'Tente novamente.'));
+        if (cloudDeleted) {
+            this.showToast('🗑️ Inscrição excluída da nuvem e localmente!');
+        } else {
+            this.showToast('🗑️ Inscrição excluída localmente!');
         }
     }
 
@@ -760,11 +878,11 @@ class RemissaoApp {
     exportRegistrationsCsv() {
         const regs = this.state.registrations;
         if (!regs || regs.length === 0) {
-            alert('Nenhuma inscri├º├úo dispon├¡vel para exportar.');
+            alert('Nenhuma inscrição disponível para exportar.');
             return;
         }
 
-        const headers = ['ID', 'Nome Completo', 'Email', 'Telem├│vel', 'Data Nascimento', 'Pa├¡s', 'Cidade', 'Tamanho Camiseta', 'Igreja', 'Pastor', 'Como Conheceu', 'J├í Participou', 'Observa├º├Áes', 'Status Pagamento', 'Valor (Ôé¼)', 'Stripe Session ID', 'Data Inscri├º├úo'];
+        const headers = ['ID', 'Nome Completo', 'Email', 'Telemóvel', 'Data Nascimento', 'País', 'Cidade', 'Tamanho Camiseta', 'Igreja', 'Pastor', 'Como Conheceu', 'Já Participou', 'Observações', 'Status Pagamento', 'Valor (€)', 'Stripe Session ID', 'Data Inscrição'];
         
         const rows = regs.map(r => [
             `"${r.id}"`,

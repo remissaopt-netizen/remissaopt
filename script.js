@@ -1342,9 +1342,17 @@ class RemissaoApp {
 
             // 2. Persist locally first so data is NEVER lost
             try {
-                const existing = JSON.parse(localStorage.getItem('remissao_pt_registrations') || '[]');
-                existing.unshift(newRegistration);
-                localStorage.setItem('remissao_pt_registrations', JSON.stringify(existing));
+                let list1 = JSON.parse(localStorage.getItem('remissao_pt_registrations') || '[]');
+                let list2 = JSON.parse(localStorage.getItem('remissao_pt_registrations_store') || '[]');
+                const map = new Map();
+                [...list1, ...list2].forEach(item => {
+                    if (item && item.id && !map.has(item.id)) map.set(item.id, item);
+                });
+                map.set(newRegistration.id, newRegistration);
+                const merged = Array.from(map.values());
+                merged.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+                localStorage.setItem('remissao_pt_registrations', JSON.stringify(merged));
+                localStorage.setItem('remissao_pt_registrations_store', JSON.stringify(merged));
             } catch (e) {
                 console.warn('LocalStorage save warning:', e);
             }
@@ -1352,9 +1360,11 @@ class RemissaoApp {
             // 3. Attempt async sync to backend/Supabase with timeout (non-blocking)
             try {
                 if (supabaseClient) {
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000));
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
                     const insertPromise = supabaseClient.from('registrations').insert([newRegistration]);
-                    await Promise.race([insertPromise, timeoutPromise]).catch(() => {});
+                    await Promise.race([insertPromise, timeoutPromise]).catch((e) => {
+                        console.warn('Supabase insert failed or timed out (saved in localStorage):', e);
+                    });
                 }
             } catch (syncErr) {
                 console.warn('Background sync failed, continuing:', syncErr);
