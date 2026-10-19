@@ -28,6 +28,54 @@ if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
     supabaseClient = window.supabase.createClient(APP_CONFIG.SUPABASE.URL, APP_CONFIG.SUPABASE.ANON_KEY);
 }
 
+// Bulletproof UUID v4 Generator compatible with PostgreSQL UUID column
+function generateUUID() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+// Sanitizer to guarantee 100% compliance with Supabase Postgres schema
+function sanitizeRegistrationForSupabase(reg) {
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const id = (reg.id && isUUID.test(reg.id)) ? reg.id : generateUUID();
+
+    let notes = reg.notes || '';
+    if (reg.payment_method) {
+        const methodStr = reg.payment_method === 'online_stripe' ? 'Cartão / Stripe Online' : 'WhatsApp / MB WAY (Pr. Ezequias)';
+        if (!notes.includes('Pagamento:')) {
+            notes = notes ? `${notes} | Pagamento: ${methodStr}` : `Pagamento: ${methodStr}`;
+        }
+    }
+
+    return {
+        id: id,
+        full_name: reg.full_name || '',
+        email: reg.email || '',
+        phone: reg.phone || '',
+        birth_date: reg.birth_date || null,
+        country: reg.country || null,
+        city: reg.city || null,
+        shirt_size: reg.shirt_size || 'M',
+        church: reg.church || null,
+        pastor: reg.pastor || null,
+        how_found: reg.how_found || null,
+        previous_participant: reg.previous_participant || null,
+        notes: notes || null,
+        event_name: reg.event_name || 'Seminário Remissão Portugal 2027',
+        event_price: parseFloat(reg.event_price || 85.00),
+        payment_status: reg.payment_status || 'pending',
+        currency: reg.currency || 'EUR',
+        rgpd_accepted: true,
+        created_at: reg.created_at || new Date().toISOString()
+    };
+}
+
 class RemissaoApp {
     constructor() {
         this.state = {
@@ -52,10 +100,21 @@ class RemissaoApp {
             let list1 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS) || '[]');
             let list2 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY) || '[]');
             
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const oldIdToUuid = new Map();
             const map = new Map();
             [...list1, ...list2].forEach(item => {
-                if (item && item.id && !map.has(item.id)) {
-                    map.set(item.id, item);
+                if (item) {
+                    if (!item.id || !isUUID.test(item.id)) {
+                        const legacyKey = item.id || `${item.email || ''}_${item.full_name || ''}`;
+                        if (!oldIdToUuid.has(legacyKey)) {
+                            oldIdToUuid.set(legacyKey, generateUUID());
+                        }
+                        item.id = oldIdToUuid.get(legacyKey);
+                    }
+                    if (!map.has(item.id)) {
+                        map.set(item.id, item);
+                    }
                 }
             });
             const merged = Array.from(map.values());
@@ -330,8 +389,8 @@ class RemissaoApp {
                 return;
             }
 
-            // 1. Generate unique client reference ID and create registration record
-            const regId = 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+            // 1. Generate standard UUID compatible with Supabase & Stripe reference
+            const regId = generateUUID();
             const newRegistration = {
                 id: regId,
                 full_name: fullName,
@@ -359,14 +418,22 @@ class RemissaoApp {
             localList.unshift(newRegistration);
             this.saveLocalRegistrations(localList);
 
-            // 3. Attempt async sync to backend/Supabase with timeout (non-blocking)
+            // 3. Attempt async sync to backend/Supabase with sanitized payload
             try {
                 if (supabaseClient) {
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
-                    const insertPromise = supabaseClient.from('registrations').insert([newRegistration]);
-                    await Promise.race([insertPromise, timeoutPromise]).catch((e) => {
+                    const supabasePayload = sanitizeRegistrationForSupabase(newRegistration);
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000));
+                    const insertPromise = supabaseClient.from('registrations').insert([supabasePayload]);
+                    try {
+                        const res = await Promise.race([insertPromise, timeoutPromise]);
+                        if (res && res.error) {
+                            console.warn('Supabase insert error details:', res.error);
+                        } else if (res) {
+                            console.log('✅ Inscrição gravada com sucesso no Supabase Cloud!');
+                        }
+                    } catch (e) {
                         console.warn('Supabase insert timed out or failed (safe in localStorage):', e);
-                    });
+                    }
                 }
             } catch (syncErr) {
                 console.warn('Background sync failed, continuing:', syncErr);
@@ -505,7 +572,7 @@ class RemissaoApp {
 
         if (supabaseClient) {
             try {
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 6000));
                 const fetchPromise = supabaseClient
                     .from('registrations')
                     .select('*')
@@ -542,12 +609,17 @@ class RemissaoApp {
                             <span style="font-size: 1.2rem;">⚠️</span>
                             <div>
                                 <strong>Modo Local Ativo (${localData.length} inscrições salvas no dispositivo):</strong><br>
-                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está <strong>pausado por inatividade</strong> (Free tier da Supabase). Para sincronizar na nuvem, basta reativar no painel.</span>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está temporariamente inacessível ou em hibernação.</span>
                             </div>
                         </div>
-                        <a href="https://supabase.com/dashboard/project/jcpjgowdxcmqditgvmeq" target="_blank" rel="noopener" class="btn-restore-link">
-                            🚀 Reativar no Supabase →
-                        </a>
+                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                            <button type="button" onclick="window.app && window.app.fetchAndRenderAdminData()" class="btn-restore-link" style="cursor: pointer; border: none; background: rgba(255,255,255,0.15);">
+                                🔄 Tentar Reconectar
+                            </button>
+                            <a href="https://supabase.com/dashboard/project/jcpjgowdxcmqditgvmeq" target="_blank" rel="noopener" class="btn-restore-link">
+                                🚀 Reativar no Supabase →
+                            </a>
+                        </div>
                     </div>
                 `;
             }
@@ -556,7 +628,12 @@ class RemissaoApp {
         // 4. Merge remote data if online, and auto-sync any local records not in cloud
         if (supabaseOnline && supData) {
             const map = new Map();
-            supData.forEach(item => map.set(item.id, item));
+            supData.forEach(item => {
+                if (!item.payment_method) {
+                    item.payment_method = (item.notes && item.notes.includes('Stripe')) ? 'online_stripe' : 'whatsapp_manual';
+                }
+                map.set(item.id, item);
+            });
 
             const pendingSync = [];
             localData.forEach(item => {
@@ -575,12 +652,13 @@ class RemissaoApp {
             this.renderShirtReport();
             this.renderRegistrationsTable();
 
-            // Background sync pending items to Supabase
+            // Background sync pending items to Supabase using sanitized format
             if (pendingSync.length > 0 && supabaseClient) {
                 console.log(`Syncing ${pendingSync.length} local registrations to Supabase...`);
-                supabaseClient.from('registrations').insert(pendingSync).then(({ error }) => {
+                const sanitizedPayload = pendingSync.map(item => sanitizeRegistrationForSupabase(item));
+                supabaseClient.from('registrations').insert(sanitizedPayload).then(({ error }) => {
                     if (error) console.warn('Background sync error:', error);
-                    else console.log('Pending registrations successfully synced to Supabase!');
+                    else console.log('Pending registrations successfully synced to Supabase Cloud!');
                 }).catch(e => console.warn('Background sync exception:', e));
             }
         }

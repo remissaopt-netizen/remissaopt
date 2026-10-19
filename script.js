@@ -33,6 +33,54 @@ if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
     }
 }
 
+// Bulletproof UUID v4 Generator compatible with PostgreSQL UUID column
+function generateUUID() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+// Sanitizer to guarantee 100% compliance with Supabase Postgres schema
+function sanitizeRegistrationForSupabase(reg) {
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const id = (reg.id && isUUID.test(reg.id)) ? reg.id : generateUUID();
+
+    let notes = reg.notes || '';
+    if (reg.payment_method) {
+        const methodStr = reg.payment_method === 'online_stripe' ? 'Cartão / Stripe Online' : 'WhatsApp / MB WAY (Pr. Ezequias)';
+        if (!notes.includes('Pagamento:')) {
+            notes = notes ? `${notes} | Pagamento: ${methodStr}` : `Pagamento: ${methodStr}`;
+        }
+    }
+
+    return {
+        id: id,
+        full_name: reg.full_name || '',
+        email: reg.email || '',
+        phone: reg.phone || '',
+        birth_date: reg.birth_date || null,
+        country: reg.country || null,
+        city: reg.city || null,
+        shirt_size: reg.shirt_size || 'M',
+        church: reg.church || null,
+        pastor: reg.pastor || null,
+        how_found: reg.how_found || null,
+        previous_participant: reg.previous_participant || null,
+        notes: notes || null,
+        event_name: reg.event_name || 'Seminário Remissão Portugal 2027',
+        event_price: parseFloat(reg.event_price || 85.00),
+        payment_status: reg.payment_status || 'pending',
+        currency: reg.currency || 'EUR',
+        rgpd_accepted: true,
+        created_at: reg.created_at || new Date().toISOString()
+    };
+}
+
 // Initial Events Database
 const initialEventsDB = [
     {
@@ -1316,8 +1364,8 @@ class RemissaoApp {
                 return;
             }
 
-            // 1. Generate unique client reference ID and create registration record
-            const regId = 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+            // 1. Generate standard UUID compatible with Supabase & Stripe reference
+            const regId = generateUUID();
             const newRegistration = {
                 id: regId,
                 full_name: fullName,
@@ -1344,9 +1392,20 @@ class RemissaoApp {
             try {
                 let list1 = JSON.parse(localStorage.getItem('remissao_pt_registrations') || '[]');
                 let list2 = JSON.parse(localStorage.getItem('remissao_pt_registrations_store') || '[]');
+                const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+                const oldIdToUuid = new Map();
                 const map = new Map();
                 [...list1, ...list2].forEach(item => {
-                    if (item && item.id && !map.has(item.id)) map.set(item.id, item);
+                    if (item) {
+                        if (!item.id || !isUUID.test(item.id)) {
+                            const legacyKey = item.id || `${item.email || ''}_${item.full_name || ''}`;
+                            if (!oldIdToUuid.has(legacyKey)) {
+                                oldIdToUuid.set(legacyKey, generateUUID());
+                            }
+                            item.id = oldIdToUuid.get(legacyKey);
+                        }
+                        if (!map.has(item.id)) map.set(item.id, item);
+                    }
                 });
                 map.set(newRegistration.id, newRegistration);
                 const merged = Array.from(map.values());
@@ -1357,14 +1416,22 @@ class RemissaoApp {
                 console.warn('LocalStorage save warning:', e);
             }
 
-            // 3. Attempt async sync to backend/Supabase with timeout (non-blocking)
+            // 3. Attempt async sync to backend/Supabase with sanitized payload
             try {
                 if (supabaseClient) {
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
-                    const insertPromise = supabaseClient.from('registrations').insert([newRegistration]);
-                    await Promise.race([insertPromise, timeoutPromise]).catch((e) => {
+                    const supabasePayload = sanitizeRegistrationForSupabase(newRegistration);
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000));
+                    const insertPromise = supabaseClient.from('registrations').insert([supabasePayload]);
+                    try {
+                        const res = await Promise.race([insertPromise, timeoutPromise]);
+                        if (res && res.error) {
+                            console.warn('Supabase insert error details:', res.error);
+                        } else if (res) {
+                            console.log('✅ Inscrição gravada com sucesso no Supabase Cloud!');
+                        }
+                    } catch (e) {
                         console.warn('Supabase insert failed or timed out (saved in localStorage):', e);
-                    });
+                    }
                 }
             } catch (syncErr) {
                 console.warn('Background sync failed, continuing:', syncErr);
