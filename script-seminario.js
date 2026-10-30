@@ -11,8 +11,8 @@ const APP_CONFIG = {
     ADMIN_PASS_HASH: 'remissao2027',
     CHECKOUT_URL: 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01', // URL oficial do Checkout Stripe
     SUPABASE: {
-        URL: 'https://jcpjgowdxcmqditgvmeq.supabase.co',
-        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcGpnb3dkeGNtcWRpdGd2bWVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDIwNTAsImV4cCI6MjEwMjMxODA1MH0.MCdmZqHdRFDaS-FzHCuDmWEdtd08qyJFYhXumepwZ8Y'
+        URL: 'https://hoiuenjioiquflhwxtwd.supabase.co',
+        ANON_KEY: 'sb_publishable_yxUcX1lR_BMzCjmxPiBwDw_mHrunskf'
     },
     STORAGE_KEYS: {
         LANG: 'remissao_pt_lang',
@@ -568,6 +568,7 @@ class RemissaoApp {
 
         // 2. Query Supabase Cloud
         let supabaseOnline = false;
+        let supabaseMissingTable = false;
         let supData = null;
 
         if (supabaseClient) {
@@ -583,7 +584,10 @@ class RemissaoApp {
                     supabaseOnline = true;
                     supData = res.data;
                 } else if (res && res.error) {
-                    console.warn('Supabase query warning (project may be paused):', res.error);
+                    if (res.error.code === 'PGRST205' || (res.error.message && res.error.message.includes('schema cache'))) {
+                        supabaseMissingTable = true;
+                    }
+                    console.warn('Supabase query warning:', res.error);
                 }
             } catch (err) {
                 console.warn('Supabase connection unreachable or timed out:', err);
@@ -599,7 +603,27 @@ class RemissaoApp {
                             <span style="font-size: 1.1rem;">🟢</span>
                             <span><strong>Supabase Cloud Conectado:</strong> Banco de dados ativo e sincronizado em tempo real.</span>
                         </div>
-                        <span style="font-size: 0.78rem; opacity: 0.85; background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.6rem; border-radius: 4px;">Projeto: jcpjgowdxcmqditgvmeq</span>
+                        <span style="font-size: 0.78rem; opacity: 0.85; background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.6rem; border-radius: 4px;">Projeto: hoiuenjioiquflhwxtwd</span>
+                    </div>
+                `;
+            } else if (supabaseMissingTable) {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner offline" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4); color: #FDE68A;">
+                        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <span style="font-size: 1.2rem;">⚡</span>
+                            <div>
+                                <strong>Supabase Conectado, mas a Tabela "registrations" ainda não foi criada no banco:</strong><br>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">Execute o script <code>supabase/schema.sql</code> no SQL Editor do Supabase para ativar a tabela e políticas de segurança.</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                            <button type="button" onclick="window.app && window.app.fetchAndRenderAdminData()" class="btn-restore-link" style="cursor: pointer; border: none; background: rgba(255,255,255,0.15);">
+                                🔄 Já executei, verificar agora
+                            </button>
+                            <a href="https://supabase.com/dashboard/project/hoiuenjioiquflhwxtwd/sql/new" target="_blank" rel="noopener" class="btn-restore-link" style="background: #F59E0B; color: #000; font-weight: 700;">
+                                📝 Abrir SQL Editor no Supabase →
+                            </a>
+                        </div>
                     </div>
                 `;
             } else {
@@ -609,15 +633,15 @@ class RemissaoApp {
                             <span style="font-size: 1.2rem;">⚠️</span>
                             <div>
                                 <strong>Modo Local Ativo (${localData.length} inscrições salvas no dispositivo):</strong><br>
-                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está temporariamente inacessível ou em hibernação.</span>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está temporariamente inacessível.</span>
                             </div>
                         </div>
                         <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
                             <button type="button" onclick="window.app && window.app.fetchAndRenderAdminData()" class="btn-restore-link" style="cursor: pointer; border: none; background: rgba(255,255,255,0.15);">
                                 🔄 Tentar Reconectar
                             </button>
-                            <a href="https://supabase.com/dashboard/project/jcpjgowdxcmqditgvmeq" target="_blank" rel="noopener" class="btn-restore-link">
-                                🚀 Reativar no Supabase →
+                            <a href="https://supabase.com/dashboard/project/hoiuenjioiquflhwxtwd" target="_blank" rel="noopener" class="btn-restore-link">
+                                🚀 Painel Supabase →
                             </a>
                         </div>
                     </div>

@@ -12,14 +12,16 @@ const APP_CONFIG = {
     ADMIN_PASS_HASH: 'remissao2027', // Default admin password
     CHECKOUT_URL: 'https://buy.stripe.com/bJe7sK3HT06E9qofNh2ZO01', // URL oficial do Checkout Stripe
     SUPABASE: {
-        URL: 'https://jcpjgowdxcmqditgvmeq.supabase.co',
-        ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcGpnb3dkeGNtcWRpdGd2bWVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDIwNTAsImV4cCI6MjEwMjMxODA1MH0.MCdmZqHdRFDaS-FzHCuDmWEdtd08qyJFYhXumepwZ8Y'
+        URL: 'https://hoiuenjioiquflhwxtwd.supabase.co',
+        ANON_KEY: 'sb_publishable_yxUcX1lR_BMzCjmxPiBwDw_mHrunskf'
     },
     STORAGE_KEYS: {
         LANG: 'remissao_pt_lang',
         CRM: 'remissao_pt_crm_leads',
         EVENTS: 'remissao_pt_events_db',
-        AUTH: 'remissao_pt_admin_session'
+        AUTH: 'remissao_pt_admin_session',
+        REGISTRATIONS: 'remissao_pt_registrations',
+        REGISTRATIONS_LEGACY: 'remissao_pt_registrations_store'
     }
 };
 
@@ -884,8 +886,10 @@ class RemissaoApp {
             currentLang: localStorage.getItem(APP_CONFIG.STORAGE_KEYS.LANG) || APP_CONFIG.DEFAULT_LANG,
             events: this.loadEventsStore(),
             crmLeads: this.loadCrmStore(),
+            registrations: [],
             activeEventId: null,
             activeFilter: 'all',
+            searchQuery: '',
             isAdminAuthenticated: sessionStorage.getItem(APP_CONFIG.STORAGE_KEYS.AUTH) === 'true'
         };
 
@@ -898,6 +902,49 @@ class RemissaoApp {
         this.initThemesHeroSlider();
         this.setLanguage(this.state.currentLang, false);
         this.handleHashChange();
+    }
+
+    getLocalRegistrations() {
+        try {
+            let list1 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS) || '[]');
+            let list2 = JSON.parse(localStorage.getItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY) || '[]');
+            
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const oldIdToUuid = new Map();
+            const map = new Map();
+            [...list1, ...list2].forEach(item => {
+                if (item) {
+                    if (!item.id || !isUUID.test(item.id)) {
+                        const legacyKey = item.id || `${item.email || ''}_${item.full_name || ''}`;
+                        if (!oldIdToUuid.has(legacyKey)) {
+                            oldIdToUuid.set(legacyKey, generateUUID());
+                        }
+                        item.id = oldIdToUuid.get(legacyKey);
+                    }
+                    if (!map.has(item.id)) {
+                        map.set(item.id, item);
+                    }
+                }
+            });
+            const merged = Array.from(map.values());
+            merged.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+            
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS, JSON.stringify(merged));
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY, JSON.stringify(merged));
+            return merged;
+        } catch (e) {
+            console.warn('Error reading local registrations:', e);
+            return [];
+        }
+    }
+
+    saveLocalRegistrations(regs) {
+        try {
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS, JSON.stringify(regs));
+            localStorage.setItem(APP_CONFIG.STORAGE_KEYS.REGISTRATIONS_LEGACY, JSON.stringify(regs));
+        } catch (e) {
+            console.warn('Error saving local registrations:', e);
+        }
     }
 
     loadEventsStore() {
@@ -1111,6 +1158,39 @@ class RemissaoApp {
                 if (targetContent) targetContent.style.display = 'block';
             });
         });
+
+        // Admin Filter Pills
+        const filterPillsContainer = document.getElementById('adminFilterPills');
+        if (filterPillsContainer) {
+            filterPillsContainer.addEventListener('click', (e) => {
+                const filterPill = e.target.closest('.filter-pill');
+                if (!filterPill) return;
+                e.preventDefault();
+                filterPillsContainer.querySelectorAll('.filter-pill').forEach(btn => {
+                    btn.classList.remove('active', 'btn-primary');
+                    btn.classList.add('btn-secondary');
+                });
+                filterPill.classList.add('active', 'btn-primary');
+                filterPill.classList.remove('btn-secondary');
+                this.state.activeFilter = filterPill.dataset.filter;
+                this.renderRegistrationsTable();
+            });
+        }
+
+        // Admin Search Input
+        const searchInput = document.getElementById('adminSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.state.searchQuery = e.target.value.trim().toLowerCase();
+                this.renderRegistrationsTable();
+            });
+        }
+
+        // Admin Export CSV
+        document.getElementById('btnExportCsv')?.addEventListener('click', () => this.exportRegistrationsCsv());
+
+        // Close Details Modal
+        document.getElementById('closeDetailsModalBtn')?.addEventListener('click', () => this.closeModal('registrationDetailsModal'));
 
         // On-Demand Admin AI Suite Button Handlers
         document.getElementById('aiTranslateBtn')?.addEventListener('click', () => this.runAiTranslation());
@@ -1575,8 +1655,467 @@ class RemissaoApp {
     }
 
     renderAdminPanel() {
+        this.fetchAndRenderAdminData();
         this.renderAdminEventsTable();
         this.renderAdminCrmTable();
+    }
+
+    async fetchAndRenderAdminData() {
+        const tbody = document.getElementById('adminRegistrationsTbody');
+        const statusContainer = document.getElementById('adminSupabaseStatus');
+
+        // 1. Immediately render local registrations so admin sees data right away!
+        let localData = this.getLocalRegistrations();
+        this.state.registrations = localData;
+        this.renderAdminKPIs();
+        this.renderShirtReport();
+        this.renderRegistrationsTable();
+
+        if (statusContainer) {
+            statusContainer.innerHTML = `
+                <div class="supabase-status-banner" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94A3B8;">
+                    <span>⏳ Verificando conexão e sincronização com o Supabase Cloud...</span>
+                </div>
+            `;
+        }
+
+        // 2. Query Supabase Cloud
+        let supabaseOnline = false;
+        let supabaseMissingTable = false;
+        let supData = null;
+
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 6000));
+                const fetchPromise = supabaseClient
+                    .from('registrations')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                const res = await Promise.race([fetchPromise, timeoutPromise]);
+                if (res && !res.error && res.data) {
+                    supabaseOnline = true;
+                    supData = res.data;
+                } else if (res && res.error) {
+                    if (res.error.code === 'PGRST205' || (res.error.message && res.error.message.includes('schema cache'))) {
+                        supabaseMissingTable = true;
+                    }
+                    console.warn('Supabase query warning:', res.error);
+                }
+            } catch (err) {
+                console.warn('Supabase connection unreachable or timed out:', err);
+            }
+        }
+
+        // 3. Handle Online vs Offline Status Banner
+        if (statusContainer) {
+            if (supabaseOnline) {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner online">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.1rem;">🟢</span>
+                            <span><strong>Supabase Cloud Conectado:</strong> Banco de dados ativo e sincronizado em tempo real.</span>
+                        </div>
+                        <span style="font-size: 0.78rem; opacity: 0.85; background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.6rem; border-radius: 4px;">Projeto: hoiuenjioiquflhwxtwd</span>
+                    </div>
+                `;
+            } else if (supabaseMissingTable) {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner offline" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4); color: #FDE68A;">
+                        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <span style="font-size: 1.2rem;">⚡</span>
+                            <div>
+                                <strong>Supabase Conectado, mas a Tabela "registrations" ainda não foi criada no banco:</strong><br>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">Execute o script <code>supabase/schema.sql</code> no SQL Editor do Supabase para ativar a tabela e políticas de segurança.</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                            <button type="button" onclick="window.app && window.app.fetchAndRenderAdminData()" class="btn-restore-link" style="cursor: pointer; border: none; background: rgba(255,255,255,0.15);">
+                                🔄 Já executei, verificar agora
+                            </button>
+                            <a href="https://supabase.com/dashboard/project/hoiuenjioiquflhwxtwd/sql/new" target="_blank" rel="noopener" class="btn-restore-link" style="background: #F59E0B; color: #000; font-weight: 700;">
+                                📝 Abrir SQL Editor no Supabase →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                statusContainer.innerHTML = `
+                    <div class="supabase-status-banner offline">
+                        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <span style="font-size: 1.2rem;">⚠️</span>
+                            <div>
+                                <strong>Modo Local Ativo (${localData.length} inscrições salvas no dispositivo):</strong><br>
+                                <span style="font-size: 0.82rem; opacity: 0.9;">O projeto Supabase Cloud está temporariamente inacessível.</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                            <button type="button" onclick="window.app && window.app.fetchAndRenderAdminData()" class="btn-restore-link" style="cursor: pointer; border: none; background: rgba(255,255,255,0.15);">
+                                🔄 Tentar Reconectar
+                            </button>
+                            <a href="https://supabase.com/dashboard/project/hoiuenjioiquflhwxtwd" target="_blank" rel="noopener" class="btn-restore-link">
+                                🚀 Painel Supabase →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // 4. Merge remote data if online, and auto-sync any local records not in cloud
+        if (supabaseOnline && supData) {
+            const map = new Map();
+            supData.forEach(item => {
+                if (!item.payment_method) {
+                    item.payment_method = (item.notes && item.notes.includes('Stripe')) ? 'online_stripe' : 'whatsapp_manual';
+                }
+                map.set(item.id, item);
+            });
+
+            const pendingSync = [];
+            localData.forEach(item => {
+                if (!map.has(item.id)) {
+                    map.set(item.id, item);
+                    pendingSync.push(item);
+                }
+            });
+
+            const merged = Array.from(map.values());
+            merged.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+            this.state.registrations = merged;
+            this.saveLocalRegistrations(merged);
+            this.renderAdminKPIs();
+            this.renderShirtReport();
+            this.renderRegistrationsTable();
+
+            // Background sync pending items to Supabase using sanitized format
+            if (pendingSync.length > 0 && supabaseClient) {
+                console.log(`Syncing ${pendingSync.length} local registrations to Supabase...`);
+                const sanitizedPayload = pendingSync.map(item => sanitizeRegistrationForSupabase(item));
+                supabaseClient.from('registrations').insert(sanitizedPayload).then(({ error }) => {
+                    if (error) console.warn('Background sync error:', error);
+                    else console.log('Pending registrations successfully synced to Supabase Cloud!');
+                }).catch(e => console.warn('Background sync exception:', e));
+            }
+        }
+    }
+
+    renderAdminKPIs() {
+        const regs = this.state.registrations;
+        const total = regs.length;
+        const paid = regs.filter(r => r.payment_status === 'paid');
+        const pending = regs.filter(r => r.payment_status === 'pending');
+
+        const totalRevenue = paid.reduce((acc, r) => acc + (parseFloat(r.amount_paid || r.event_price || 85)), 0);
+        const pendingRevenue = pending.reduce((acc, r) => acc + (parseFloat(r.event_price || 85)), 0);
+        const conversionRate = total > 0 ? Math.round((paid.length / total) * 100) : 0;
+
+        const elTotal = document.getElementById('statTotalRegistrations');
+        const elPaid = document.getElementById('statPaidRegistrations');
+        const elPending = document.getElementById('statPendingRegistrations');
+        const elTotalRev = document.getElementById('statTotalRevenue');
+        const elPendingRev = document.getElementById('statPendingRevenue');
+        const elConv = document.getElementById('statConversionRate');
+
+        if (elTotal) elTotal.textContent = total;
+        if (elPaid) elPaid.textContent = paid.length;
+        if (elPending) elPending.textContent = pending.length;
+        if (elTotalRev) elTotalRev.textContent = `€${totalRevenue.toFixed(2)}`;
+        if (elPendingRev) elPendingRev.textContent = `€${pendingRevenue.toFixed(2)}`;
+        if (elConv) elConv.textContent = `${conversionRate}%`;
+    }
+
+    renderShirtReport() {
+        const regs = this.state.registrations;
+        
+        const shirtCounts = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
+        let totalShirts = 0;
+
+        regs.forEach(r => {
+            const size = (r.shirt_size || 'M').toUpperCase();
+            if (shirtCounts.hasOwnProperty(size)) {
+                shirtCounts[size]++;
+                totalShirts++;
+            }
+        });
+
+        const elXS = document.getElementById('countShirtXS');
+        const elS = document.getElementById('countShirtS');
+        const elM = document.getElementById('countShirtM');
+        const elL = document.getElementById('countShirtL');
+        const elXL = document.getElementById('countShirtXL');
+        const elTotal = document.getElementById('countShirtTotal');
+
+        if (elXS) elXS.textContent = shirtCounts.XS;
+        if (elS) elS.textContent = shirtCounts.S;
+        if (elM) elM.textContent = shirtCounts.M;
+        if (elL) elL.textContent = shirtCounts.L;
+        if (elXL) elXL.textContent = shirtCounts.XL;
+        if (elTotal) elTotal.textContent = totalShirts;
+    }
+
+    renderRegistrationsTable() {
+        const tbody = document.getElementById('adminRegistrationsTbody');
+        if (!tbody) return;
+
+        let filtered = this.state.registrations;
+
+        // Apply Status Filter
+        if (this.state.activeFilter !== 'all') {
+            filtered = filtered.filter(r => r.payment_status === this.state.activeFilter);
+        }
+
+        // Apply Search Filter
+        if (this.state.searchQuery) {
+            const q = this.state.searchQuery;
+            filtered = filtered.filter(r =>
+                (r.full_name && r.full_name.toLowerCase().includes(q)) ||
+                (r.email && r.email.toLowerCase().includes(q)) ||
+                (r.city && r.city.toLowerCase().includes(q)) ||
+                (r.church && r.church.toLowerCase().includes(q))
+            );
+        }
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" style="text-align: center; padding: 2.5rem; color: #94A3B8;">
+                        Nenhuma inscrição encontrada para os filtros selecionados.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(r => {
+            const dateStr = new Date(r.created_at).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+            return `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0;">
+                    <td style="padding: 1rem 1.25rem;">
+                        <strong>${r.full_name}</strong>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">
+                        <div>${r.email}</div>
+                        <div style="font-size: 0.8rem; color: #94A3B8;">${r.phone}</div>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">${r.city || '—'}, ${r.country || '—'}</td>
+                    <td style="padding: 1rem 1.25rem;">${r.church || '—'}</td>
+                    <td style="padding: 1rem 1.25rem; text-align: center;">
+                        <span style="background: rgba(0,207,200,0.2); color: #00CFC8; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem;">
+                            ${r.shirt_size || 'M'}
+                        </span>
+                    </td>
+                    <td style="padding: 1rem 1.25rem;">${dateStr}</td>
+                    <td style="padding: 1rem 1.25rem; font-weight: 700; color: #00CFC8;">€${parseFloat(r.event_price || 85).toFixed(2)}</td>
+                    <td style="padding: 1rem 1.25rem;">
+                        <select class="admin-status-select" data-id="${r.id}" style="background: #0F172A; color: #FFF; border: 1.5px solid rgba(0, 207, 200, 0.4); border-radius: 8px; padding: 0.35rem 0.65rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; outline: none;">
+                            <option value="pending" ${r.payment_status === 'pending' ? 'selected' : ''}>⏳ Pendente</option>
+                            <option value="paid" ${r.payment_status === 'paid' ? 'selected' : ''}>✅ Pago</option>
+                            <option value="cancelled" ${r.payment_status === 'cancelled' || r.payment_status === 'expired' ? 'selected' : ''}>❌ Cancelado</option>
+                            <option value="refunded" ${r.payment_status === 'refunded' ? 'selected' : ''}>🔄 Reembolsado</option>
+                        </select>
+                    </td>
+                    <td style="padding: 1rem 1.25rem; text-align: right;">
+                        <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+                            <button class="btn btn-sm btn-secondary btn-view-details" data-id="${r.id}" title="Ver detalhes completos" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+                                🔍 Detalhes
+                            </button>
+                            <button class="btn btn-sm btn-delete-reg" data-id="${r.id}" data-name="${r.full_name}" title="Excluir inscrição" style="padding: 0.35rem 0.65rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #FCA5A5; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                                🗑️ Excluir
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Bind Status Change
+        tbody.querySelectorAll('.admin-status-select').forEach(sel => {
+            sel.addEventListener('change', (e) => {
+                const id = e.target.dataset.id;
+                const newStatus = e.target.value;
+                this.updateRegistrationStatus(id, newStatus);
+            });
+        });
+
+        // Bind Delete Buttons
+        tbody.querySelectorAll('.btn-delete-reg').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const button = e.target.closest('.btn-delete-reg');
+                const id = button.dataset.id;
+                const name = button.dataset.name;
+                this.deleteRegistration(id, name);
+            });
+        });
+
+        // Bind Detail Buttons
+        tbody.querySelectorAll('.btn-view-details').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.dataset.id;
+                const reg = this.state.registrations.find(item => item.id === id);
+                if (reg) this.openRegistrationDetailsModal(reg);
+            });
+        });
+    }
+
+    async updateRegistrationStatus(id, newStatus) {
+        // 1. Update in local state & localStorage immediately
+        const reg = this.state.registrations.find(r => r.id === id);
+        if (reg) {
+            reg.payment_status = newStatus;
+            this.saveLocalRegistrations(this.state.registrations);
+            this.renderAdminKPIs();
+            this.renderRegistrationsTable();
+        }
+
+        // 2. Try to sync to Supabase in background
+        let cloudSynced = false;
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                const updatePromise = supabaseClient
+                    .from('registrations')
+                    .update({ payment_status: newStatus })
+                    .eq('id', id)
+                    .select();
+
+                const { data, error } = await Promise.race([updatePromise, timeoutPromise]);
+                if (!error && data && data.length > 0) {
+                    cloudSynced = true;
+                }
+            } catch (err) {
+                console.warn('Supabase status update failed or paused (kept locally):', err);
+            }
+        }
+
+        if (cloudSynced) {
+            this.showToast('✅ Status atualizado e sincronizado na nuvem!');
+        } else {
+            this.showToast('✅ Status atualizado localmente!');
+        }
+    }
+
+    async deleteRegistration(id, fullName) {
+        if (!confirm(`Tem certeza que deseja excluir permanentemente a inscrição de "${fullName}"?\n\nEsta ação removerá o registro.`)) {
+            return;
+        }
+
+        // 1. Delete from local state & localStorage immediately
+        this.state.registrations = this.state.registrations.filter(r => r.id !== id);
+        this.saveLocalRegistrations(this.state.registrations);
+        this.renderAdminKPIs();
+        this.renderShirtReport();
+        this.renderRegistrationsTable();
+        this.closeModal('registrationDetailsModal');
+
+        // 2. Try to delete from Supabase in background
+        let cloudDeleted = false;
+        if (supabaseClient) {
+            try {
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2500));
+                const delPromise = supabaseClient
+                    .from('registrations')
+                    .delete()
+                    .eq('id', id)
+                    .select();
+
+                const { data, error } = await Promise.race([delPromise, timeoutPromise]);
+                if (!error && data && data.length > 0) {
+                    cloudDeleted = true;
+                }
+            } catch (err) {
+                console.warn('Supabase delete failed or paused (deleted locally):', err);
+            }
+        }
+
+        if (cloudDeleted) {
+            this.showToast('🗑️ Inscrição excluída da nuvem e localmente!');
+        } else {
+            this.showToast('🗑️ Inscrição excluída localmente!');
+        }
+    }
+
+    openRegistrationDetailsModal(reg) {
+        const title = document.getElementById('detailsNameTitle');
+        const pill = document.getElementById('detailsStatusPill');
+        const content = document.getElementById('detailsModalContent');
+
+        if (title) title.textContent = reg.full_name;
+
+        let statusBadge = '<span class="status-pill status-pending">⏳ Pendente</span>';
+        if (reg.payment_status === 'paid') statusBadge = '<span class="status-pill status-paid">✅ Pago</span>';
+        if (reg.payment_status === 'cancelled' || reg.payment_status === 'expired') statusBadge = '<span class="status-pill status-cancelled">❌ Cancelado</span>';
+        if (reg.payment_status === 'refunded') statusBadge = '<span class="status-pill status-refunded">🔄 Reembolsado</span>';
+
+        if (pill) pill.innerHTML = statusBadge;
+
+        if (content) {
+            content.innerHTML = `
+                <div><strong>Email:</strong> ${reg.email}</div>
+                <div><strong>Telemóvel:</strong> ${reg.phone}</div>
+                <div><strong>Data de Nascimento:</strong> ${reg.birth_date || '—'}</div>
+                <div><strong>Localização:</strong> ${reg.city || '—'}, ${reg.country || '—'}</div>
+                <div><strong>Tamanho da Camiseta:</strong> <span style="color: #00CFC8; font-weight: 800; font-size: 1.1rem;">${reg.shirt_size || 'M'}</span></div>
+                <div><strong>Igreja / Pastor:</strong> ${reg.church || '—'} (Pr. ${reg.pastor || '—'})</div>
+                <div><strong>Como Conheceu:</strong> ${reg.how_found || '—'}</div>
+                <div><strong>Já Participou:</strong> ${reg.previous_participant || '—'}</div>
+                <div><strong>Observações:</strong> ${reg.notes || 'Nenhuma'}</div>
+                <div><strong>Forma de Pagamento:</strong> ${reg.payment_method === 'online_stripe' ? '<span style="color:#00CFC8; font-weight:700;">💳 Stripe Online</span>' : '<span style="color:#25D366; font-weight:700;">💬 WhatsApp / MB WAY (Pr. Ezequias)</span>'}</div>
+                <div style="margin-top: 0.6rem;">
+                    <a href="https://wa.me/${(reg.phone || '').replace(/[^0-9]/g, '')}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.4rem; background: #25D366; color: #FFF; text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        Conversar com Inscrito no WhatsApp
+                    </a>
+                </div>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0.5rem 0;">
+                <div><strong>ID de Registro:</strong> <code style="font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">${reg.id}</code></div>
+                <div><strong>Data da Inscrição:</strong> ${new Date(reg.created_at).toLocaleString('pt-PT')}</div>
+            `;
+        }
+
+        const modal = document.getElementById('registrationDetailsModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    exportRegistrationsCsv() {
+        const regs = this.state.registrations;
+        if (!regs || regs.length === 0) {
+            alert('Nenhuma inscrição disponível para exportar.');
+            return;
+        }
+
+        const headers = ['ID', 'Nome Completo', 'Email', 'Telemóvel', 'Data Nascimento', 'País', 'Cidade', 'Tamanho Camiseta', 'Igreja', 'Pastor', 'Como Conheceu', 'Já Participou', 'Observações', 'Status Pagamento', 'Forma Pagamento', 'Valor (€)', 'Data Inscrição'];
+        
+        const rows = regs.map(r => [
+            `"${r.id}"`,
+            `"${r.full_name || ''}"`,
+            `"${r.email || ''}"`,
+            `"${r.phone || ''}"`,
+            `"${r.birth_date || ''}"`,
+            `"${r.country || ''}"`,
+            `"${r.city || ''}"`,
+            `"${r.shirt_size || 'M'}"`,
+            `"${r.church || ''}"`,
+            `"${r.pastor || ''}"`,
+            `"${r.how_found || ''}"`,
+            `"${r.previous_participant || ''}"`,
+            `"${(r.notes || '').replace(/"/g, '""')}"`,
+            `"${r.payment_status || 'pending'}"`,
+            `"${r.payment_method || ''}"`,
+            `"${r.event_price || 85}"`,
+            `"${new Date(r.created_at).toLocaleString('pt-PT')}"`
+        ]);
+
+        const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `inscricoes_remissao_portugal_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     renderAdminEventsTable() {

@@ -629,15 +629,128 @@
                     </div>
 
                     <div class="admin-tabs">
-                        <button class="admin-tab-btn active" data-tab="tab-events" style="display:none;">📅 Gerenciar
-                            Seminários</button>
+                        <button class="admin-tab-btn active" data-tab="tab-registrations">📋 Inscrições do Seminário</button>
                         <button class="admin-tab-btn" data-tab="tab-crm">⛪ Solicitações de Igrejas (CRM)</button>
+                        <button class="admin-tab-btn" data-tab="tab-events" style="display:none;">📅 Gerenciar Seminários</button>
                         <button class="admin-tab-btn" data-tab="tab-ai-suite">🤖 IA Assistente Suite</button>
                         <button class="admin-tab-btn" data-tab="tab-seo">🔍 SEO Booster</button>
                     </div>
 
+                    <!-- TAB REGISTRATIONS -->
+                    <div id="tab-registrations" class="admin-tab-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.5rem; color: #FFF; margin-bottom: 0.25rem;">Gestão de Inscrições do Seminário</h3>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Inscrições registradas online e sincronizadas na nuvem com o Supabase.</p>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <button class="btn btn-primary btn-sm" id="btnExportCsv" style="background: linear-gradient(135deg, #00CFC8, #0B4F8A); border: none; font-weight: 700;">
+                                    📊 Exportar Excel / CSV
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Database & Supabase Connectivity Status Banner -->
+                        <div id="adminSupabaseStatus" style="margin-bottom: 1.5rem;"></div>
+
+                        <!-- Dashboard KPI Cards Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: var(--gold-light); font-weight: 700; text-transform: uppercase;">Total Inscritos</span>
+                                <h3 id="statTotalRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #FFF; margin-top: 0.25rem;">0</h3>
+                            </div>
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #10B981; font-weight: 700; text-transform: uppercase;">Confirmados (Pagos)</span>
+                                <h3 id="statPaidRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #10B981; margin-top: 0.25rem;">0</h3>
+                            </div>
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #F59E0B; font-weight: 700; text-transform: uppercase;">Pendentes</span>
+                                <h3 id="statPendingRegistrations" style="font-size: 2.2rem; font-weight: 800; color: #F59E0B; margin-top: 0.25rem;">0</h3>
+                            </div>
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #00CFC8; font-weight: 700; text-transform: uppercase;">Arrecadado (€)</span>
+                                <h3 id="statTotalRevenue" style="font-size: 2.2rem; font-weight: 800; color: #00CFC8; margin-top: 0.25rem;">€0</h3>
+                            </div>
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #94A3B8; font-weight: 700; text-transform: uppercase;">Pendente (€)</span>
+                                <h3 id="statPendingRevenue" style="font-size: 2.2rem; font-weight: 800; color: #CBD5E1; margin-top: 0.25rem;">€0</h3>
+                            </div>
+                            <div class="card-glass" style="padding: 1.25rem; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #FFF3A8; font-weight: 700; text-transform: uppercase;">Conversão</span>
+                                <h3 id="statConversionRate" style="font-size: 2.2rem; font-weight: 800; color: #FFF3A8; margin-top: 0.25rem;">0%</h3>
+                            </div>
+                        </div>
+
+                        <!-- RELATÓRIO DE CAMISETAS PARA ENCOMENDA WIDGET -->
+                        <div class="shirt-report-container">
+                            <div class="shirt-report-title">
+                                <span style="display: inline-flex; align-items: center; gap: 0.5rem;">👕 Relatório para Encomenda de Camisetas Oficiais</span>
+                            </div>
+                            <div class="shirt-sizes-grid">
+                                <div class="shirt-size-badge-box">
+                                    <div class="shirt-size-name">Tamanho XS</div>
+                                    <div class="shirt-size-count" id="countShirtXS">0</div>
+                                </div>
+                                <div class="shirt-size-badge-box">
+                                    <div class="shirt-size-name">Tamanho S</div>
+                                    <div class="shirt-size-count" id="countShirtS">0</div>
+                                </div>
+                                <div class="shirt-size-badge-box">
+                                    <div class="shirt-size-name">Tamanho M</div>
+                                    <div class="shirt-size-count" id="countShirtM">0</div>
+                                </div>
+                                <div class="shirt-size-badge-box">
+                                    <div class="shirt-size-name">Tamanho L</div>
+                                    <div class="shirt-size-count" id="countShirtL">0</div>
+                                </div>
+                                <div class="shirt-size-badge-box">
+                                    <div class="shirt-size-name">Tamanho XL</div>
+                                    <div class="shirt-size-count" id="countShirtXL">0</div>
+                                </div>
+                                <div class="shirt-size-badge-box" style="border-color: #00CFC8; background: rgba(0, 207, 200, 0.15);">
+                                    <div class="shirt-size-name" style="color: #00CFC8;">TOTAL CAMISETAS</div>
+                                    <div class="shirt-size-count" id="countShirtTotal" style="color: #00CFC8;">0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table Controls: Search & Filters -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="adminFilterPills">
+                                <button class="btn btn-sm btn-primary filter-pill active" data-filter="all">Todos</button>
+                                <button class="btn btn-sm btn-secondary filter-pill" data-filter="paid"><span class="status-dot status-dot-paid"></span> Pagos</button>
+                                <button class="btn btn-sm btn-secondary filter-pill" data-filter="pending"><span class="status-dot status-dot-pending"></span> Pendentes</button>
+                                <button class="btn btn-sm btn-secondary filter-pill" data-filter="cancelled"><span class="status-dot status-dot-cancelled"></span> Cancelados</button>
+                                <button class="btn btn-sm btn-secondary filter-pill" data-filter="refunded"><span class="status-dot status-dot-refunded"></span> Reembolsados</button>
+                            </div>
+                            <input type="text" id="adminSearchInput" placeholder="Pesquisar por Nome, Email, Cidade ou Igreja..." class="form-input" style="max-width: 380px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: #FFF;">
+                        </div>
+
+                        <!-- Interactive Registrations Table -->
+                        <div style="overflow-x: auto; background: rgba(18, 26, 43, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem;">
+                                <thead>
+                                    <tr style="background: rgba(255,255,255,0.08); color: #00CFC8; border-bottom: 1px solid rgba(255,255,255,0.15);">
+                                        <th style="padding: 1rem 1.25rem;">Participante</th>
+                                        <th style="padding: 1rem 1.25rem;">Contacto</th>
+                                        <th style="padding: 1rem 1.25rem;">Cidade / País</th>
+                                        <th style="padding: 1rem 1.25rem;">Igreja</th>
+                                        <th style="padding: 1rem 1.25rem; text-align: center;">Camiseta</th>
+                                        <th style="padding: 1rem 1.25rem;">Data Inscrição</th>
+                                        <th style="padding: 1rem 1.25rem;">Valor</th>
+                                        <th style="padding: 1rem 1.25rem;">Status</th>
+                                        <th style="padding: 1rem 1.25rem; text-align: right;">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminRegistrationsTbody">
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- TAB EVENTS -->
-                    <div id="tab-events" class="admin-tab-content">
+                    <div id="tab-events" class="admin-tab-content" style="display: none;">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h3>Seminários Cadastrados</h3>
@@ -1114,6 +1227,23 @@
         </div>
     </div>
 
+    <!-- ==================== DETAILS MODAL FOR ADMIN (#registrationDetailsModal) ==================== -->
+    <div class="registration-modal-overlay" id="registrationDetailsModal">
+        <div class="registration-modal-card" style="max-width: 680px;">
+            <button class="registration-modal-close" id="closeDetailsModalBtn">&times;</button>
+            
+            <div class="reg-modal-header" style="margin-bottom: 1.5rem;">
+                <span class="reg-modal-tag">DETALHES DA INSCRIÇÃO</span>
+                <h3 class="reg-modal-title" id="detailsNameTitle" style="font-size: 1.6rem;">—</h3>
+                <div id="detailsStatusPill" style="margin-top: 0.5rem;"></div>
+            </div>
+
+            <div id="detailsModalContent" style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
     <!-- Share Event Modal -->
     <div class="modal-overlay" id="shareModal">
         <div class="modal-dialog">
@@ -1139,7 +1269,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Script File -->
-    <script src="script.js?v=19"></script>
+    <script src="script.js?v=20"></script>
 
     <!--
     =============================================================================
