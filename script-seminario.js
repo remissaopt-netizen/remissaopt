@@ -69,7 +69,9 @@ function sanitizeRegistrationForSupabase(reg) {
         notes: notes || null,
         event_name: reg.event_name || 'Seminário Remissão Portugal 2027',
         event_price: parseFloat(reg.event_price || 85.00),
+        amount_paid: reg.amount_paid ? parseFloat(reg.amount_paid) : null,
         payment_status: reg.payment_status || 'pending',
+        payment_method: reg.payment_method || 'whatsapp_manual',
         currency: reg.currency || 'EUR',
         rgpd_accepted: true,
         created_at: reg.created_at || new Date().toISOString()
